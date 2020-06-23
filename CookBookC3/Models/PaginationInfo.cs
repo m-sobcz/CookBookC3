@@ -5,13 +5,11 @@ using System.Threading.Tasks;
 
 namespace CookBookC3.Models
 {
-    public class PageInfo
+    public class PaginationInfo
     {
         public int ItemsCount { get; set; }
         public int ItemsPerPage { get; set; }
         public int Current { get; set; }
-
-
         public int PagesCount => (int)Math.Ceiling((decimal)ItemsCount/ItemsPerPage);
 
     }

@@ -11,19 +11,19 @@ using System.Threading.Tasks;
 
 namespace CookBookC3.Infrastructure
 {
-    [HtmlTargetElement("ul",Attributes="page-info")]
-    public class PageLinkTagHelper : TagHelper
+    [HtmlTargetElement("ul",Attributes="pagination-info")]
+    public class PaginationInfoTagHelper : TagHelper
     {
         private IUrlHelperFactory urlHelperFactory;
         [ViewContext]
         [HtmlAttributeNotBound]
         public ViewContext ViewContext { get; set; }
-        public PageInfo PageInfo { get; set; } // !! takie jak nazwa atrybuty ?
+        public PaginationInfo PaginationInfo { get; set; } // -> Attributes="pagination-info"
         public string PageAction { get; set; }
         public string PageOuterClass { get; set; }
         public string PageInnerClass { get; set; }
 
-        public PageLinkTagHelper(IUrlHelperFactory urlHelperFactory)
+        public PaginationInfoTagHelper(IUrlHelperFactory urlHelperFactory)
         {
             this.urlHelperFactory = urlHelperFactory;
         }
@@ -34,7 +34,7 @@ namespace CookBookC3.Infrastructure
             TagBuilder result = new TagBuilder("li");
             result.AddCssClass(PageOuterClass);
 
-            for (int i = 1; i <= PageInfo.PagesCount; i++) 
+            for (int i = 1; i <= PaginationInfo.PagesCount; i++) 
             {
                 TagBuilder tag = new TagBuilder("a");
                 tag.AddCssClass(PageInnerClass);

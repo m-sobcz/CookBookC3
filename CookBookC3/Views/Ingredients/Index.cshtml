@@ -1,0 +1,15 @@
+﻿@model IngredientsListWithPaginationInfo
+<div class="container">
+    @foreach (var ingredient in Model.Ingredients)
+    {
+        <div class="card bg-light">
+            <div class="card-body">
+                <h4 class="card-title">@ingredient.Name</h4>
+                <p class="card-text">@ingredient.Description.</p>
+                <p class="card-subtitle" style="float:right">@ingredient.Unit.</p>
+            </div>
+        </div>
+    }
+    <ul class="pagination" pagination-info="@Model.PaginationInfo" page-action="Index" page-outer-class="page-item" page-inner-class="page-link"></ul>
+    <a asp-action="Create" class="btn btn-primary">Dodaj nowy</a>
+    </div>

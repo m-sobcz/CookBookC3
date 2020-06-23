@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CookBookC3.Models;
+using DataLibrary.DataAccess;
+using DataLibrary.Logic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,99 +12,57 @@ namespace CookBookC3.Controllers
 {
     public class IngredientsController : Controller
     {
-        private IIngredientRepository ingredientRepository;
+        private IIngredientProcessor ingredientProcessor;
         public int IngredientsPerPage { get; set; } = 3;
-
-        public IngredientsController(IIngredientRepository ingredientRepository)
+        public IngredientsController(IIngredientProcessor ingredientProcessor)
         {
-            this.ingredientRepository = ingredientRepository;
+            this.ingredientProcessor = ingredientProcessor;
         }
-        public ActionResult List(int currentPage = 1)
+
+        public ActionResult Index(int currentPage = 1)
         {
-            IngredientsList ingredientsList = new IngredientsList()
+            List<Ingredient> Ingredients = new List<Ingredient>();
+            var data = ingredientProcessor.LoadIngredients();
+            foreach (var row in data)
             {
-                Ingredients = ingredientRepository.Ingredients.Skip((currentPage - 1) * IngredientsPerPage).Take(IngredientsPerPage),
-                PageInfo = new PageInfo()
+                Ingredients.Add(new Ingredient
+                {
+                    Name = row.Name,
+                    Description=row.Description,
+                    Unit=row.Unit
+                });
+            }
+
+            IngredientsListWithPaginationInfo ingredientsList = new IngredientsListWithPaginationInfo()
+            {
+                Ingredients = Ingredients.Skip((currentPage - 1) * IngredientsPerPage).Take(IngredientsPerPage),
+                PaginationInfo = new PaginationInfo()
                 {
                     Current = currentPage,
                     ItemsPerPage = IngredientsPerPage,
-                    ItemsCount = ingredientRepository.Ingredients.Count()
+                    ItemsCount = Ingredients.Count()
 
                 }
             };
             return View(ingredientsList);
         }
 
-        // GET: IngredientsController
-        public ActionResult Index()
-        {
-            return View();
-        }
-
-        // GET: IngredientsController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: IngredientsController/Create
+        [HttpGet]
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: IngredientsController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Ingredient ingredient)
         {
-            try
+            if (ModelState.IsValid)
             {
+                ingredientProcessor.CreateIngredient(ingredient.Name,
+                                                                          ingredient.Description);
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: IngredientsController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: IngredientsController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: IngredientsController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: IngredientsController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
+            else
             {
                 return View();
             }

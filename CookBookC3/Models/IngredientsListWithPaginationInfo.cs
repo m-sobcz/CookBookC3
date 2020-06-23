@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace CookBookC3.Models
 {
-    public class IngredientsList
+    public class IngredientsListWithPaginationInfo
     {
         public IEnumerable<Ingredient> Ingredients { get; set; }
-        public PageInfo PageInfo { get; set; }
+        public PaginationInfo PaginationInfo { get; set; }
     }
 }
