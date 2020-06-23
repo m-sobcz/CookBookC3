@@ -5,5 +5,6 @@
     [Description] NCHAR(100) NULL, 
     [Unit] NCHAR(10) NULL, 
     [CostPerUnit] DECIMAL NULL, 
+    [Category] NCHAR(50) NULL, 
     [Callories] INT NULL
 )

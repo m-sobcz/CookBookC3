@@ -17,20 +17,15 @@ namespace DataLibrary.Logic
         {
             this.sqlDataAccess = sqlDataAccess;
         }
-        public int CreateIngredient(string name, string description)
+        public int CreateIngredient(IngredientModelDTO ingredientModel)
         {
-            IngredientModel data = new IngredientModel
-            {
-                Name = name,
-                Description = description
-            };
-            string sql = @"insert into dbo.Ingredients (Name,Description) values (@Name, @Description)";
-            return sqlDataAccess.SaveData(sql, data);
+            string sql = @"insert into dbo.Ingredients (Name,Description,Callories,Category,CostPerUnit) values (@Name, @Description,@Callories ,@Category,@CostPerUnit)";
+            return sqlDataAccess.SaveData(sql, ingredientModel);
         }
-        public List<IngredientModel> LoadIngredients()
+        public List<IngredientModelDTO> LoadIngredients()
         {
-            string sql = @"select Name,Description from dbo.Ingredients";
-            return sqlDataAccess.LoadData<IngredientModel>(sql);
+            string sql = @"select Name,Description,Callories,Category,CostPerUnit from dbo.Ingredients";
+            return sqlDataAccess.LoadData<IngredientModelDTO>(sql);
 
         }
     }

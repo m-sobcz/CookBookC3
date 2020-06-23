@@ -22,6 +22,8 @@ namespace CookBookC3.Infrastructure
         public string PageAction { get; set; }
         public string PageOuterClass { get; set; }
         public string PageInnerClass { get; set; }
+        [HtmlAttributeName(DictionaryAttributePrefix = "page-values-")]
+        public Dictionary<string, object> PageValues { get; set; }=new Dictionary<string, object>();
 
         public PaginationInfoTagHelper(IUrlHelperFactory urlHelperFactory)
         {
@@ -38,7 +40,8 @@ namespace CookBookC3.Infrastructure
             {
                 TagBuilder tag = new TagBuilder("a");
                 tag.AddCssClass(PageInnerClass);
-                tag.Attributes["href"] = urlHelper.Action(PageAction, new { currentPage = i });
+                PageValues["id"] = i;
+                tag.Attributes["href"] = urlHelper.Action(PageAction, PageValues);
                 
                 tag.InnerHtml.Append(i.ToString());             
                 result.InnerHtml.AppendHtml(tag);

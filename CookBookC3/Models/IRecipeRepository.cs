@@ -7,6 +7,6 @@ namespace CookBookC3.Models
 {
     interface IRecipeRepository
     {
-        IQueryable<Ingredient> Recipes { get; set; }
+        IQueryable<IngredientModelUI> Recipes { get; set; }
     }
 }

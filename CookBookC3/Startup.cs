@@ -13,11 +13,14 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
 using DataLibrary.Logic;
 using DataLibrary.DataAccess;
+using AutoMapper;
+using DataLibrary.Models;
 
 namespace CookBookC3
 {
     public class Startup
     {
+        IMapper mapper;
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -32,17 +35,22 @@ namespace CookBookC3
             services.AddSingleton<IIngredientProcessor, IngredientProcessor>();
             services.AddControllersWithViews();
             services.AddRazorPages().AddRazorRuntimeCompilation();
-            
+            MapperConfiguration mapperConfiguration = new MapperConfiguration(config =>
+            {
+                config.CreateMap<IngredientModelUI, IngredientModelDTO>();
+            });
+            mapper = mapperConfiguration.CreateMapper();
+            services.AddSingleton<IMapper>(mapper);
         }
-
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                
-
+                app.UseBrowserLink();
             }
             else
             {
@@ -50,21 +58,31 @@ namespace CookBookC3
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            app.UseBrowserLink();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
-            
+
             app.UseAuthorization();
 
 
             app.UseEndpoints(endpoints =>
             {
                 //endpoints.MapControllerRoute(
-                //    name: "PageInfo",
-                //    pattern: "Skladniki/Strona{currentPage}",
-                //    defaults: new { Controller="Ingredients", action="List"});
+                //    name: "IngredientPagination",
+                //    pattern: "Skladniki/{id:int?}",
+                //    defaults: new { Controller = "Ingredients", action = "Index" }
+                //    );
+                //endpoints.MapControllerRoute(
+                //    name: "Ingredient",
+                //    pattern: "Skladniki/{action}/{id?}",
+                //    defaults: new { Controller = "Ingredients"}
+                //    );
+                endpoints.MapControllerRoute(
+                    name: "Category",
+                    pattern: "Skladniki/{category}/{id?}",
+                    defaults: new { Controller = "Ingredients", action="Index" }
+                    );
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

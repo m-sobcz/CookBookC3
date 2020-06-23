@@ -5,7 +5,7 @@ namespace DataLibrary.Logic
 {
     public interface IIngredientProcessor
     {
-        int CreateIngredient(string name, string description);
-        List<IngredientModel> LoadIngredients();
+        int CreateIngredient(IngredientModelDTO ingredientModel);
+        List<IngredientModelDTO> LoadIngredients();
     }
 }
