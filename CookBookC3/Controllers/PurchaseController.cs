@@ -10,18 +10,20 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CookBookC3.Controllers
 {
-    public class ShoppingController : Controller
+    public class PurchaseController : Controller
     {
+        private Purchase purchase;
         private IIngredientProcessor ingredientProcessor;
 
-        public ShoppingController(IIngredientProcessor ingredientProcessor)
+        public PurchaseController(IIngredientProcessor ingredientProcessor, Purchase purchase)
         {
+            this.purchase = purchase;
             this.ingredientProcessor = ingredientProcessor;
         }
 
         public ViewResult Index()
         {
-            return View(GetShoppingList());
+            return View(GetPurchase());
         }
 
         public ActionResult Add(string ingredientName)
@@ -29,13 +31,13 @@ namespace CookBookC3.Controllers
             IngredientModelUI Ingredient = GetIngredientByName(ingredientName);
             if (Ingredient != null)
             {
-                ShoppingList cart = GetShoppingList();
-                cart.AddItem(Ingredient, 1);
-                SaveShoppingList(cart);
+                
+                purchase.AddItem(Ingredient, 1);
+                SavePurchase(purchase);
             }
             return RedirectToAction(nameof(Index));
         }
-        IngredientModelUI GetIngredientByName(string ingredientName) 
+        IngredientModelUI GetIngredientByName(string ingredientName)
         {
             return ingredientProcessor.LoadIngredients().FirstOrDefault(p => p.Name == ingredientName).DTOToUI();
         }
@@ -46,22 +48,22 @@ namespace CookBookC3.Controllers
 
             if (Ingredient != null)
             {
-                ShoppingList cart = GetShoppingList();
+                Purchase cart = GetPurchase();
                 cart.RemovePosition(Ingredient);
-                SaveShoppingList(cart);
+                SavePurchase(cart);
             }
             return RedirectToAction("Index");
         }
         //Wykorzystanie mechanizmu sesji - przechowywanie i pobieranie obiektów
-        private ShoppingList GetShoppingList()
+        public Purchase GetPurchase()
         {
-            ShoppingList shoppingList = HttpContext.Session.GetJson<ShoppingList>(nameof(ShoppingList)) ?? new ShoppingList();
-            return shoppingList;
+            Purchase purchase = HttpContext.Session.GetJson<Purchase>(nameof(Purchase)) ?? new Purchase();
+            return purchase;
         }
 
-        private void SaveShoppingList(ShoppingList shoppingList)
+        public void SavePurchase(Purchase purchase)
         {
-            HttpContext.Session.SetJson(nameof(ShoppingList), shoppingList);
+            HttpContext.Session.SetJson(nameof(Purchase), purchase);
         }
     }
 }

@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 
 namespace CookBookC3.Models
 {
-    public class ShoppingList
+    public class Purchase
     {
-        private List<Position> positions = new List<Position>();
+        public List<PurchasePosition> Positions = new List<PurchasePosition>();
 
         public virtual void AddItem(IngredientModelUI ingredient, int quantity)
         {
-            Position cartPosition = positions
+            PurchasePosition ingredientPosition = Positions
                 .Where(x => x.Ingredient.Name == ingredient.Name)
                 .FirstOrDefault();
             
-            if (cartPosition == null)
+            if (ingredientPosition == null)
             {
-                positions.Add(new Position
+                Positions.Add(new PurchasePosition
                 {
                     Ingredient = ingredient,
                     Quantity = quantity
@@ -25,26 +25,20 @@ namespace CookBookC3.Models
             }
             else
             {
-                cartPosition.Quantity += quantity;
+                ingredientPosition.Quantity += quantity;
             }
         }
 
         public virtual void RemovePosition(IngredientModelUI selectedIngredient) =>
-            positions.RemoveAll(l => l.Ingredient.Name ==
+            Positions.RemoveAll(l => l.Ingredient.Name ==
                 selectedIngredient.Name);
 
         public virtual decimal ComputeTotalValue() =>
-            positions.Sum(x => x.Ingredient.CostPerUnit * x.Quantity);
+            Positions.Sum(x => x.Ingredient.CostPerUnit * x.Quantity);
 
-        public virtual void Clear() => positions.Clear();
+        public virtual void Clear() => Positions.Clear();
 
-        public virtual IEnumerable<Position> Positions => positions;
     }
 
-    public class Position
-    {
-        public int ID { get; set; }
-        public IngredientModelUI Ingredient { get; set; }
-        public int Quantity { get; set; }
-    }
+
 }

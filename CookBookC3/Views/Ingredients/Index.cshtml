@@ -31,7 +31,7 @@
                 <p class="card-text">Kalorie: @ingredient.Callories</p>
                 <p class="card-text">Koszt: @ingredient.CostPerUnit</p>
 
-                <form asp-controller="Shopping" asp-action="Add" method="post">
+                <form asp-controller="Purchase" asp-action="Add" method="post">
                     <input name="ingredientName" type="hidden" value="@ingredient.Name">
                     <button type="submit" class="btn btn-secondary">
                         Dodaj do listy

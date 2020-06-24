@@ -46,6 +46,8 @@ namespace CookBookC3
             //Custom
             services.AddSingleton<SqlDataAccess>();
             services.AddSingleton<IIngredientProcessor, IngredientProcessor>();
+            services.AddSingleton<Purchase>();
+           // services.AddScoped<Purchase>(sp => SessionCart.GetCart(sp));
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
