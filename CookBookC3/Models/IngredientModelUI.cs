@@ -8,7 +8,9 @@ namespace CookBookC3.Models
 {
     public class IngredientModelUI
     {
+       
         const string ErrorMessageText = "Podanie tego pola jest obowiązkowe";
+        public int Id { get; set; }
         [Required(ErrorMessage = ErrorMessageText)]
         public string Name { get; set; }
         [Required(ErrorMessage = ErrorMessageText)]

@@ -31,22 +31,25 @@ namespace CookBookC3
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<SqlDataAccess>();
-            services.AddSingleton<IIngredientProcessor, IngredientProcessor>();
-            services.AddControllersWithViews();
-            services.AddRazorPages().AddRazorRuntimeCompilation();
+            //Automapper
             MapperConfiguration mapperConfiguration = new MapperConfiguration(config =>
             {
                 config.CreateMap<IngredientModelUI, IngredientModelDTO>();
             });
             mapper = mapperConfiguration.CreateMapper();
             services.AddSingleton<IMapper>(mapper);
+            //MVC and Microsoft
+            services.AddControllersWithViews();
+            services.AddRazorPages().AddRazorRuntimeCompilation();
+            services.AddMemoryCache();
+            services.AddSession();
+            //Custom
+            services.AddSingleton<SqlDataAccess>();
+            services.AddSingleton<IIngredientProcessor, IngredientProcessor>();
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -64,7 +67,7 @@ namespace CookBookC3
             app.UseRouting();
 
             app.UseAuthorization();
-
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

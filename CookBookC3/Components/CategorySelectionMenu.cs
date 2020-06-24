@@ -21,7 +21,7 @@ namespace CookBookC3.Components
             var ingredients = ingredientProcessor.LoadIngredients();
             var categories = ingredients.Select(x => x.Category)
                 .Where(x => x != null)
-                .StringReplace(" ","")
+                .ReplaceStrings(" ","")
                 .Distinct();
             return View(categories);
         }

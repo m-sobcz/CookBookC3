@@ -1,0 +1,31 @@
+﻿@model ShoppingList
+
+<h2>Lista zakupów</h2>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Ilość</th>
+            <th>Produkt</th>
+            <th class="text-right">Cena</th>
+            <th class="text-right">Wartość</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var position in Model.Positions)
+        {
+        <tr>
+
+            <td class="text-center">@position.Ingredient.Name</td>
+            <td class="text-left">@position.Quantity</td>
+        </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3" class="text-right">Razem:</td>
+            <td class="text-right">
+                @Model.ComputeTotalValue().ToString("c")
+            </td>
+        </tr>
+    </tfoot>
+</table>

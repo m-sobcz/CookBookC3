@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using CookBookC3.Converters;
 using CookBookC3.Extensions;
 using CookBookC3.Models;
 using DataLibrary.DataAccess;
@@ -27,7 +28,7 @@ namespace CookBookC3.Controllers
         }
         public ActionResult Index(int id = 1, string category="")
         {
-            List<IngredientModelUI> Ingredients = GetAllIngredients();
+            List<IngredientModelUI> Ingredients = ingredientProcessor.LoadIngredients().DTOToUIList();
             List<IngredientModelUI> FilteredIngredients = FilterByCategory(Ingredients,category);
             IngredientsList ingredientsList = new IngredientsList()
             {
@@ -47,28 +48,10 @@ namespace CookBookC3.Controllers
         { 
             var x= ingredients.Select(x => x.Category)
                 .Where(x => x != null)
-                .StringReplace(" ", "")
+                .ReplaceStrings(" ", "")
                 .Distinct();
             var y = ingredients.Select(x => x.Category);
             return x;
-        }
-        List<IngredientModelUI> GetAllIngredients() 
-        {
-            List<IngredientModelUI> Ingredients = new List<IngredientModelUI>();
-            var data = ingredientProcessor.LoadIngredients();
-            foreach (var row in data)
-            {
-                Ingredients.Add(new IngredientModelUI
-                {
-                    Name = row.Name,
-                    Description = row.Description,
-                    Unit = row.Unit,
-                    Callories = row.Callories,
-                    CostPerUnit = row.CostPerUnit,
-                    Category=row.Category
-                });
-            }
-            return Ingredients;
         }
         List<IngredientModelUI> FilterByCategory(List<IngredientModelUI> data, string category)
         {
