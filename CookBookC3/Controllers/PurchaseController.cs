@@ -12,12 +12,10 @@ namespace CookBookC3.Controllers
 {
     public class PurchaseController : Controller
     {
-        private Purchase purchase;
         private IIngredientProcessor ingredientProcessor;
 
-        public PurchaseController(IIngredientProcessor ingredientProcessor, Purchase purchase)
+        public PurchaseController(IIngredientProcessor ingredientProcessor)
         {
-            this.purchase = purchase;
             this.ingredientProcessor = ingredientProcessor;
         }
 
@@ -31,7 +29,7 @@ namespace CookBookC3.Controllers
             IngredientModelUI Ingredient = GetIngredientByName(ingredientName);
             if (Ingredient != null)
             {
-                
+                Purchase purchase = GetPurchase();
                 purchase.AddItem(Ingredient, 1);
                 SavePurchase(purchase);
             }
@@ -48,9 +46,9 @@ namespace CookBookC3.Controllers
 
             if (Ingredient != null)
             {
-                Purchase cart = GetPurchase();
-                cart.RemovePosition(Ingredient);
-                SavePurchase(cart);
+                Purchase purchase = GetPurchase();
+                purchase.RemovePosition(Ingredient);
+                SavePurchase(purchase);
             }
             return RedirectToAction("Index");
         }
