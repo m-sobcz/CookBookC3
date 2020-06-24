@@ -10,6 +10,7 @@ using DataLibrary.Logic;
 using DataLibrary.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 
 namespace CookBookC3.Controllers
 {
@@ -24,21 +25,22 @@ namespace CookBookC3.Controllers
             this.mapper = mapper;
             this.ingredientProcessor = ingredientProcessor;
         }
-        public ActionResult Index(int id = 1)
+        public ActionResult Index(int id = 1, string category="")
         {
             List<IngredientModelUI> Ingredients = GetAllIngredients();
+            List<IngredientModelUI> FilteredIngredients = FilterByCategory(Ingredients,category);
             IngredientsList ingredientsList = new IngredientsList()
             {
-                Ingredients = Ingredients.Skip((id - 1) * IngredientsPerPage).Take(IngredientsPerPage),
+                Ingredients = FilteredIngredients.Skip((id - 1) * IngredientsPerPage).Take(IngredientsPerPage),
                 PaginationInfo = new PaginationInfo()
                 {
                     Current = id,
                     ItemsPerPage = IngredientsPerPage,
-                    ItemsCount = Ingredients.Count()
-
+                    ItemsCount = FilteredIngredients.Count()
                 },
                 Categories=GetCategories(Ingredients)
             };
+            ViewBag.SelectedCategory = category;
             return View(ingredientsList);
         }
         IEnumerable<string> GetCategories(List<IngredientModelUI> ingredients) 
@@ -68,6 +70,12 @@ namespace CookBookC3.Controllers
             }
             return Ingredients;
         }
+        List<IngredientModelUI> FilterByCategory(List<IngredientModelUI> data, string category)
+        {
+            var dataFiltered = data.Where(x => category == "" || (x.Category?.Contains(category) ?? false)).ToList();
+            return dataFiltered;
+        }
+
         [HttpGet]
         public ActionResult Create()
         {
