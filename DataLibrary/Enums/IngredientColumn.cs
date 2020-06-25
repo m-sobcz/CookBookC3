@@ -6,6 +6,6 @@ namespace DataLibrary.Enums
 {
     public enum IngredientColumn
     {
-        Name, Description, Category, Callories, CostPerUnit
+        Name, Description, Callories, CostPerUnit
     }
 }

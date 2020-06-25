@@ -35,7 +35,7 @@ namespace DataLibrary.Logic
             {
                 Value = value
             };
-            string sql = $@"select Name,Description,Callories,Category,CostPerUnit from dbo.Ingredients where '{column}'=@Value";//'{value}'
+            string sql = $@"select * from dbo.Ingredients where '{column}'=@Value";//'{value}'
             return sqlDataAccess.LoadData<IngredientModelDTO>(sql,parameter);
         }
     }

@@ -10,8 +10,7 @@ namespace DataLibrary.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public string Unit { get; set; }
-        public decimal CostPerUnit { get; set; }
+        public decimal Cost { get; set; }
         public int Callories { get; set; }
-        public string Category { get; set; }
     }
 }

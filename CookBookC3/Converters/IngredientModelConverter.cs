@@ -26,9 +26,7 @@ namespace CookBookC3.Converters
                 Description = dto.Description,
                 Unit = dto.Unit,
                 Callories = dto.Callories,
-                CostPerUnit = dto.CostPerUnit,
-                Category = dto.Category
-
+                CostPerUnit = dto.Cost
             };
         }
     }

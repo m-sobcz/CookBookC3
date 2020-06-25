@@ -29,7 +29,6 @@ namespace DataLibrary.DataAccess
             {
                 return connection.Query<T>(sql, parameter).ToList();
             }
-
         }
         public  int SaveData<T>(string sql, T data)
         {

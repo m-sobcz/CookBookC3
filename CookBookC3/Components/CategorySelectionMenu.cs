@@ -19,7 +19,7 @@ namespace CookBookC3.Components
         public IViewComponentResult Invoke()
         {
             var ingredients = ingredientProcessor.LoadIngredients();
-            var categories = ingredients.Select(x => x.Category)
+            var categories = ingredients.Select(x => x.Name)//CATEGORY!
                 .Where(x => x != null)
                 .ReplaceStrings(" ","")
                 .Distinct();
