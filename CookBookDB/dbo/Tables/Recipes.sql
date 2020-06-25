@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[Recipes]
+(
+	[Id] INT NOT NULL PRIMARY KEY, 
+    [Name] NCHAR(50) NULL, 
+    [User_Id] INT NOT NULL FOREIGN KEY REFERENCES Users([Id])
+)

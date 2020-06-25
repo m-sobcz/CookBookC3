@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using CookBookC3.Converters;
 using CookBookC3.Extensions;
 using CookBookC3.Models;
+using DataLibrary.Enums;
 using DataLibrary.Logic;
 using Microsoft.AspNetCore.Mvc;
 
@@ -37,6 +38,8 @@ namespace CookBookC3.Controllers
         }
         IngredientModelUI GetIngredientByName(string ingredientName)
         {
+            //return ingredientProcessor.LoadIngredients().FirstOrDefault(p => p.Name == ingredientName).DTOToUI();
+            var x=ingredientProcessor.LoadIngredients(IngredientColumn.Name, ingredientName);
             return ingredientProcessor.LoadIngredients().FirstOrDefault(p => p.Name == ingredientName).DTOToUI();
         }
 
@@ -50,7 +53,7 @@ namespace CookBookC3.Controllers
                 purchase.RemovePosition(Ingredient);
                 SavePurchase(purchase);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
         //Wykorzystanie mechanizmu sesji - przechowywanie i pobieranie obiektów
         public Purchase GetPurchase()

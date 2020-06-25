@@ -59,9 +59,20 @@
     <Folder Include="dbo" />
     <Folder Include="dbo\Tables" />
     <Folder Include="PublishProfiles\" />
+    <Folder Include="dbo\Types" />
+    <Folder Include="dbo\Stored Procedures" />
+    <Folder Include="Scripts" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Ingredients.sql" />
+    <Build Include="dbo\Stored Procedures\spIngredient_Search.sql" />
+    <Build Include="dbo\Tables\Categories.sql" />
+    <Build Include="dbo\Tables\Ingredients_Categories.sql" />
+    <Build Include="dbo\Tables\Users.sql" />
+    <Build Include="dbo\Tables\Recipes.sql" />
+    <Build Include="dbo\Tables\Cuisines.sql" />
+    <Build Include="dbo\Tables\Recipe_Cuisine.sql" />
+    <Build Include="CreateSpUserWithSpAccess.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PublishProfiles\CookBookDB.publish.xml" />

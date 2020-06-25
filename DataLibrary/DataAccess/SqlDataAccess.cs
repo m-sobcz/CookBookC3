@@ -23,11 +23,11 @@ namespace DataLibrary.DataAccess
         {
             return configuration.GetConnectionString(connectionName);
         }
-        public List<T> LoadData<T>(string sql)
+        public List<T> LoadData<T>(string sql,object parameter=null)
         {
             using (IDbConnection connection = new SqlConnection(GetConnectionString()))
             {
-                return connection.Query<T>(sql).ToList();
+                return connection.Query<T>(sql, parameter).ToList();
             }
 
         }
