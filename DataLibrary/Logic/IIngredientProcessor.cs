@@ -10,6 +10,7 @@ namespace DataLibrary.Logic
         List<CategoryDTO> LoadCategories();
         List<IngredientDTO> LoadIngredients();
         List<IngredientDTO> LoadIngredients(IngredientColumn column, string value);
-        List<IngredientWithCategories> LoadIngredientsWithCategories(int startIndex, int endIndex);
+        List<IngredientWithCategories> LoadIngredientsWithCategories(int startIndex, int numberOfRows, string categoryName = null);
+        public int IngredientCount();
     }
 }

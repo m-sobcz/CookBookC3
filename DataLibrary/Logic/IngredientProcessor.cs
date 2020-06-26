@@ -4,6 +4,7 @@ using DataLibrary.Models;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
@@ -38,15 +39,17 @@ namespace DataLibrary.Logic
             string sql = $@"select * from dbo.Ingredients where '{column}'=@Value";//'{value}'
             return sqlDataAccess.LoadData<IngredientDTO>(sql, parameter);
         }
-        public List<IngredientWithCategories> LoadIngredientsWithCategories(int startIndex, int endIndex)
+        public List<IngredientWithCategories> LoadIngredientsWithCategories(int startIndex, int numberOfRows, string categoryName=null)
         {
             var parameters = new
             {
                 StartIndex = startIndex,
-                EndIndex = endIndex
+                NumberOfRows = numberOfRows,
+                CategoryName= categoryName
             };
+            string filter= (categoryName!=null) ?@" WHERE c2.Name=@CategoryName " : " ";
             string sql = $@"
-SELECT
+SELECT distinct
 i1.*,
 STUFF((
     SELECT DISTINCT '\n' + c.Name
@@ -58,10 +61,12 @@ STUFF((
                 WHERE i1.Id = i2.Id 
                 FOR XML PATH('')), 1, 2, ''
             ) as CategoryList
-FROM Ingredients i1  
-ORDER by i1.Id
-OFFSET @StartIndex ROWS FETCH NEXT @EndIndex ROWS ONLY
-";
+FROM Ingredients i1 
+LEFT JOIN Ingredients_Categories ON i1.Id = Ingredients_Categories.Ingredients_Id
+LEFT JOIN (SELECT * FROM Categories) c2 ON Ingredients_Categories.Categories_Id=c2.Id"+
+filter+
+@$" ORDER by i1.Id
+OFFSET @StartIndex ROWS FETCH NEXT @NumberOfRows ROWS ONLY";
             return sqlDataAccess.LoadData<IngredientWithCategories, string, IngredientWithCategories>
                 (
                 sql,
@@ -74,6 +79,11 @@ OFFSET @StartIndex ROWS FETCH NEXT @EndIndex ROWS ONLY
         {
             string sql = $@"select * from dbo.Categories"; //Name,Description,Callories,Category,CostPerUnit
             return sqlDataAccess.LoadData<CategoryDTO>(sql);
+        }
+        public int IngredientCount() 
+        {
+            string sql = $@"select count(id) from Ingredients"; //Name,Description,Callories,Category,CostPerUnit
+            return sqlDataAccess.LoadData<int>(sql).FirstOrDefault();
         }
     }
 }

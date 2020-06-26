@@ -34,7 +34,8 @@ namespace DataLibrary.DataAccess
         {
             using (IDbConnection connection = new SqlConnection(GetConnectionString()))
             {
-                return connection.Query<Tin1,Tin2,Tout>(sql,mapping, parameter, splitOn: "CategoryList").ToList();
+                var data= connection.Query<Tin1,Tin2,Tout>(sql,mapping, parameter, splitOn: "CategoryList").ToList();
+                return data;
             }
         }
         public  int SaveData<T>(string sql, T data)

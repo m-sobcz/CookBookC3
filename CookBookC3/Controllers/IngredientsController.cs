@@ -27,9 +27,11 @@ namespace CookBookC3.Controllers
             this.mapper = mapper;
             this.ingredientProcessor = ingredientProcessor;
         }
-        public ActionResult Index(int id = 1, string category="")
+        public ActionResult Index(int id = 1, string category=null)
         {
-            var loadedIngredients = ingredientProcessor.LoadIngredientsWithCategories(id - 1, IngredientsPerPage);
+            var loadedIngredients = ingredientProcessor.LoadIngredientsWithCategories(id - 1, IngredientsPerPage,category);
+            var Categories = ingredientProcessor.LoadCategories().DTOToUIOList();
+            var ingredientCount = ingredientProcessor.IngredientCount();
             IngredientsList ingredientsList = new IngredientsList()
             {
                 Ingredients = loadedIngredients,
@@ -37,9 +39,9 @@ namespace CookBookC3.Controllers
                 {
                     Current = id,
                     ItemsPerPage = IngredientsPerPage,
-                    ItemsCount = 20//!!
+                    ItemsCount = ingredientCount
                 },
-                Categories= ingredientProcessor.LoadCategories().DTOToUIOList()
+                Categories= Categories
             };
             ViewBag.SelectedCategory = category;
             return View(ingredientsList);
