@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using AutoMapper;
 using CookBookC3.Converters;
@@ -28,36 +29,22 @@ namespace CookBookC3.Controllers
         }
         public ActionResult Index(int id = 1, string category="")
         {
-            List<IngredientUIO> Ingredients = ingredientProcessor.LoadIngredients().DTOToUIOList();
-            List<IngredientUIO> FilteredIngredients = FilterByCategory(Ingredients,category);
+            var loadedIngredients = ingredientProcessor.LoadIngredientsWithCategories(id - 1, IngredientsPerPage);
             IngredientsList ingredientsList = new IngredientsList()
             {
-                Ingredients = FilteredIngredients.Skip((id - 1) * IngredientsPerPage).Take(IngredientsPerPage),
+                Ingredients = loadedIngredients,
                 PaginationInfo = new PaginationInfo()
                 {
                     Current = id,
                     ItemsPerPage = IngredientsPerPage,
-                    ItemsCount = FilteredIngredients.Count()
+                    ItemsCount = 20//!!
                 },
-                Categories=GetCategories(Ingredients)
+                Categories= ingredientProcessor.LoadCategories().DTOToUIOList()
             };
             ViewBag.SelectedCategory = category;
             return View(ingredientsList);
         }
-        IEnumerable<string> GetCategories(List<IngredientUIO> ingredients) 
-        { 
-            var x= ingredients.Select(x => x.Category)
-                .Where(x => x != null)
-                .ReplaceStrings(" ", "")
-                .Distinct();
-            var y = ingredients.Select(x => x.Category);
-            return x;
-        }
-        List<IngredientUIO> FilterByCategory(List<IngredientUIO> data, string category)
-        {
-            var dataFiltered = data.Where(x => category == "" || (x.Category?.Contains(category) ?? false)).ToList();
-            return dataFiltered;
-        }
+
 
         [HttpGet]
         public ActionResult Create()

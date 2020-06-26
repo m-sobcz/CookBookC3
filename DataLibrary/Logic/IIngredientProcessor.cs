@@ -1,14 +1,15 @@
 ﻿using DataLibrary.Enums;
 using DataLibrary.Models;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataLibrary.Logic
 {
     public interface IIngredientProcessor
     {
         int CreateIngredient(IngredientDTO ingredientModel);
+        List<CategoryDTO> LoadCategories();
         List<IngredientDTO> LoadIngredients();
-        List<IngredientDTO> LoadIngredients(IngredientColumn where, string value);
+        List<IngredientDTO> LoadIngredients(IngredientColumn column, string value);
+        List<IngredientWithCategories> LoadIngredientsWithCategories(int startIndex, int endIndex);
     }
 }

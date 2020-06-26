@@ -1,4 +1,4 @@
-﻿@model CookBookC3.Models.IngredientModelUI
+﻿@model CookBookC3.Models.IngredientUIO
 
 @{
     ViewData["Title"] = "Dodawanie nowego składnika";
@@ -29,9 +29,9 @@
                 <span asp-validation-for="Unit" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CostPerUnit" class="control-label">Koszt jednostkowy</label>
-                <input asp-for="CostPerUnit" class="form-control" />
-                <span asp-validation-for="CostPerUnit" class="text-danger"></span>
+                <label asp-for="Cost" class="control-label">Koszt jednostkowy</label>
+                <input asp-for="Cost" class="form-control" />
+                <span asp-validation-for="Cost" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Callories" class="control-label">Kalorie</label>

@@ -30,6 +30,13 @@ namespace DataLibrary.DataAccess
                 return connection.Query<T>(sql, parameter).ToList();
             }
         }
+        public List<Tout> LoadData<Tin1,Tin2,Tout>(string sql,Func<Tin1,Tin2,Tout> mapping, object parameter = null)
+        {
+            using (IDbConnection connection = new SqlConnection(GetConnectionString()))
+            {
+                return connection.Query<Tin1,Tin2,Tout>(sql,mapping, parameter, splitOn: "CategoryList").ToList();
+            }
+        }
         public  int SaveData<T>(string sql, T data)
         {
             using (IDbConnection connection = new SqlConnection(GetConnectionString()))

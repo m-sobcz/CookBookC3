@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CookBookC3", "CookBookC3\Co
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "CookBookDB", "CookBookDB\CookBookDB.sqlproj", "{35BF6A84-B3DA-46D9-B9F7-E9979F8ECAA4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLibrary", "DataLibrary\DataLibrary.csproj", "{65F6E877-B0A6-484A-93C8-1BE69B56D299}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataLibrary", "DataLibrary\DataLibrary.csproj", "{65F6E877-B0A6-484A-93C8-1BE69B56D299}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

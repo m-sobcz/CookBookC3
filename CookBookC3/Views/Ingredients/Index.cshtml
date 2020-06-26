@@ -9,14 +9,14 @@
             Wszystkie
         </a>
 
-        @foreach (string category in Model.Categories)
+        @*@foreach (string category in Model.Categories)
         {
             <a class="btn btn-outline-primary m-1
                    @(ViewBag.SelectedCategory==category?"active": "")"
                asp-action="Index" asp-controller="Ingredients"
                asp-route-category="@category" asp-route-id="1">
                 @category
-            </a>
+            </a>*@
         }
     </div>
     <!--Skladniki-->
@@ -26,10 +26,10 @@
             <div class="card-body">
                 <h4 class="card-title">@ingredient.Name</h4>
                 <h6 class="card-subtitle">@ingredient.Description.</h6>
-                <p class="badge badge-info">@ingredient.Category</p>
+                @*<p class="badge badge-info">@ingredient.Category</p>*@
                 <p class="card-text">Jednostka: @ingredient.Unit</p>
                 <p class="card-text">Kalorie: @ingredient.Callories</p>
-                <p class="card-text">Koszt: @ingredient.CostPerUnit</p>
+                <p class="card-text">Koszt: @ingredient.Cost</p>
 
                 <form asp-controller="Purchase" asp-action="Add" method="post">
                     <input name="ingredientName" type="hidden" value="@ingredient.Name">
