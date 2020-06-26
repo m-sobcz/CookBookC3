@@ -27,7 +27,7 @@ namespace CookBookC3.Controllers
 
         public ActionResult Add(string ingredientName)
         {
-            IngredientModelUI Ingredient = GetIngredientByName(ingredientName);
+            IngredientUIO Ingredient = GetIngredientByName(ingredientName);
             if (Ingredient != null)
             {
                 Purchase purchase = GetPurchase();
@@ -36,16 +36,16 @@ namespace CookBookC3.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
-        IngredientModelUI GetIngredientByName(string ingredientName)
+        IngredientUIO GetIngredientByName(string ingredientName)
         {
             //return ingredientProcessor.LoadIngredients().FirstOrDefault(p => p.Name == ingredientName).DTOToUI();
             var x=ingredientProcessor.LoadIngredients(IngredientColumn.Name, ingredientName);
-            return ingredientProcessor.LoadIngredients().FirstOrDefault(p => p.Name == ingredientName).DTOToUI();
+            return ingredientProcessor.LoadIngredients().FirstOrDefault(p => p.Name == ingredientName).DTOToUIO();
         }
 
         public RedirectToActionResult Remove(string ingredientName)
         {
-            IngredientModelUI Ingredient = GetIngredientByName(ingredientName);
+            IngredientUIO Ingredient = GetIngredientByName(ingredientName);
 
             if (Ingredient != null)
             {

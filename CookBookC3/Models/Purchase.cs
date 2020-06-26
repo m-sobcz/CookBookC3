@@ -9,7 +9,7 @@ namespace CookBookC3.Models
     {
         public List<PurchasePosition> Positions = new List<PurchasePosition>();
 
-        public virtual void AddItem(IngredientModelUI ingredient, int quantity)
+        public virtual void AddItem(IngredientUIO ingredient, int quantity)
         {
             PurchasePosition ingredientPosition = Positions
                 .Where(x => x.Ingredient.Name == ingredient.Name)
@@ -29,12 +29,12 @@ namespace CookBookC3.Models
             }
         }
 
-        public virtual void RemovePosition(IngredientModelUI selectedIngredient) =>
+        public virtual void RemovePosition(IngredientUIO selectedIngredient) =>
             Positions.RemoveAll(l => l.Ingredient.Name ==
                 selectedIngredient.Name);
 
         public virtual decimal ComputeTotalValue() =>
-            Positions.Sum(x => x.Ingredient.CostPerUnit * x.Quantity);
+            Positions.Sum(x => x.Ingredient.Cost * x.Quantity);
 
         public virtual void Clear() => Positions.Clear();
 

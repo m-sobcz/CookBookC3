@@ -18,17 +18,17 @@ namespace DataLibrary.Logic
         {
             this.sqlDataAccess = sqlDataAccess;
         }
-        public int CreateIngredient(IngredientModelDTO ingredientModel)
+        public int CreateIngredient(IngredientDTO ingredientModel)
         {
-            string sql = $@"insert into dbo.Ingredients (Name,Description,Callories,Category,CostPerUnit) values (@Name, @Description,@Callories ,@Category,@CostPerUnit)";
+            string sql = $@"insert into dbo.Ingredients (Name,Description,Callories,Cost) values (@Name, @Description,@Callories ,@Cost)";
             return sqlDataAccess.SaveData(sql, ingredientModel);
         }
-        public List<IngredientModelDTO> LoadIngredients()
+        public List<IngredientDTO> LoadIngredients()
         {
             string sql = $@"select * from dbo.Ingredients"; //Name,Description,Callories,Category,CostPerUnit
-            return sqlDataAccess.LoadData<IngredientModelDTO>(sql);
+            return sqlDataAccess.LoadData<IngredientDTO>(sql);
         }
-        public List<IngredientModelDTO> LoadIngredients(IngredientColumn column, string value)
+        public List<IngredientDTO> LoadIngredients(IngredientColumn column, string value)
         {
             //parameter injection
             var parameter = new
@@ -36,7 +36,7 @@ namespace DataLibrary.Logic
                 Value = value
             };
             string sql = $@"select * from dbo.Ingredients where '{column}'=@Value";//'{value}'
-            return sqlDataAccess.LoadData<IngredientModelDTO>(sql,parameter);
+            return sqlDataAccess.LoadData<IngredientDTO>(sql,parameter);
         }
     }
 }

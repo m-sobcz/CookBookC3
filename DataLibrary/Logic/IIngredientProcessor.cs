@@ -7,8 +7,8 @@ namespace DataLibrary.Logic
 {
     public interface IIngredientProcessor
     {
-        int CreateIngredient(IngredientModelDTO ingredientModel);
-        List<IngredientModelDTO> LoadIngredients();
-        List<IngredientModelDTO> LoadIngredients(IngredientColumn where, string value);
+        int CreateIngredient(IngredientDTO ingredientModel);
+        List<IngredientDTO> LoadIngredients();
+        List<IngredientDTO> LoadIngredients(IngredientColumn where, string value);
     }
 }

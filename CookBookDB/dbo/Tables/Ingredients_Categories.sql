@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[Ingredients_IngredientsTypes]
+﻿CREATE TABLE [dbo].[Ingredients_Categories]
 (
 	[Ingredients_Id] INT NOT NULL, 
     [Categories_Id] INT NOT NULL, 

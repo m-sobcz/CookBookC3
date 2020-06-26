@@ -7,26 +7,23 @@ using System.Threading.Tasks;
 
 namespace CookBookC3.Converters
 {
-    public static class IngredientModelConverter
+    public static class CategoryModelConverter
     {
-        public static List<IngredientUIO> DTOToUIOList(this IEnumerable<IngredientDTO> data)
+        public static List<CategoryUIO> DTOToUIOList(this IEnumerable<CategoryDTO> data)
         {
-            List<IngredientUIO> Ingredients = new List<IngredientUIO>();
+            List<CategoryUIO> Ingredients = new List<CategoryUIO>();
             foreach (var row in data)
             {
                 Ingredients.Add(row.DTOToUIO());
             }
             return Ingredients;
         }
-        public static IngredientUIO DTOToUIO(this IngredientDTO dto)
+        public static CategoryUIO DTOToUIO(this CategoryDTO dto)
         {
-            return new IngredientUIO()
+            return new CategoryUIO()
             {
                 Name = dto.Name,
                 Description = dto.Description,
-                Unit = dto.Unit,
-                Callories = dto.Callories,
-                Cost = dto.Cost
             };
         }
     }

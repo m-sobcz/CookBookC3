@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CookBookC3.Models
 {
-    public class IngredientModelUI
+    public class IngredientUIO
     {
        
         const string ErrorMessageText = "Podanie tego pola jest obowiązkowe";
@@ -18,9 +18,8 @@ namespace CookBookC3.Models
         [Required(ErrorMessage = ErrorMessageText)]
         public string Unit { get; set; }
         [Required(ErrorMessage = ErrorMessageText)]
-        public decimal CostPerUnit { get; set; }
+        public decimal Cost { get; set; }
         [Required(ErrorMessage = ErrorMessageText)]
         public int Callories { get; set; }
-        public string Category { get; set; }
     }
 }

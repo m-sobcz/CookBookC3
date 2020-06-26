@@ -28,8 +28,8 @@ namespace CookBookC3.Controllers
         }
         public ActionResult Index(int id = 1, string category="")
         {
-            List<IngredientModelUI> Ingredients = ingredientProcessor.LoadIngredients().DTOToUIList();
-            List<IngredientModelUI> FilteredIngredients = FilterByCategory(Ingredients,category);
+            List<IngredientUIO> Ingredients = ingredientProcessor.LoadIngredients().DTOToUIOList();
+            List<IngredientUIO> FilteredIngredients = FilterByCategory(Ingredients,category);
             IngredientsList ingredientsList = new IngredientsList()
             {
                 Ingredients = FilteredIngredients.Skip((id - 1) * IngredientsPerPage).Take(IngredientsPerPage),
@@ -44,7 +44,7 @@ namespace CookBookC3.Controllers
             ViewBag.SelectedCategory = category;
             return View(ingredientsList);
         }
-        IEnumerable<string> GetCategories(List<IngredientModelUI> ingredients) 
+        IEnumerable<string> GetCategories(List<IngredientUIO> ingredients) 
         { 
             var x= ingredients.Select(x => x.Category)
                 .Where(x => x != null)
@@ -53,7 +53,7 @@ namespace CookBookC3.Controllers
             var y = ingredients.Select(x => x.Category);
             return x;
         }
-        List<IngredientModelUI> FilterByCategory(List<IngredientModelUI> data, string category)
+        List<IngredientUIO> FilterByCategory(List<IngredientUIO> data, string category)
         {
             var dataFiltered = data.Where(x => category == "" || (x.Category?.Contains(category) ?? false)).ToList();
             return dataFiltered;
@@ -65,11 +65,11 @@ namespace CookBookC3.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Create(IngredientModelUI ingredient)
+        public ActionResult Create(IngredientUIO ingredient)
         {
             if (ModelState.IsValid)
             {
-                ingredientProcessor.CreateIngredient(mapper.Map<IngredientModelDTO>(ingredient));
+                ingredientProcessor.CreateIngredient(mapper.Map<IngredientDTO>(ingredient));
                 return RedirectToAction(nameof(Index));
             }
             else

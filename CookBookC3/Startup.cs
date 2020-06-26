@@ -34,7 +34,7 @@ namespace CookBookC3
             //Automapper
             MapperConfiguration mapperConfiguration = new MapperConfiguration(config =>
             {
-                config.CreateMap<IngredientModelUI, IngredientModelDTO>();
+                config.CreateMap<IngredientUIO, IngredientDTO>();
             });
             mapper = mapperConfiguration.CreateMapper();
             services.AddSingleton<IMapper>(mapper);
