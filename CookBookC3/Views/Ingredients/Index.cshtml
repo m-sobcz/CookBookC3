@@ -1,55 +1,58 @@
 ﻿@model IngredientsList
     <!--Kategorie-->
-    <div class="row p-1">
+<div class="row p-1">
 
-        <a class="btn btn-outline-primary m-1
+    <a class="btn btn-outline-primary m-1
                @(ViewBag.SelectedCategory==""?"active": "")"
-           asp-action="Index" asp-controller="Ingredients" asp-route-id="1"
-           asp-route-category="">
-            Wszystkie
-        </a>
+       asp-action="Index" asp-controller="Ingredients" asp-route-id="1"
+       asp-route-category="">
+        Wszystkie
+    </a>
 
-        @foreach (var category in Model.Categories)
-        {
-            <a class="btn btn-outline-primary m-1
-                   @(ViewBag.SelectedCategory==category.Name?"active": "")"
-               asp-action="Index" asp-controller="Ingredients"
-               asp-route-category="@category.Name" asp-route-id="1">
-                @category.Name
-            </a>
-        }
-    </div>
-    <!--Skladniki-->
-    @foreach (var ingredient in Model.Ingredients)
+    @foreach (var category in Model.Categories)
     {
-        <div class="card m-2">
-            <div class="card-body">
-                <h4 class="card-title">@ingredient.Name</h4>
-                <h6 class="card-subtitle">@ingredient.Description.</h6>
-                @*@foreach (var category in @ingredient.Categories.Substring()
-
-                
-                <p class="badge badge-info">@ingredient.Categories</p>*@
-                <p class="card-text">Jednostka: @ingredient.Unit</p>
-                <p class="card-text">Kalorie: @ingredient.Callories</p>
-                <p class="card-text">Koszt: @ingredient.Cost</p>
-
-                <form asp-controller="Purchase" asp-action="Add" method="post">
-                    <input name="ingredientName" type="hidden" value="@ingredient.Name">
-                    <button type="submit" class="btn btn-secondary">
-                        Dodaj do listy
-                    </button>
-                </form>
-            </div>
-
-        </div>
+        <a class="btn btn-outline-primary m-1
+                   @(ViewBag.SelectedCategory==category.Name?"active": "")"
+           asp-action="Index" asp-controller="Ingredients"
+           asp-route-category="@category.Name" asp-route-id="1">
+            @category.Name
+        </a>
     }
-    <!--Nawigacja miedzy stronami-->
-    <div class="row justify-content-center p-1">
-        <ul class="pagination" pagination-info="@Model.PaginationInfo" page-action="Index"
-            page-outer-class-default="page-item" page-outer-class-selected="page-item active" page-inner-class-default="page-link"></ul>
+</div>
+<!--Skladniki-->
+@foreach (var ingredient in Model.Ingredients)
+{
+    <div class="card m-2">
+        <div class="card-body">
+            <h4 class="card-title">@ingredient.Name</h4>
+            @if (@ingredient.Categories != null)
+            {
+                foreach (string category in Regex.Split(ingredient.Categories, ","))
+                {
+                    <p class="badge badge-info">@category</p>
+                }
+            }
+            <h6 class="card-subtitle">@ingredient.Description.</h6>
+            <p class="card-text">Jednostka: @ingredient.Unit</p>
+            <p class="card-text">Kalorie: @ingredient.Callories</p>
+            <p class="card-text">Koszt: @ingredient.Cost</p>
+
+            <form asp-controller="Purchase" asp-action="Add" method="post">
+                <input name="ingredientName" type="hidden" value="@ingredient.Name">
+                <button type="submit" class="btn btn-secondary">
+                    Dodaj do listy
+                </button>
+            </form>
+        </div>
+
     </div>
-    <!--Dodawanie nowego skladnika-->
-    <div class="row justify-content-center p-1">
-        <a asp-action="Create" class="btn btn-primary ">Dodaj nowy</a>
-    </div>
+}
+<!--Nawigacja miedzy stronami-->
+<div class="row justify-content-center p-1">
+    <ul class="pagination" pagination-info="@Model.PaginationInfo" page-action="Index"
+        page-outer-class-default="page-item" page-outer-class-selected="page-item active" page-inner-class-default="page-link"></ul>
+</div>
+<!--Dodawanie nowego skladnika-->
+<div class="row justify-content-center p-1">
+    <a asp-action="Create" class="btn btn-primary ">Dodaj nowy</a>
+</div>

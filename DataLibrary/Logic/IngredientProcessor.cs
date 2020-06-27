@@ -52,7 +52,7 @@ namespace DataLibrary.Logic
 SELECT distinct
 i1.*,
 STUFF((
-    SELECT DISTINCT '\n' + c.Name
+    SELECT DISTINCT ', ' + c.Name
     FROM
             (
                 SELECT Ingredients.* FROM Ingredients) i2
