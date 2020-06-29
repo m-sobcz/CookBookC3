@@ -46,8 +46,6 @@ namespace CookBookC3.Controllers
             ViewBag.SelectedCategory = category;
             return View(ingredientsList);
         }
-
-
         [HttpGet]
         public ActionResult Create()
         {

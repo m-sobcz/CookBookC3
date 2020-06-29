@@ -15,6 +15,8 @@ using DataLibrary.Logic;
 using DataLibrary.DataAccess;
 using AutoMapper;
 using DataLibrary.Models;
+using CookBookC3.Controllers;
+using CookBookC3.Session;
 
 namespace CookBookC3
 {
@@ -40,14 +42,15 @@ namespace CookBookC3
             services.AddSingleton<IMapper>(mapper);
             //MVC and Microsoft
             services.AddControllersWithViews();
+            services.AddHttpContextAccessor();
             services.AddRazorPages().AddRazorRuntimeCompilation();
             services.AddMemoryCache();
             services.AddSession();
             //Custom
             services.AddSingleton<SqlDataAccess>();
             services.AddSingleton<IIngredientProcessor, IngredientProcessor>();
-            services.AddScoped<Purchase>();
-           // services.AddScoped<Purchase>(sp => SessionCart.GetCart(sp));
+            services.AddTransient<SessionManager<Purchase>>();
+
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

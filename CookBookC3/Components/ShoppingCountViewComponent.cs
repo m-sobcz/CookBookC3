@@ -1,4 +1,6 @@
-﻿using CookBookC3.Models;
+﻿using CookBookC3.Controllers;
+using CookBookC3.Models;
+using CookBookC3.Session;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,16 +11,18 @@ namespace CookBookC3.Components
 {
     public class ShoppingCountViewComponent : ViewComponent
     {
-        private Purchase shoppingList;
+        private SessionManager<Purchase> sessionManager;
 
-        public ShoppingCountViewComponent(Purchase shoppingList)
+        public ShoppingCountViewComponent(SessionManager<Purchase> sessionManager)
         {
-            this.shoppingList = shoppingList;
+            this.sessionManager = sessionManager;
         }
 
         public IViewComponentResult Invoke()
         {
-            return View(shoppingList);
+
+            var x = sessionManager.GetItem().Positions.Count();
+            return View(x);
         }
     }
 }

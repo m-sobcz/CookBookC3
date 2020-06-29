@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using CookBookC3.Converters;
 using CookBookC3.Extensions;
 using CookBookC3.Models;
+using CookBookC3.Session;
 using DataLibrary.Enums;
 using DataLibrary.Logic;
 using Microsoft.AspNetCore.Mvc;
@@ -13,16 +14,18 @@ namespace CookBookC3.Controllers
 {
     public class PurchaseController : Controller
     {
+        private SessionManager<Purchase> sessionManager;
         private IIngredientProcessor ingredientProcessor;
 
-        public PurchaseController(IIngredientProcessor ingredientProcessor)
+        public PurchaseController(IIngredientProcessor ingredientProcessor, SessionManager<Purchase> sessionManager)
         {
+            this.sessionManager = sessionManager;
             this.ingredientProcessor = ingredientProcessor;
         }
 
         public ViewResult Index()
         {
-            return View(GetPurchase());
+            return View(sessionManager.GetItem());
         }
 
         public ActionResult Add(string ingredientName)
@@ -30,15 +33,14 @@ namespace CookBookC3.Controllers
             IngredientUIO Ingredient = GetIngredientByName(ingredientName);
             if (Ingredient != null)
             {
-                Purchase purchase = GetPurchase();
+                Purchase purchase = sessionManager.GetItem();
                 purchase.AddItem(Ingredient, 1);
-                SavePurchase(purchase);
+                sessionManager.SetItem(purchase);
             }
             return RedirectToAction(nameof(Index));
         }
         IngredientUIO GetIngredientByName(string ingredientName)
         {
-            //return ingredientProcessor.LoadIngredients().FirstOrDefault(p => p.Name == ingredientName).DTOToUI();
             var x=ingredientProcessor.LoadIngredients(IngredientColumn.Name, ingredientName);
             return ingredientProcessor.LoadIngredients().FirstOrDefault(p => p.Name == ingredientName).DTOToUIO();
         }
@@ -49,22 +51,11 @@ namespace CookBookC3.Controllers
 
             if (Ingredient != null)
             {
-                Purchase purchase = GetPurchase();
+                Purchase purchase = sessionManager.GetItem();
                 purchase.RemovePosition(Ingredient);
-                SavePurchase(purchase);
+                sessionManager.SetItem(purchase);
             }
             return RedirectToAction(nameof(Index));
-        }
-        //Wykorzystanie mechanizmu sesji - przechowywanie i pobieranie obiektów
-        public Purchase GetPurchase()
-        {
-            Purchase purchase = HttpContext.Session.GetJson<Purchase>(nameof(Purchase)) ?? new Purchase();
-            return purchase;
-        }
-
-        public void SavePurchase(Purchase purchase)
-        {
-            HttpContext.Session.SetJson(nameof(Purchase), purchase);
         }
     }
 }

@@ -8,23 +8,23 @@ using System.Threading.Tasks;
 
 namespace CookBookC3.Session
 {
-    public class SessionManager
+    public class SessionManager<T> where T : new()
     {
         public ISession Session { get; set; }
-        public SessionManager(ISession session)
+        public SessionManager(IHttpContextAccessor httpContextAccessor)
         {
-            this.Session = session;
+            this.Session = httpContextAccessor.HttpContext.Session;
         }
         //Wykorzystanie mechanizmu sesji - przechowywanie i pobieranie obiektów
-        public Purchase GetPurchase()
+        public T GetItem()
         {
-            Purchase purchase = Session.GetJson<Purchase>(nameof(Purchase)) ?? new Purchase();
-            return purchase;
+            T item = Session.GetJson<T>(nameof(T)) ?? new T();
+            return item;
+        }
+        public void SetItem(T item)
+        {
+            Session.SetJson(nameof(T), item);
         }
 
-        public void SavePurchase(Purchase purchase)
-        {
-            Session.SetJson(nameof(Purchase), purchase);
-        }
     }
 }
