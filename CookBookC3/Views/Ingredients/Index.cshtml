@@ -38,11 +38,21 @@
             <p class="card-text">Koszt: @ingredient.Cost</p>
 
             <form asp-controller="Purchase" asp-action="Add" method="post">
-                <input name="ingredientName" type="hidden" value="@ingredient.Name">
+                <input name="id" type="hidden" value="@ingredient.Id">
                 <button type="submit" class="btn btn-secondary">
                     Dodaj do listy
                 </button>
             </form>
+            @*<form asp-controller="Ingredients" asp-action="Edit" method="get">
+                <input name="ingredientName" type="hidden" value="@ingredient.Name">
+                <button type="submit" class="btn btn-secondary">
+                    Edytuj
+                </button>
+            </form>*@
+            <a asp-action="Edit" method="post" class="btn btn-secondary"
+               asp-route-id="@ingredient.Id">
+                Edytuj
+            </a>
         </div>
 
     </div>

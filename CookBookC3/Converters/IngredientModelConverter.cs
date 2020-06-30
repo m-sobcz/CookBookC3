@@ -22,6 +22,7 @@ namespace CookBookC3.Converters
         {
             return new IngredientUIO()
             {
+                Id=dto.Id,
                 Name = dto.Name,
                 Description = dto.Description,
                 Unit = dto.Unit,

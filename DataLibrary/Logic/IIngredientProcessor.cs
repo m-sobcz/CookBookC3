@@ -6,11 +6,10 @@ namespace DataLibrary.Logic
 {
     public interface IIngredientProcessor
     {
-        int CreateIngredient(IngredientDTO ingredientModel);
+        int Create(IngredientDTO ingredientModel);
         List<CategoryDTO> LoadCategories();
-        List<IngredientDTO> LoadIngredients();
-        List<IngredientDTO> LoadIngredients(IngredientColumn column, string value);
-        List<IngredientWithCategories> LoadIngredientsWithCategories(int startIndex, int numberOfRows, string categoryName = null);
+        List<IngredientWithCategories> LoadRowsWithCategories(int startIndex, int numberOfRows, string categoryName = null);
         public int IngredientCount();
+        IngredientDTO Load(int id);
     }
 }

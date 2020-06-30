@@ -19,27 +19,21 @@ namespace DataLibrary.Logic
         {
             this.sqlDataAccess = sqlDataAccess;
         }
-        public int CreateIngredient(IngredientDTO ingredientModel)
+        public int Create(IngredientDTO ingredientModel)
         {
             string sql = $@"insert into dbo.Ingredients (Name,Description,Callories,Cost) values (@Name, @Description,@Callories ,@Cost)";
             return sqlDataAccess.SaveData(sql, ingredientModel);
         }
-        public List<IngredientDTO> LoadIngredients()
+        public IngredientDTO Load(int id)
         {
-            string sql = $@"select * from dbo.Ingredients"; //Name,Description,Callories,Category,CostPerUnit
-            return sqlDataAccess.LoadData<IngredientDTO>(sql);
-        }
-        public List<IngredientDTO> LoadIngredients(IngredientColumn column, string value)
-        {
-            //parameter injection
             var parameter = new
             {
-                Value = value
+                Id = id
             };
-            string sql = $@"select * from dbo.Ingredients where '{column}'=@Value";//'{value}'
-            return sqlDataAccess.LoadData<IngredientDTO>(sql, parameter);
+            string sql = $@"select * from dbo.Ingredients where Ingredients.Id=@Id";//'{value}'
+            return sqlDataAccess.LoadData<IngredientDTO>(sql, parameter).FirstOrDefault();
         }
-        public List<IngredientWithCategories> LoadIngredientsWithCategories(int startIndex, int numberOfRows, string categoryName=null)
+        public List<IngredientWithCategories> LoadRowsWithCategories(int startIndex, int numberOfRows, string categoryName=null)
         {
             var parameters = new
             {
@@ -74,7 +68,6 @@ OFFSET @StartIndex ROWS FETCH NEXT @NumberOfRows ROWS ONLY";
                 parameters
                 );
         }
-
         public List<CategoryDTO> LoadCategories()
         {
             string sql = $@"select * from dbo.Categories"; //Name,Description,Callories,Category,CostPerUnit

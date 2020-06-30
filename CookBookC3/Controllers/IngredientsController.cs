@@ -8,6 +8,7 @@ using CookBookC3.Converters;
 using CookBookC3.Extensions;
 using CookBookC3.Models;
 using DataLibrary.DataAccess;
+using DataLibrary.Enums;
 using DataLibrary.Logic;
 using DataLibrary.Models;
 using Microsoft.AspNetCore.Http;
@@ -29,7 +30,7 @@ namespace CookBookC3.Controllers
         }
         public ActionResult Index(int id = 1, string category=null)
         {
-            var loadedIngredients = ingredientProcessor.LoadIngredientsWithCategories(id - 1, IngredientsPerPage,category);
+            var loadedIngredients = ingredientProcessor.LoadRowsWithCategories(id - 1, IngredientsPerPage,category);
             var Categories = ingredientProcessor.LoadCategories().DTOToUIOList();
             var ingredientCount = ingredientProcessor.IngredientCount();
             IngredientsList ingredientsList = new IngredientsList()
@@ -56,7 +57,7 @@ namespace CookBookC3.Controllers
         {
             if (ModelState.IsValid)
             {
-                ingredientProcessor.CreateIngredient(mapper.Map<IngredientDTO>(ingredient));
+                ingredientProcessor.Create(mapper.Map<IngredientDTO>(ingredient));
                 return RedirectToAction(nameof(Index));
             }
             else
@@ -64,5 +65,25 @@ namespace CookBookC3.Controllers
                 return View();
             }
         }
+        [HttpPost]
+        public ActionResult Edit(IngredientUIO ingredient)
+        {
+            if (ModelState.IsValid)
+            {
+                //ingredientProcessor.CreateIngredient(mapper.Map<IngredientDTO>(ingredient));
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                return View(ingredient);
+            }
+        }
+        [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            var model=ingredientProcessor.Load(id).DTOToUIO();
+            return View(model);
+        }
+
     }
 }
