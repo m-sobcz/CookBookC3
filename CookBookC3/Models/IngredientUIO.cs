@@ -18,9 +18,7 @@ namespace CookBookC3.Models
         public string Description { get; set; }
         [Required(ErrorMessage = ErrorMessageText)]
         public string Unit { get; set; }
-        //TODO : comma separated reuqired field
         [Required(ErrorMessage = ErrorMessageText)]
-
         public decimal Cost { get; set; }
         [Required(ErrorMessage = ErrorMessageText)]
         public int Callories { get; set; }
