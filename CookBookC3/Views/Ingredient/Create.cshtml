@@ -1,10 +1,10 @@
 ﻿@model CookBookC3.Models.IngredientUIO
 
 @{
-    ViewData["Title"] = "Dodawanie nowego składnika";
+    ViewData["Title"] = "Create";
 }
 
-<h1>Dodaj składnik</h1>
+<h1>Tworzenie składnika</h1>
 <hr />
 
 <div class="row">
@@ -14,32 +14,31 @@
             @Html.AntiForgeryToken()
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label">Nazwa</label>
+                <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Description" class="control-label">Opis</label>
+                <label asp-for="Description" class="control-label"></label>
                 <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Unit" class="control-label">Jednostka</label>
+                <label asp-for="Unit" class="control-label"></label>
                 <input asp-for="Unit" class="form-control" />
                 <span asp-validation-for="Unit" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Cost" class="control-label">Koszt jednostkowy</label>
+                <label asp-for="Cost" class="control-label"></label>
                 <input asp-for="Cost" class="form-control" />
                 <span asp-validation-for="Cost" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Callories" class="control-label">Kalorie</label>
+                <label asp-for="Callories" class="control-label"></label>
                 <input asp-for="Callories" class="form-control" />
                 <span asp-validation-for="Callories" class="text-danger"></span>
             </div>
             <div class="form-group">
-
                 <input type="submit" value="Dodaj" class="btn btn-primary" />
             </div>
         </form>
@@ -47,7 +46,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Powrót </a>
+    <a asp-action="Index">Powrót</a>
 </div>
 
 @section Scripts {

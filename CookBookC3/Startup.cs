@@ -48,7 +48,8 @@ namespace CookBookC3
             services.AddSession();
             //Custom
             services.AddSingleton<SqlDataAccess>();
-            services.AddSingleton<IIngredientProcessor, IngredientProcessor>();
+            services.AddSingleton<IngredientProcessor>();
+            services.AddSingleton<CategoryProcessor>();
             services.AddTransient<SessionManager<Purchase>>();
 
         }
@@ -89,7 +90,7 @@ namespace CookBookC3
                 endpoints.MapControllerRoute(
                     name: "Category",
                     pattern: "Skladniki/{category}/{id?}",
-                    defaults: new { Controller = "Ingredients", action="Index" }
+                    defaults: new { Controller = "Ingredient", action="Index" }
                     );
                 endpoints.MapControllerRoute(
                     name: "default",

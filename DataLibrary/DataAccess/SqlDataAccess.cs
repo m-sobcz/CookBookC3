@@ -45,5 +45,15 @@ namespace DataLibrary.DataAccess
                 return connection.Execute(sql, data);
             }
         }
+        public int DeleteData(string sql, object parameter)
+        {
+            //parameter=new { Id = id }
+            using (IDbConnection connection = new SqlConnection(GetConnectionString()))
+            {
+                return connection.Execute(sql, parameter);
+            }
+        }
+
+
     }
 }

@@ -18,20 +18,23 @@ using Microsoft.AspNetCore.Routing;
 namespace CookBookC3.Controllers
 {
 
-    public class IngredientsController : Controller
+    public class IngredientController : Controller
     {
         private IMapper mapper;
-        private IIngredientProcessor ingredientProcessor;
+        private IngredientProcessor ingredientProcessor;
+        private CategoryProcessor categoryProcessor;
+
         public int IngredientsPerPage { get; set; } = 6;
-        public IngredientsController(IIngredientProcessor ingredientProcessor, IMapper mapper)
+        public IngredientController(IngredientProcessor ingredientProcessor, CategoryProcessor categoryProcessor, IMapper mapper)
         {
             this.mapper = mapper;
             this.ingredientProcessor = ingredientProcessor;
+            this.categoryProcessor = categoryProcessor;
         }
         public ActionResult Index(int id = 1, string category=null)
         {
             var loadedIngredients = ingredientProcessor.LoadRowsWithCategories(id - 1, IngredientsPerPage,category);
-            var Categories = ingredientProcessor.LoadCategories().DTOToUIOList();
+            var Categories = categoryProcessor.LoadCategories().DTOToUIOList();
             var ingredientCount = ingredientProcessor.IngredientCount();
             IngredientsList ingredientsList = new IngredientsList()
             {
@@ -84,6 +87,20 @@ namespace CookBookC3.Controllers
             var model=ingredientProcessor.Load(id).DTOToUIO();
             return View(model);
         }
-
+        public ActionResult Categories(int id)
+        {
+            var model = ingredientProcessor.LoadCategories(id).DTOToUIOList();
+            return View(model);
+        }
+        public ActionResult RemoveCategory(int id, int categoryId)
+        {
+            ingredientProcessor.RemoveCategory(id, categoryId);
+            return RedirectToAction(nameof(Categories), new { id });
+        }
+        public ActionResult AddCategory(int id, int categoryId)
+        {
+            ingredientProcessor.AddCategory(id, categoryId);
+            return RedirectToAction(nameof(Categories), new { id });
+        }
     }
 }

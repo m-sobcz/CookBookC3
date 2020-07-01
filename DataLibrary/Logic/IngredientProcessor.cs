@@ -11,7 +11,7 @@ using System.Text;
 
 namespace DataLibrary.Logic
 {
-    public class IngredientProcessor : IIngredientProcessor
+    public class IngredientProcessor
     {
         private SqlDataAccess sqlDataAccess;
 
@@ -68,15 +68,59 @@ OFFSET @StartIndex ROWS FETCH NEXT @NumberOfRows ROWS ONLY";
                 parameters
                 );
         }
-        public List<CategoryDTO> LoadCategories()
+
+        public List<CategoryDTO> LoadCategories(int ingredientId)
         {
-            string sql = $@"select * from dbo.Categories"; //Name,Description,Callories,Category,CostPerUnit
-            return sqlDataAccess.LoadData<CategoryDTO>(sql);
+            var parameter = new
+            {
+                Id = ingredientId
+            };
+            string sql = $@"select Categories.* from Categories 
+LEFT JOIN Ingredients_Categories on Categories.Id=Ingredients_Categories.Categories_Id
+LEFT JOIN Ingredients on Ingredients.Id=Ingredients_Categories.Ingredients_Id
+where Ingredients.Id=@Id";
+            return sqlDataAccess.LoadData<CategoryDTO>(sql,parameter);
         }
         public int IngredientCount() 
         {
             string sql = $@"select count(id) from Ingredients"; //Name,Description,Callories,Category,CostPerUnit
             return sqlDataAccess.LoadData<int>(sql).FirstOrDefault();
+        }
+        public int RemoveCategory(int ingredientId, int categoryId)
+        {
+            var parameter = new
+            {
+                Ingredients_Id= ingredientId,
+                Categories_Id=categoryId
+            };
+            string sql = $@"DELETE FROM Ingredients_Categories
+WHERE Ingredients_Categories.Ingredients_Id=@Ingredients_Id and Ingredients_Categories.Categories_Id=@Categories_Id";
+            return sqlDataAccess.DeleteData(sql,parameter);
+        }
+        public int AddCategory(int ingredientId, int categoryId)
+        {
+            var parameter = new
+            {
+                Ingredients_Id = ingredientId,
+                Categories_Id = categoryId
+            };
+            string sql = $@"INSERT INTO Ingredients_Categories(Ingredients_Id,Categories_Id)
+VALUES (@Ingredients_Id, @Categories_Id);";
+            return sqlDataAccess.DeleteData(sql, parameter);
+        }
+        public List<CategoryDTO> LoadUnusedCategories(int ingredientId)
+        {
+            var parameter = new
+            {
+                Id = ingredientId
+            };
+            string sql = $@"select Categories.* from Categories 
+LEFT JOIN Ingredients_Categories on Categories.Id=Ingredients_Categories.Categories_Id
+except
+select Categories.* from Categories 
+LEFT JOIN Ingredients_Categories on Categories.Id=Ingredients_Categories.Categories_Id
+where Ingredients_Categories.Ingredients_Id=@Id";
+            return sqlDataAccess.LoadData<CategoryDTO>(sql, parameter);
         }
     }
 }

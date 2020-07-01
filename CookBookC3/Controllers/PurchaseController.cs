@@ -15,9 +15,9 @@ namespace CookBookC3.Controllers
     public class PurchaseController : Controller
     {
         private SessionManager<Purchase> sessionManager;
-        private IIngredientProcessor ingredientProcessor;
+        private IngredientProcessor ingredientProcessor;
 
-        public PurchaseController(IIngredientProcessor ingredientProcessor, SessionManager<Purchase> sessionManager)
+        public PurchaseController(IngredientProcessor ingredientProcessor, SessionManager<Purchase> sessionManager)
         {
             this.sessionManager = sessionManager;
             this.ingredientProcessor = ingredientProcessor;

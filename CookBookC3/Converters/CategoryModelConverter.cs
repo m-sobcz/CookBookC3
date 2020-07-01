@@ -22,6 +22,7 @@ namespace CookBookC3.Converters
         {
             return new CategoryUIO()
             {
+                Id=dto.Id,
                 Name = dto.Name,
                 Description = dto.Description,
             };

@@ -1,10 +1,12 @@
 ﻿<script src="~/lib/jquery-validation/dist/jquery.min.js"></script>
 <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
 <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-<script  type="text/javascript" src="~/lib/jquery-validation/dist/localization/messages_pl.min.js"></script>
+@*<script  type="text/javascript" src="~/lib/jquery-validation/dist/localization/messages_pl.min.js"></script>*@
 <script>
-    $form.validate({
-        lang: 'pl',
+    $(document).ready(function () {
+        $("form#login").validate({
+            lang: 'en'  // or whatever language option you have.
+        });
     });
     </script>
 @*Comma separator in validation*@

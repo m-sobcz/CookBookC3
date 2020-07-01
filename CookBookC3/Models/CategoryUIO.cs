@@ -10,9 +10,11 @@ namespace CookBookC3.Models
     {
             const string ErrorMessageText = "Podanie tego pola jest obowiązkowe";
             public int Id { get; set; }
-            [Required(ErrorMessage = ErrorMessageText)]
+        [Display(Name = "Nazwa")]
+        [Required(ErrorMessage = ErrorMessageText)]
             public string Name { get; set; }
-            [Required(ErrorMessage = ErrorMessageText)]
+        [Display(Name = "Opis")]
+        [Required(ErrorMessage = ErrorMessageText)]
             public string Description { get; set; }    
     }
 }

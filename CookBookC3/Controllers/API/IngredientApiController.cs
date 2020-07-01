@@ -10,7 +10,7 @@ namespace CookBookC3.Controllers.API
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class IngredientsApiController : ControllerBase
+    public class IngredientApiController : ControllerBase
     {
         // GET: api/<IngredientApiController>
         [HttpGet]
