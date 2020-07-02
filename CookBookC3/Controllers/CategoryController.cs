@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using CookBookC3.Converters;
+using CookBookC3.Models;
 using DataLibrary.Logic;
+using DataLibrary.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CookBookC3.Controllers
@@ -23,6 +25,43 @@ namespace CookBookC3.Controllers
         {
             var model = categoryProcessor.LoadCategories().DTOToUIOList();
             return View(model);
+        }
+        [HttpGet]
+        public ActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Create(CategoryUIO category)
+        {
+            if (ModelState.IsValid)
+            {
+                //categoryProcessor.Create(mapper.Map<CategoryDTO>(category));
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                return View();
+            }
+        }
+        [HttpPost]
+        public ActionResult Edit(CategoryUIO category)
+        {
+            if (ModelState.IsValid)
+            {
+                //ingredientProcessor.CreateIngredient(mapper.Map<IngredientDTO>(ingredient));
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                return View(category);
+            }
+        }
+        [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            //var model = categoryProcessor.Load(id).DTOToUIO();
+            return View();//(model);
         }
     }
 }

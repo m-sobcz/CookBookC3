@@ -8,7 +8,7 @@
             lang: 'en'  // or whatever language option you have.
         });
     });
-    </script>
+</script>
 @*Comma separator in validation*@
 <script>
 
@@ -25,4 +25,12 @@
         var date = value.split("/");
         return this.optional(element) || !/Invalid|NaN/.test(new Date(date[2], date[1], date[0]).toString());
     }
+</script>
+@*Confirm - are you sure*@
+<script>
+    $(function () {
+        $('.confirm').click(function () {
+            return window.confirm("Are you sure?");
+        });
+    });
 </script>

@@ -36,21 +36,28 @@
             <p class="card-text">Jednostka: @ingredient.Unit</p>
             <p class="card-text">Kalorie: @ingredient.Callories</p>
             <p class="card-text">Koszt: @ingredient.Cost</p>
-
-            <form asp-controller="Purchase" asp-action="Add" method="post" class="m-1">
-                <input name="id" type="hidden" value="@ingredient.Id">
-                <button type="submit" class="btn btn-secondary">
-                    Dodaj do listy
-                </button>
-            </form>
-            <a asp-action="Edit" method="post" class="btn btn-secondary m-1"
-               asp-route-id="@ingredient.Id">
-                Edytuj
-            </a>
-            <a asp-action="Categories" method="post" class="btn btn-secondary m-1"
-               asp-route-id="@ingredient.Id">
-                Kategorie
-            </a>
+            <div class="row">
+                <form asp-controller="Purchase" asp-action="Add" method="post" class="m-1">
+                    <input name="id" type="hidden" value="@ingredient.Id">
+                    <button type="submit" class="btn btn-secondary">
+                        Dodaj do listy
+                    </button>
+                </form>
+                <a asp-action="Edit" method="post" class="btn btn-secondary m-1"
+                   asp-route-id="@ingredient.Id">
+                    Edytuj
+                </a>
+                <form asp-action="Delete" method="post" class="m-1">
+                    <input name="id" type="hidden" value="@ingredient.Id">
+                    <button type="submit" class="btn btn-secondary" onclick="if (!confirm('Na pewno chcesz usunąć ?')) return false;">
+                        Usuń
+                    </button>
+                </form>
+                <a asp-action="Categories" method="post" class="btn btn-secondary m-1"
+                   asp-route-id="@ingredient.Id">
+                    Kategorie
+                </a>
+            </div>
         </div>
 
     </div>

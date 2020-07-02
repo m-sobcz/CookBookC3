@@ -73,7 +73,7 @@ namespace CookBookC3.Controllers
         {
             if (ModelState.IsValid)
             {
-                //ingredientProcessor.CreateIngredient(mapper.Map<IngredientDTO>(ingredient));
+                ingredientProcessor.Update(mapper.Map<IngredientDTO>(ingredient));
                 return RedirectToAction(nameof(Index));
             }
             else
@@ -86,6 +86,12 @@ namespace CookBookC3.Controllers
         {
             var model=ingredientProcessor.Load(id).DTOToUIO();
             return View(model);
+        }
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            ingredientProcessor.Delete(id);
+            return RedirectToAction(nameof(Index));
         }
         public ActionResult Categories(int id)
         {

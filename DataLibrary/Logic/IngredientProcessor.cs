@@ -21,7 +21,16 @@ namespace DataLibrary.Logic
         }
         public int Create(IngredientDTO ingredientModel)
         {
-            string sql = $@"insert into dbo.Ingredients (Name,Description,Callories,Cost) values (@Name, @Description,@Callories ,@Cost)";
+            string sql = $@"INSERT INTO Ingredients 
+(Name,Description,Callories,Cost,Unit) 
+VALUES (@Name, @Description,@Callories ,@Cost, @Unit)";
+            return sqlDataAccess.SaveData(sql, ingredientModel);
+        }
+        public int Update(IngredientDTO ingredientModel)
+        {
+            string sql = $@"UPDATE Ingredients 
+SET Name=@Name, Description=@Description, Callories=@Callories, Cost=@Cost 
+WHERE Id=@Id";
             return sqlDataAccess.SaveData(sql, ingredientModel);
         }
         public IngredientDTO Load(int id)
@@ -30,7 +39,9 @@ namespace DataLibrary.Logic
             {
                 Id = id
             };
-            string sql = $@"select * from dbo.Ingredients where Ingredients.Id=@Id";//'{value}'
+            string sql = $@"SELECT * 
+FROM dbo.Ingredients 
+WHERE Ingredients.Id=@Id";
             return sqlDataAccess.LoadData<IngredientDTO>(sql, parameter).FirstOrDefault();
         }
         public List<IngredientWithCategories> LoadRowsWithCategories(int startIndex, int numberOfRows, string categoryName=null)
@@ -94,8 +105,22 @@ where Ingredients.Id=@Id";
                 Categories_Id=categoryId
             };
             string sql = $@"DELETE FROM Ingredients_Categories
-WHERE Ingredients_Categories.Ingredients_Id=@Ingredients_Id and Ingredients_Categories.Categories_Id=@Categories_Id";
+WHERE Ingredients_Categories.Ingredients_Id=@Ingredients_Id 
+AND Ingredients_Categories.Categories_Id=@Categories_Id";
             return sqlDataAccess.DeleteData(sql,parameter);
+        }
+        public int Delete(int id)
+        {
+            var parameter = new
+            {
+                Id = id
+            };
+            string sql1 = $@"DELETE FROM Ingredients_Categories 
+WHERE Ingredients_Categories.Ingredients_Id=@Id";
+            string sql2 = $@"DELETE FROM Ingredients
+WHERE Id=@Id";
+            sqlDataAccess.DeleteData(sql1, parameter);
+            return sqlDataAccess.DeleteData(sql2, parameter);
         }
         public int AddCategory(int ingredientId, int categoryId)
         {
