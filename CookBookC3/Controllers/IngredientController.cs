@@ -84,7 +84,7 @@ namespace CookBookC3.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            var model=ingredientProcessor.Load(id).DTOToUIO();
+            var model=ingredientProcessor.Get(id).DTOToUIO();
             return View(model);
         }
         [HttpPost]
@@ -95,7 +95,7 @@ namespace CookBookC3.Controllers
         }
         public ActionResult Categories(int id)
         {
-            var model = ingredientProcessor.LoadCategories(id).DTOToUIOList();
+            var model = ingredientProcessor.LoadCategoriesFor(id).DTOToUIOList();
             return View(model);
         }
         public ActionResult RemoveCategory(int id, int categoryId)

@@ -1,8 +1,5 @@
 ﻿@model IEnumerable<CookBookC3.Models.CategoryUIO>
 
-@{
-    ViewData["Title"] = "Categories";
-}
 
 <h1>Kategorie dla składnika</h1>
 
@@ -10,9 +7,6 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
@@ -46,6 +40,27 @@
 
     </tbody>
 </table>
+
+@foreach (var category in Model)
+{
+    <div class="card m-2">
+        <div class="card-body">
+            <h4 class="card-title">@category.Name</h4>
+
+            <h6 class="card-subtitle">@category.Description</h6>
+            <div class="row">
+                <a asp-action="RemoveCategory" method="post" class="btn btn-secondary m-1"
+                   asp-route-id=@(ViewContext.RouteData.Values["id"]) asp-route-categoryId="@category.Id">
+                    Usuń
+                </a>
+            </div>
+        </div>
+
+    </div>
+}
 @*Dodawanie kategorii*@
 @await Component.InvokeAsync("CategorySelection", new { id = Convert.ToInt32((ViewContext.RouteData.Values["id"])) })
 
+<div>
+    <a asp-action="Index">Powrót</a>
+</div>

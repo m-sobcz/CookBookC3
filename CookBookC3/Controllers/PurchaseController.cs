@@ -30,7 +30,7 @@ namespace CookBookC3.Controllers
 
         public ActionResult Add(int id)
         {    
-            IngredientUIO Ingredient = ingredientProcessor.Load(id).DTOToUIO();
+            IngredientUIO Ingredient = ingredientProcessor.Get(id).DTOToUIO();
             if (Ingredient != null)
             {
                 Purchase purchase = sessionManager.GetItem();
@@ -42,7 +42,7 @@ namespace CookBookC3.Controllers
 
         public RedirectToActionResult Remove(int id)
         {
-            IngredientUIO Ingredient = ingredientProcessor.Load(id).DTOToUIO();
+            IngredientUIO Ingredient = ingredientProcessor.Get(id).DTOToUIO();
 
             if (Ingredient != null)
             {

@@ -37,6 +37,7 @@ namespace CookBookC3
             MapperConfiguration mapperConfiguration = new MapperConfiguration(config =>
             {
                 config.CreateMap<IngredientUIO, IngredientDTO>();
+                config.CreateMap<CategoryUIO, CategoryDTO>();
             });
             mapper = mapperConfiguration.CreateMapper();
             services.AddSingleton<IMapper>(mapper);

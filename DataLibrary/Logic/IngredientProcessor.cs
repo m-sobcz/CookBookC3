@@ -33,7 +33,7 @@ SET Name=@Name, Description=@Description, Callories=@Callories, Cost=@Cost
 WHERE Id=@Id";
             return sqlDataAccess.SaveData(sql, ingredientModel);
         }
-        public IngredientDTO Load(int id)
+        public IngredientDTO Get(int id)
         {
             var parameter = new
             {
@@ -80,7 +80,7 @@ OFFSET @StartIndex ROWS FETCH NEXT @NumberOfRows ROWS ONLY";
                 );
         }
 
-        public List<CategoryDTO> LoadCategories(int ingredientId)
+        public List<CategoryDTO> LoadCategoriesFor(int ingredientId)
         {
             var parameter = new
             {
