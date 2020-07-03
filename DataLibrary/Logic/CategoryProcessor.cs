@@ -18,7 +18,7 @@ namespace DataLibrary.Logic
         }
         public List<CategoryDTO> GetAll()
         {
-            return sqlDataAccess.LoadData<CategoryDTO>(GetDefaultStoredProcedureName(),commandType: CommandType.StoredProcedure);
+            return sqlDataAccess.LoadData<CategoryDTO>(GetDefaultStoredProcedureName());
         }
         public CategoryDTO Get(int id)
         {
@@ -26,18 +26,15 @@ namespace DataLibrary.Logic
             {
                 Id = id
             };
-            string sql = "Categories_Get";
-            return sqlDataAccess.LoadData<CategoryDTO>(sql, parameter, CommandType.StoredProcedure).FirstOrDefault();
+            return sqlDataAccess.LoadData<CategoryDTO>(GetDefaultStoredProcedureName(), parameter).FirstOrDefault();
         }
         public int Create(CategoryDTO category)
         {
-            string sql = "Categories_Create";
-            return sqlDataAccess.SaveData(sql, category, CommandType.StoredProcedure);
+            return sqlDataAccess.SaveData(GetDefaultStoredProcedureName(), category );
         }
         public int Update(CategoryDTO category)
         {
-            string sql = "Categories_Update";
-            return sqlDataAccess.SaveData(sql, category, CommandType.StoredProcedure);
+            return sqlDataAccess.SaveData(GetDefaultStoredProcedureName(), category );
         }
         public int Delete(int id)
         {
@@ -45,11 +42,8 @@ namespace DataLibrary.Logic
             {
                 Id = id
             };
-            string sql1 = "IngredientsCategories_Delete";
-            string sql2 = "Categories_Delete";
-            sqlDataAccess.DeleteData(sql1, parameter, CommandType.StoredProcedure);
-            return sqlDataAccess.DeleteData(sql2, parameter, CommandType.StoredProcedure);
+            sqlDataAccess.DeleteData("IngredientsCategories_DeleteByCategories", parameter );
+            return sqlDataAccess.DeleteData(GetDefaultStoredProcedureName(), parameter );
         }
-
     }
 }

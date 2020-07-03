@@ -11,27 +11,22 @@ using System.Text;
 
 namespace DataLibrary.Logic
 {
-    public class IngredientProcessor
+    public class IngredientProcessor : Processor
     {
         private SqlDataAccess sqlDataAccess;
 
         public IngredientProcessor(SqlDataAccess sqlDataAccess)
         {
             this.sqlDataAccess = sqlDataAccess;
+            defaultStoredProceduresPrefix = "Ingredients";
         }
         public int Create(IngredientDTO ingredientModel)
         {
-            string sql = $@"INSERT INTO Ingredients 
-(Name,Description,Callories,Cost,Unit) 
-VALUES (@Name, @Description,@Callories ,@Cost, @Unit)";
-            return sqlDataAccess.SaveData(sql, ingredientModel);
+            return sqlDataAccess.SaveData(GetDefaultStoredProcedureName(), ingredientModel);
         }
         public int Update(IngredientDTO ingredientModel)
         {
-            string sql = $@"UPDATE Ingredients 
-SET Name=@Name, Description=@Description, Callories=@Callories, Cost=@Cost 
-WHERE Id=@Id";
-            return sqlDataAccess.SaveData(sql, ingredientModel);
+            return sqlDataAccess.SaveData(GetDefaultStoredProcedureName(), ingredientModel);
         }
         public IngredientDTO Get(int id)
         {
@@ -39,12 +34,9 @@ WHERE Id=@Id";
             {
                 Id = id
             };
-            string sql = $@"SELECT * 
-FROM dbo.Ingredients 
-WHERE Ingredients.Id=@Id";
-            return sqlDataAccess.LoadData<IngredientDTO>(sql, parameter).FirstOrDefault();
+            return sqlDataAccess.LoadData<IngredientDTO>(GetDefaultStoredProcedureName(), parameter).FirstOrDefault();
         }
-        public List<IngredientWithCategories> LoadRowsWithCategories(int startIndex, int numberOfRows, string categoryName=null)
+        public List<IngredientWithCategories> GetAllInCategory(int startIndex, int numberOfRows, string categoryName=null)
         {
             var parameters = new
             {
@@ -52,50 +44,26 @@ WHERE Ingredients.Id=@Id";
                 NumberOfRows = numberOfRows,
                 CategoryName= categoryName
             };
-            string filter= (categoryName!=null) ?@" WHERE c2.Name=@CategoryName " : " ";
-            string sql = $@"
-SELECT distinct
-i1.*,
-STUFF((
-    SELECT DISTINCT ', ' + c.Name
-    FROM
-            (
-                SELECT Ingredients.* FROM Ingredients) i2
-                LEFT JOIN Ingredients_Categories ON i2.Id = Ingredients_Categories.Ingredients_Id
-                LEFT JOIN (SELECT * FROM Categories) c ON Ingredients_Categories.Categories_Id=c.Id
-                WHERE i1.Id = i2.Id 
-                FOR XML PATH('')), 1, 2, ''
-            ) as CategoryList
-FROM Ingredients i1 
-LEFT JOIN Ingredients_Categories ON i1.Id = Ingredients_Categories.Ingredients_Id
-LEFT JOIN (SELECT * FROM Categories) c2 ON Ingredients_Categories.Categories_Id=c2.Id"+
-filter+
-@$" ORDER by i1.Id
-OFFSET @StartIndex ROWS FETCH NEXT @NumberOfRows ROWS ONLY";
             return sqlDataAccess.LoadData<IngredientWithCategories, string, IngredientWithCategories>
                 (
-                sql,
+                GetDefaultStoredProcedureName(),
                 (ingredient, categories) => { ingredient.Categories = categories; return ingredient; },
                 parameters
                 );
         }
 
-        public List<CategoryDTO> LoadCategoriesFor(int ingredientId)
+        public List<CategoryDTO> GetCategories(int ingredientId)
         {
             var parameter = new
             {
                 Id = ingredientId
             };
-            string sql = $@"select Categories.* from Categories 
-LEFT JOIN Ingredients_Categories on Categories.Id=Ingredients_Categories.Categories_Id
-LEFT JOIN Ingredients on Ingredients.Id=Ingredients_Categories.Ingredients_Id
-where Ingredients.Id=@Id";
-            return sqlDataAccess.LoadData<CategoryDTO>(sql,parameter);
+            
+            return sqlDataAccess.LoadData<CategoryDTO>(GetDefaultStoredProcedureName(),parameter);
         }
-        public int IngredientCount() 
+        public int Count() 
         {
-            string sql = $@"select count(id) from Ingredients"; //Name,Description,Callories,Category,CostPerUnit
-            return sqlDataAccess.LoadData<int>(sql).FirstOrDefault();
+            return sqlDataAccess.LoadData<int>(GetDefaultStoredProcedureName()).FirstOrDefault();
         }
         public int RemoveCategory(int ingredientId, int categoryId)
         {
@@ -104,10 +72,7 @@ where Ingredients.Id=@Id";
                 Ingredients_Id= ingredientId,
                 Categories_Id=categoryId
             };
-            string sql = $@"DELETE FROM Ingredients_Categories
-WHERE Ingredients_Categories.Ingredients_Id=@Ingredients_Id 
-AND Ingredients_Categories.Categories_Id=@Categories_Id";
-            return sqlDataAccess.DeleteData(sql,parameter);
+            return sqlDataAccess.DeleteData(GetDefaultStoredProcedureName(),parameter);
         }
         public int Delete(int id)
         {
@@ -115,12 +80,8 @@ AND Ingredients_Categories.Categories_Id=@Categories_Id";
             {
                 Id = id
             };
-            string sql1 = $@"DELETE FROM Ingredients_Categories 
-WHERE Ingredients_Categories.Ingredients_Id=@Id";
-            string sql2 = $@"DELETE FROM Ingredients
-WHERE Id=@Id";
-            sqlDataAccess.DeleteData(sql1, parameter);
-            return sqlDataAccess.DeleteData(sql2, parameter);
+            sqlDataAccess.DeleteData("IngredientsCategories_DeleteByIngredients", parameter);
+            return sqlDataAccess.DeleteData(GetDefaultStoredProcedureName(), parameter);
         }
         public int AddCategory(int ingredientId, int categoryId)
         {
@@ -129,23 +90,15 @@ WHERE Id=@Id";
                 Ingredients_Id = ingredientId,
                 Categories_Id = categoryId
             };
-            string sql = $@"INSERT INTO Ingredients_Categories(Ingredients_Id,Categories_Id)
-VALUES (@Ingredients_Id, @Categories_Id);";
-            return sqlDataAccess.DeleteData(sql, parameter);
+            return sqlDataAccess.DeleteData(GetDefaultStoredProcedureName(), parameter);
         }
-        public List<CategoryDTO> LoadUnusedCategories(int ingredientId)
+        public List<CategoryDTO> GetUnusedCategories(int ingredientId)
         {
             var parameter = new
             {
                 Id = ingredientId
             };
-            string sql = $@"select Categories.* from Categories 
-LEFT JOIN Ingredients_Categories on Categories.Id=Ingredients_Categories.Categories_Id
-except
-select Categories.* from Categories 
-LEFT JOIN Ingredients_Categories on Categories.Id=Ingredients_Categories.Categories_Id
-where Ingredients_Categories.Ingredients_Id=@Id";
-            return sqlDataAccess.LoadData<CategoryDTO>(sql, parameter);
+            return sqlDataAccess.LoadData<CategoryDTO>(GetDefaultStoredProcedureName(), parameter);
         }
     }
 }

@@ -23,29 +23,29 @@ namespace DataLibrary.DataAccess
         {
             return configuration.GetConnectionString(connectionName);
         }
-        public List<T> LoadData<T>(string sql,object parameter=null, CommandType commandType=CommandType.Text)
+        public List<T> LoadData<T>(string sql,object parameter=null, CommandType commandType=CommandType.StoredProcedure)
         {        
             using (IDbConnection connection = new SqlConnection(GetConnectionString()))
             {
                 return connection.Query<T>(sql, parameter,commandType: commandType).ToList();
             }
         }
-        public List<Tout> LoadData<Tin1,Tin2,Tout>(string sql,Func<Tin1,Tin2,Tout> mapping, object parameter = null)
+        public List<Tout> LoadData<Tin1,Tin2,Tout>(string sql,Func<Tin1,Tin2,Tout> mapping, object parameter = null, CommandType commandType = CommandType.StoredProcedure, string splitOn="CategoryList")
         {
             using (IDbConnection connection = new SqlConnection(GetConnectionString()))
             {
-                var data= connection.Query<Tin1,Tin2,Tout>(sql,mapping, parameter, splitOn: "CategoryList").ToList();//!
+                var data= connection.Query<Tin1,Tin2,Tout>(sql,mapping, parameter, commandType: commandType, splitOn: splitOn).ToList();//!
                 return data;
             }
         }
-        public  int SaveData<T>(string sql, T data, CommandType commandType = CommandType.Text)
+        public  int SaveData<T>(string sql, T data, CommandType commandType = CommandType.StoredProcedure)
         {
             using (IDbConnection connection = new SqlConnection(GetConnectionString()))
             {
                 return connection.Execute(sql, data, commandType: commandType);
             }
         }
-        public int DeleteData(string sql, object parameter,CommandType commandType = CommandType.Text)
+        public int DeleteData(string sql, object parameter,CommandType commandType = CommandType.StoredProcedure)
         {
             //parameter=new { Id = id }
             using (IDbConnection connection = new SqlConnection(GetConnectionString()))

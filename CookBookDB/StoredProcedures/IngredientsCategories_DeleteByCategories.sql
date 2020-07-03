@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[IngredientsCategories_Delete]
+﻿CREATE PROCEDURE [dbo].[IngredientsCategories_DeleteByCategories]
 	@Id int = 0
 AS
 DELETE FROM Ingredients_Categories 

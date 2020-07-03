@@ -33,9 +33,9 @@ namespace CookBookC3.Controllers
         }
         public ActionResult Index(int id = 1, string category=null)
         {
-            var loadedIngredients = ingredientProcessor.LoadRowsWithCategories(id - 1, IngredientsPerPage,category);
+            var loadedIngredients = ingredientProcessor.GetAllInCategory(id - 1, IngredientsPerPage,category);
             var Categories = categoryProcessor.GetAll().DTOToUIOList();
-            var ingredientCount = ingredientProcessor.IngredientCount();
+            var ingredientCount = ingredientProcessor.Count();
             IngredientsList ingredientsList = new IngredientsList()
             {
                 Ingredients = loadedIngredients,
@@ -95,7 +95,7 @@ namespace CookBookC3.Controllers
         }
         public ActionResult Categories(int id)
         {
-            var model = ingredientProcessor.LoadCategoriesFor(id).DTOToUIOList();
+            var model = ingredientProcessor.GetCategories(id).DTOToUIOList();
             return View(model);
         }
         public ActionResult RemoveCategory(int id, int categoryId)

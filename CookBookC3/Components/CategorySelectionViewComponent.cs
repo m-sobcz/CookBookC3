@@ -19,7 +19,7 @@ namespace CookBookC3.Components
         }
         public IViewComponentResult Invoke(int id)
         {
-            var categories = ingredientProcessor.LoadUnusedCategories(id).DTOToUIOList();
+            var categories = ingredientProcessor.GetUnusedCategories(id).DTOToUIOList();
             return View(categories);
         }
     }
