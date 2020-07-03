@@ -2,24 +2,23 @@
 using DataLibrary.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 
 namespace DataLibrary.Logic
 {
-    public class CategoryProcessor
+    public class CategoryProcessor : Processor
     {
         private SqlDataAccess sqlDataAccess;
-
         public CategoryProcessor(SqlDataAccess sqlDataAccess)
         {
             this.sqlDataAccess = sqlDataAccess;
+            defaultStoredProceduresPrefix = "Categories";
         }
-        public List<CategoryDTO> LoadCategories()
+        public List<CategoryDTO> GetAll()
         {
-            string sql = $@"SELECT * 
-FROM Categories";
-            return sqlDataAccess.LoadData<CategoryDTO>(sql);
+            return sqlDataAccess.LoadData<CategoryDTO>(GetDefaultStoredProcedureName(),commandType: CommandType.StoredProcedure);
         }
         public CategoryDTO Get(int id)
         {
@@ -27,23 +26,18 @@ FROM Categories";
             {
                 Id = id
             };
-            string sql = $@"SELECT * 
-FROM Categories
-WHERE Categories.Id=@Id";
-            return sqlDataAccess.LoadData<CategoryDTO>(sql, parameter).FirstOrDefault();
+            string sql = "Categories_Get";
+            return sqlDataAccess.LoadData<CategoryDTO>(sql, parameter, CommandType.StoredProcedure).FirstOrDefault();
         }
         public int Create(CategoryDTO category)
         {
-            string sql = $@"INSERT INTO Categories 
-(Name,Description) VALUES (@Name, @Description)";
-            return sqlDataAccess.SaveData(sql, category);
+            string sql = "Categories_Create";
+            return sqlDataAccess.SaveData(sql, category, CommandType.StoredProcedure);
         }
         public int Update(CategoryDTO category)
         {
-            string sql = $@"UPDATE Categories 
-SET Name=@Name, Description=@Description 
-WHERE Id=@Id";
-            return sqlDataAccess.SaveData(sql, category);
+            string sql = "Categories_Update";
+            return sqlDataAccess.SaveData(sql, category, CommandType.StoredProcedure);
         }
         public int Delete(int id)
         {
@@ -51,12 +45,11 @@ WHERE Id=@Id";
             {
                 Id = id
             };
-            string sql1 = $@"DELETE FROM Ingredients_Categories 
-WHERE Ingredients_Categories.Categories_Id=@Id";
-            string sql2 = $@"DELETE FROM Categories
-WHERE Id=@Id";
-            sqlDataAccess.DeleteData(sql1, parameter);
-            return sqlDataAccess.DeleteData(sql2, parameter);
+            string sql1 = "IngredientsCategories_Delete";
+            string sql2 = "Categories_Delete";
+            sqlDataAccess.DeleteData(sql1, parameter, CommandType.StoredProcedure);
+            return sqlDataAccess.DeleteData(sql2, parameter, CommandType.StoredProcedure);
         }
+
     }
 }

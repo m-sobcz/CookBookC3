@@ -78,6 +78,12 @@
     <Build Include="dbo\Tables\Recipe_Cuisine.sql" />
     <Build Include="CreateSpUserWithSpAccess.sql" />
     <Build Include="Views\IngredientWCategories.sql" />
+    <Build Include="StoredProcedures\Categories_GetAll.sql" />
+    <Build Include="StoredProcedures\Categories_Get.sql" />
+    <Build Include="StoredProcedures\Categories_Create.sql" />
+    <Build Include="StoredProcedures\Categories_Update.sql" />
+    <Build Include="StoredProcedures\IngredientsCategories_Delete.sql" />
+    <Build Include="StoredProcedures\Categories_Delete.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PublishProfiles\CookBookDB.publish.xml" />

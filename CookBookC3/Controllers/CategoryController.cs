@@ -23,7 +23,7 @@ namespace CookBookC3.Controllers
         }
         public ActionResult Index()
         {
-            var model = categoryProcessor.LoadCategories().DTOToUIOList();
+            var model = categoryProcessor.GetAll().DTOToUIOList();
             return View(model);
         }
         [HttpGet]

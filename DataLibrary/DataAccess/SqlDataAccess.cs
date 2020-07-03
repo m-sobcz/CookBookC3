@@ -23,34 +23,34 @@ namespace DataLibrary.DataAccess
         {
             return configuration.GetConnectionString(connectionName);
         }
-        public List<T> LoadData<T>(string sql,object parameter=null)
-        {
+        public List<T> LoadData<T>(string sql,object parameter=null, CommandType commandType=CommandType.Text)
+        {        
             using (IDbConnection connection = new SqlConnection(GetConnectionString()))
             {
-                return connection.Query<T>(sql, parameter).ToList();
+                return connection.Query<T>(sql, parameter,commandType: commandType).ToList();
             }
         }
         public List<Tout> LoadData<Tin1,Tin2,Tout>(string sql,Func<Tin1,Tin2,Tout> mapping, object parameter = null)
         {
             using (IDbConnection connection = new SqlConnection(GetConnectionString()))
             {
-                var data= connection.Query<Tin1,Tin2,Tout>(sql,mapping, parameter, splitOn: "CategoryList").ToList();
+                var data= connection.Query<Tin1,Tin2,Tout>(sql,mapping, parameter, splitOn: "CategoryList").ToList();//!
                 return data;
             }
         }
-        public  int SaveData<T>(string sql, T data)
+        public  int SaveData<T>(string sql, T data, CommandType commandType = CommandType.Text)
         {
             using (IDbConnection connection = new SqlConnection(GetConnectionString()))
             {
-                return connection.Execute(sql, data);
+                return connection.Execute(sql, data, commandType: commandType);
             }
         }
-        public int DeleteData(string sql, object parameter)
+        public int DeleteData(string sql, object parameter,CommandType commandType = CommandType.Text)
         {
             //parameter=new { Id = id }
             using (IDbConnection connection = new SqlConnection(GetConnectionString()))
             {
-                return connection.Execute(sql, parameter);
+                return connection.Execute(sql, parameter, commandType: commandType);
             }
         }
 

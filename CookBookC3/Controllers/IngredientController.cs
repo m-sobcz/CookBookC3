@@ -34,7 +34,7 @@ namespace CookBookC3.Controllers
         public ActionResult Index(int id = 1, string category=null)
         {
             var loadedIngredients = ingredientProcessor.LoadRowsWithCategories(id - 1, IngredientsPerPage,category);
-            var Categories = categoryProcessor.LoadCategories().DTOToUIOList();
+            var Categories = categoryProcessor.GetAll().DTOToUIOList();
             var ingredientCount = ingredientProcessor.IngredientCount();
             IngredientsList ingredientsList = new IngredientsList()
             {
