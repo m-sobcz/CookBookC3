@@ -49,26 +49,3 @@
 
     </tbody>
 </table>
-@foreach (var category in Model)
-{
-    <div class="card m-2">
-        <div class="card-body">
-            <h4 class="card-title">@category.Name</h4>
-
-            <h6 class="card-subtitle">@category.Description</h6>
-            <div class="row">
-                <a asp-action="Edit" method="post" class="btn btn-secondary m-1"
-                   asp-route-id="@category.Id">
-                    Edytuj
-                </a>
-                <form asp-action="Delete" method="post" class="m-1">
-                    <input name="id" type="hidden" value="@category.Id">
-                    <button type="submit" class="btn btn-secondary" onclick="if (!confirm('Na pewno chcesz usunąć ?')) return false;">
-                        Usuń
-                    </button>
-                </form>
-            </div>
-        </div>
-
-    </div>
-}
