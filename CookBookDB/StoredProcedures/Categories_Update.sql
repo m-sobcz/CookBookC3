@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[Categories_Update]
-	@Name Varchar(1000),
-	@Description Varchar(1000),
+	@Name NVarchar(1000),
+	@Description NVarchar(1000),
 	@Id int
 AS
 UPDATE Categories 

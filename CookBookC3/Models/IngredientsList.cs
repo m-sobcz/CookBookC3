@@ -10,6 +10,7 @@ namespace CookBookC3.Models
     {
         public IEnumerable<IngredientWithCategories> Ingredients { get; set; }
         public IEnumerable<CategoryUIO> Categories { get; set; }
+        public string SelectedCategoryName { get; set; }
         public PaginationInfo PaginationInfo { get; set; }
     }
 }

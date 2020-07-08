@@ -33,9 +33,9 @@ namespace CookBookC3.Controllers
         }
         public ActionResult Index(int id = 1, string category=null)
         {
-            var loadedIngredients = ingredientProcessor.GetAllInCategory(id - 1, IngredientsPerPage,category);
+            var loadedIngredients = ingredientProcessor.GetAllInCategory((id-1)*IngredientsPerPage, IngredientsPerPage,category);
             var Categories = categoryProcessor.GetAll().DTOToUIOList();
-            var ingredientCount = ingredientProcessor.Count();
+            var ingredientCount = ingredientProcessor.Count(category);
             IngredientsList ingredientsList = new IngredientsList()
             {
                 Ingredients = loadedIngredients,
@@ -45,7 +45,8 @@ namespace CookBookC3.Controllers
                     ItemsPerPage = IngredientsPerPage,
                     ItemsCount = ingredientCount
                 },
-                Categories= Categories
+                Categories= Categories,
+                SelectedCategoryName= category
             };
             ViewBag.SelectedCategory = category;
             return View(ingredientsList);

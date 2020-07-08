@@ -61,9 +61,13 @@ namespace DataLibrary.Logic
             
             return sqlDataAccess.LoadData<CategoryDTO>(GetDefaultStoredProcedureName(),parameter);
         }
-        public int Count() 
+        public int Count(string categoryName = null) 
         {
-            return sqlDataAccess.LoadData<int>(GetDefaultStoredProcedureName()).FirstOrDefault();
+            var parameters = new
+            {
+                CategoryName = categoryName
+            };
+            return sqlDataAccess.LoadData<int>(GetDefaultStoredProcedureName(), parameters).FirstOrDefault();
         }
         public int RemoveCategory(int ingredientId, int categoryId)
         {

@@ -7,9 +7,8 @@
 
     <!--Kategorie-->
     <div class="row p-1">
-
         <a class="btn btn-outline-primary m-1
-               @(ViewBag.SelectedCategory==""?"active": "")"
+               @(Model.SelectedCategoryName is null ?"active": "")"
            asp-action="Index" asp-controller="Ingredient" asp-route-id="1"
            asp-route-category="">
             Wszystkie
@@ -18,7 +17,7 @@
         @foreach (var category in Model.Categories)
         {
             <a class="btn btn-outline-primary m-1
-                   @(ViewBag.SelectedCategory==category.Name?"active": "")"
+                   @(Model.SelectedCategoryName == category.Name?"active": "")"
                asp-action="Index" asp-controller="Ingredient"
                asp-route-category="@category.Name" asp-route-id="1">
                 @category.Name
@@ -41,7 +40,7 @@
                 <h6 class="card-subtitle">@ingredient.Description.</h6>
                 <p class="card-text">Jednostka: @ingredient.Unit</p>
                 <p class="card-text">Kalorie: @ingredient.Callories</p>
-                <p class="card-text">Koszt: @ingredient.Cost</p>
+                <p class="card-text">Koszt: @ingredient.Cost.ToString("c")</p>
                 <div class="row">
                     <form asp-controller="Purchase" asp-action="Add" method="post" class="m-1">
                         <input name="id" type="hidden" value="@ingredient.Id">

@@ -15,10 +15,18 @@
         {
         <tr>
 
-            <td class="text-center">@position.Ingredient.Name</td>
+
             <td class="text-left">@position.Quantity</td>
+            <td class="text-center">@position.Ingredient.Name</td>
+            <td class="text-center">@position.Ingredient.Cost.ToString("C")</td>
+            @{
+                var positionTotal = @position.Quantity * @position.Ingredient.Cost;
+            }
+            <td class="text-center">@positionTotal.ToString("C")</td>
+
+
         </tr>
-        }
+                }
     </tbody>
     <tfoot>
         <tr>
