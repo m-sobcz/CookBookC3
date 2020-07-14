@@ -84,4 +84,25 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="Cost" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="0e90fb73-36dc-4597-b078-f1e8a6429f20" ChangeDateTime="07/14/2020 20:18:36">
+    <Property Name="ElementName" Value="[dbo].[Recipes].[User_Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Recipes]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Description" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="8fb7c61a-c6f0-4539-853b-be2405ff43d8" ChangeDateTime="07/14/2020 21:32:16">
+    <Property Name="ElementName" Value="[dbo].[Recipes_Cuisines].[Recipe_Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Recipes_Cuisines]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Recipes_Id" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="289f6292-14b0-4ac3-8333-bb2ff75ef70a" ChangeDateTime="07/14/2020 21:32:19">
+    <Property Name="ElementName" Value="[dbo].[Recipes_Cuisines].[Cuisine_Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Recipes_Cuisines]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Cuisines_Id" />
+  </Operation>
 </Operations>

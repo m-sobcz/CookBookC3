@@ -66,6 +66,7 @@
     <Folder Include="Comparison" />
     <Folder Include="PostDeploymentScripts" />
     <Folder Include="PublishProfiles" />
+    <Folder Include="Data-tier" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Ingredients.sql" />
@@ -75,7 +76,7 @@
     <Build Include="dbo\Tables\Users.sql" />
     <Build Include="dbo\Tables\Recipes.sql" />
     <Build Include="dbo\Tables\Cuisines.sql" />
-    <Build Include="dbo\Tables\Recipe_Cuisine.sql" />
+    <Build Include="dbo\Tables\Recipes_Cuisines.sql" />
     <Build Include="CreateSpUserWithSpAccess.sql" />
     <Build Include="Views\IngredientWCategories.sql" />
     <Build Include="StoredProcedures\Categories_GetAll.sql" />
@@ -95,10 +96,29 @@
     <Build Include="StoredProcedures\Ingredients_Delete.sql" />
     <Build Include="StoredProcedures\Ingredients_AddCategory.sql" />
     <Build Include="StoredProcedures\Ingredients_GetUnusedCategories.sql" />
+    <Build Include="dbo\Tables\Steps.sql" />
+    <Build Include="StoredProcedures\Recipes_GetAllInCuisine.sql" />
+    <Build Include="StoredProcedures\Recipes_Create.sql" />
+    <Build Include="StoredProcedures\Recipes_Delete.sql" />
+    <Build Include="StoredProcedures\Recipes_Count.sql" />
+    <Build Include="StoredProcedures\Recipes_Update.sql" />
+    <Build Include="StoredProcedures\Recipes_Get.sql" />
+    <Build Include="StoredProcedures\Recipes_GetCuisines.sql" />
+    <Build Include="StoredProcedures\Recipes_GetUnusedCuisines.sql" />
+    <Build Include="StoredProcedures\Cuisines_Create.sql" />
+    <Build Include="StoredProcedures\Cuisines_Delete.sql" />
+    <Build Include="StoredProcedures\Cuisines_Get.sql" />
+    <Build Include="StoredProcedures\Cuisines_GetAll.sql" />
+    <Build Include="StoredProcedures\Cuisines_Update.sql" />
+    <Build Include="StoredProcedures\RecipesCuisines_DeleteByRecipes.sql" />
+    <Build Include="StoredProcedures\RecipesCuisines_DeleteByCuisines.sql" />
+    <Build Include="StoredProcedures\Recipes_RemoveCuisine.sql" />
+    <Build Include="StoredProcedures\Recipes_AddCuisine.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Comparison\ProjectVsLocalComparison.scmp" />
     <None Include="PublishProfiles\CookBookDB.publish.xml" />
+    <None Include="Data-tier\v1.dacpac" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="CookBookDB.refactorlog" />

@@ -4,7 +4,8 @@ using System.Text;
 
 namespace DataLibrary.Models
 {
-    class RecipeModelDTO
+    class RecipeWithCuisines : RecipeDTO
     {
+        public string Cuisines { get; set; }
     }
 }

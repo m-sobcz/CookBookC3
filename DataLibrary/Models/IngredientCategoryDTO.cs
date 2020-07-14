@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DataLibrary.Models
 {
-    class IngredientCategoryDTO
+    public class IngredientCategoryDTO
     {
         public int Ingredients_Id { get; set; }
         public int Categories_Id { get; set; }
