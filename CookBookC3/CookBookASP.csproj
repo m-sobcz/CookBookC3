@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DataLibrary\DataLibrary.csproj" />
+    <ProjectReference Include="..\DataLibrary\CookBookBLL.csproj" />
   </ItemGroup>
 
 </Project>

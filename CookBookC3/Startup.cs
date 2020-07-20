@@ -17,6 +17,7 @@ using AutoMapper;
 using DataLibrary.Models;
 using CookBookC3.Controllers;
 using CookBookC3.Session;
+using Microsoft.OpenApi.Models;
 
 namespace CookBookC3
 {
@@ -52,11 +53,23 @@ namespace CookBookC3
             services.AddSingleton<IngredientProcessor>();
             services.AddSingleton<CategoryProcessor>();
             services.AddTransient<SessionManager<Purchase>>();
+            //Swagger
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+            });
+            services.AddMvcCore()
+    .AddApiExplorer();
 
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -75,6 +88,7 @@ namespace CookBookC3
 
             app.UseAuthorization();
             app.UseSession();
+            
 
             app.UseEndpoints(endpoints =>
             {
