@@ -1,13 +1,13 @@
-﻿using CookBookC3.Controllers;
-using CookBookC3.Models;
-using CookBookC3.Session;
+﻿using CookBookASP.Controllers;
+using CookBookASP.Models;
+using CookBookASP.Session;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CookBookC3.Components
+namespace CookBookASP.Components
 {
     public class ShoppingCountViewComponent : ViewComponent
     {

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DataLibrary.Models
+namespace CookBookBLL.Models
 {
-    class RecipeWithCuisines : RecipeDTO
+    public class RecipeWithCuisines : RecipeDTO
     {
         public string Cuisines { get; set; }
     }

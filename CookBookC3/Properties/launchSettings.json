@@ -11,12 +11,11 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "Ingredient",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "CookBookC3": {
+    "CookBookASP": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {

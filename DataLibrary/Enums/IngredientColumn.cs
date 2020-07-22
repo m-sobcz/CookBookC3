@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DataLibrary.Enums
+namespace CookBookBLL.Enums
 {
     public enum IngredientColumn
     {

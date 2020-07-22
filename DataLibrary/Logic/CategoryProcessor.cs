@@ -1,12 +1,12 @@
-﻿using DataLibrary.DataAccess;
-using DataLibrary.Models;
+﻿using CookBookBLL.DataAccess;
+using CookBookBLL.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
 
-namespace DataLibrary.Logic
+namespace CookBookBLL.Logic
 {
     public class CategoryProcessor : Processor
     {

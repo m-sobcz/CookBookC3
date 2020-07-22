@@ -1,28 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using AutoMapper;
-using CookBookC3.Converters;
-using CookBookC3.Extensions;
-using CookBookC3.Models;
-using DataLibrary.DataAccess;
-using DataLibrary.Enums;
-using DataLibrary.Logic;
-using DataLibrary.Models;
-using Microsoft.AspNetCore.Http;
+using CookBookASP.Converters;
+using CookBookASP.Models;
+using CookBookBLL.Logic;
+using CookBookBLL.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
+using static CookBookASP.Converters.ModelConverter;
 
-namespace CookBookC3.Controllers
+namespace CookBookASP.Controllers
 {
 
     public class IngredientController : Controller
     {
-        private IMapper mapper;
-        private IngredientProcessor ingredientProcessor;
-        private CategoryProcessor categoryProcessor;
+        private readonly IMapper mapper;
+        private readonly IngredientProcessor ingredientProcessor;
+        private readonly CategoryProcessor categoryProcessor;
 
         public int IngredientsPerPage { get; set; } = 6;
         public IngredientController(IngredientProcessor ingredientProcessor, CategoryProcessor categoryProcessor, IMapper mapper)
@@ -33,9 +26,9 @@ namespace CookBookC3.Controllers
         }
         public ActionResult Index(int id = 1, string category=null)
         {
-            var loadedIngredients = ingredientProcessor.GetAllInCategory((id-1)*IngredientsPerPage, IngredientsPerPage,category);
-            var Categories = categoryProcessor.GetAll().DTOToUIOList();
-            var ingredientCount = ingredientProcessor.Count(category);
+            List<IngredientWithCategories> loadedIngredients = ingredientProcessor.GetAllInCategory((id-1)*IngredientsPerPage, IngredientsPerPage,category);
+            List<CategoryUIO> Categories = categoryProcessor.GetAll().DTOToUIOList(MapCategory);
+            int ingredientCount = loadedIngredients.Count();
             IngredientsList ingredientsList = new IngredientsList()
             {
                 Ingredients = loadedIngredients,
@@ -47,8 +40,7 @@ namespace CookBookC3.Controllers
                 },
                 Categories= Categories,
                 SelectedCategoryName= category
-            };
-            ViewBag.SelectedCategory = category;
+            };          
             return View(ingredientsList);
         }
         [HttpGet]
@@ -58,11 +50,11 @@ namespace CookBookC3.Controllers
         }
         [HttpPost]
         public ActionResult Create(IngredientUIO ingredient)
-        {
+        {            
             if (ModelState.IsValid)
             {
-                ingredientProcessor.Create(mapper.Map<IngredientDTO>(ingredient));
-                return RedirectToAction(nameof(Index));
+                int id=ingredientProcessor.Create(mapper.Map<IngredientDTO>(ingredient));
+                return RedirectToAction(nameof(Categories),new { id });
             }
             else
             {
@@ -85,7 +77,7 @@ namespace CookBookC3.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            var model=ingredientProcessor.Get(id).DTOToUIO();
+            IngredientUIO model=ingredientProcessor.Get(id).DTOToUIO(MapIngredient);
             return View(model);
         }
         [HttpPost]
@@ -96,7 +88,7 @@ namespace CookBookC3.Controllers
         }
         public ActionResult Categories(int id)
         {
-            var model = ingredientProcessor.GetCategories(id).DTOToUIOList();
+            List<CategoryUIO> model = ingredientProcessor.GetCategories(id).DTOToUIOList(MapCategory);
             return View(model);
         }
         public ActionResult RemoveCategory(int id, int categoryId)
@@ -109,5 +101,6 @@ namespace CookBookC3.Controllers
             ingredientProcessor.AddCategory(id, categoryId);
             return RedirectToAction(nameof(Categories), new { id });
         }
+
     }
 }

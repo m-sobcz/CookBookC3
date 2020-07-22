@@ -3,18 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using CookBookC3.Converters;
-using CookBookC3.Models;
-using DataLibrary.Logic;
-using DataLibrary.Models;
+using CookBookASP.Converters;
+using CookBookASP.Models;
+using CookBookBLL.Logic;
+using CookBookBLL.Models;
 using Microsoft.AspNetCore.Mvc;
+using static CookBookASP.Converters.ModelConverter;
 
-namespace CookBookC3.Controllers
+
+namespace CookBookASP.Controllers
 {
     public class CategoryController : Controller
     {
-        private IMapper mapper;
-        private CategoryProcessor categoryProcessor;
+        private readonly IMapper mapper;
+        private readonly CategoryProcessor categoryProcessor;
 
         public CategoryController(CategoryProcessor categoryProcessor, IMapper mapper)
         {
@@ -23,7 +25,7 @@ namespace CookBookC3.Controllers
         }
         public ActionResult Index()
         {
-            var model = categoryProcessor.GetAll().DTOToUIOList();
+            List<CategoryUIO> model = categoryProcessor.GetAll().DTOToUIOList(MapCategory);
             return View(model);
         }
         [HttpGet]
@@ -60,7 +62,7 @@ namespace CookBookC3.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            var model = categoryProcessor.Get(id).DTOToUIO();
+            CategoryUIO model = categoryProcessor.Get(id).DTOToUIO(MapCategory);
             return View(model);
         }
         [HttpPost]

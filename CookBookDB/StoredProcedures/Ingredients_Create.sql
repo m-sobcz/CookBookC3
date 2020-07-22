@@ -9,3 +9,4 @@ AS
 INSERT INTO Ingredients 
 (Name,Description,Callories,Cost,Unit) 
 VALUES (@Name, @Description,@Callories ,@Cost, @Unit)
+SELECT CAST(SCOPE_IDENTITY() AS INT)

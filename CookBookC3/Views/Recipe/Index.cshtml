@@ -1,0 +1,76 @@
+﻿@model RecipesList
+<h1>Przepisy</h1>
+<!--Kategorie-->
+<h3 style="display: inline-block">Kuchnie</h3>
+<a style="vertical-align: text-bottom" asp-controller=@nameof(CookBookASP.Controllers.CuisineController).GetASPName()
+   asp-action=@ASPNames.Index>Edytuj</a>
+<!--Wybór kuchni do wyswietlania-->
+<ul class="nav nav-pills">
+    <li class="nav-item">
+        <a class="nav-link
+               @(Model.SelectedCuisineName is null ?"active": "")"
+           asp-action=@ASPNames.Index asp-controller=@nameof(CookBookASP.Controllers.RecipeController).GetASPName() asp-route-id="1"
+           asp-route-cuisine="">
+            Wszystkie
+        </a>
+    </li>
+    @foreach (var cuisine in Model.Cuisines)
+    {
+        <li class="nav-item">
+            <a class="nav-link
+                   @(Model.SelectedCuisineName == cuisine.Name?"active": "")"
+               asp-action=@ASPNames.Index asp-controller=@nameof(CookBookASP.Controllers.RecipeController).GetASPName()
+               asp-route-cuisine="@cuisine.Name" asp-route-id="1">
+                @cuisine.Name
+            </a>
+        </li>
+    }
+</ul>
+<!--Przepisy-->
+<h3 style="display: inline-block">Przepisy w kuchniach</h3>
+<a style="vertical-align: text-bottom" asp-action=@ASPNames.Create>Dodaj</a>
+
+@foreach (var recipe in Model.Recipes)
+{
+    <div class="card m-2">
+        <div class="card-body">
+            <h5 class="card-title">
+                @recipe.Name
+                @if (recipe.Cuisines != null)
+                {
+                    foreach (string category in Regex.Split(recipe.Cuisines, ","))
+                    {
+                        <p class="badge badge-info">@category</p>
+                    }
+                }
+            </h5>
+            <h7 class="card-subtitle">@recipe.Description.</h7>
+            <p class="card-text">Porcje: @recipe.Portions</p>
+
+            <div class="row">
+                <form asp-controller=@nameof(CookBookASP.Controllers.PurchaseController).GetASPName() asp-action=@ASPNames.Add method="post" class="m-1">
+                    <input name="id" type="hidden" value="@recipe.Id">
+                    <button type="submit" class="btn btn-secondary">
+                        Dodaj do listy zakupów
+                    </button>
+                </form>
+                <a asp-action=@ASPNames.Edit method="post" class="btn btn-secondary m-1"
+                   asp-route-id="@recipe.Id">
+                    Edytuj
+                </a>
+                <form asp-action=@ASPNames.Delete method="post" class="m-1">
+                    <input name="id" type="hidden" value="@recipe.Id">
+                    <button type="submit" class="btn btn-secondary" onclick="if (!confirm('Na pewno chcesz usunąć ?')) return false;">
+                        Usuń
+                    </button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+}
+<!--Nawigacja miedzy stronami-->
+<div class="row justify-content-center p-1">
+    <ul class="pagination" pagination-info="@Model.PaginationInfo" page-action=ASPNames.Index
+        page-outer-class-default="page-item" page-outer-class-selected="page-item active" page-inner-class-default="page-link"></ul>
+</div>

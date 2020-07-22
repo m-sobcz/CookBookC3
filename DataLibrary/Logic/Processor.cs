@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace DataLibrary.Logic
+namespace CookBookBLL.Logic
 {
     public class Processor
     {

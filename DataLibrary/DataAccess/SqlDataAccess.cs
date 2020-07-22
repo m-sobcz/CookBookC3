@@ -8,7 +8,7 @@ using Microsoft.Extensions.Configuration;
 using System.Linq;
 using System.Data.SqlClient;
 
-namespace DataLibrary.DataAccess
+namespace CookBookBLL.DataAccess
 {
     public class SqlDataAccess
     {
@@ -38,11 +38,11 @@ namespace DataLibrary.DataAccess
                 return data;
             }
         }
-        public  int SaveData<T>(string sql, T data, CommandType commandType = CommandType.StoredProcedure)
+        public int SaveData<T>(string sql, T data, CommandType commandType = CommandType.StoredProcedure)
         {
             using (IDbConnection connection = new SqlConnection(GetConnectionString()))
             {
-                return connection.Execute(sql, data, commandType: commandType);
+                return (int)connection.ExecuteScalar(sql, data, commandType: commandType);
             }
         }
         public int DeleteData(string sql, object parameter,CommandType commandType = CommandType.StoredProcedure)

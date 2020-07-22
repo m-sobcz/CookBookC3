@@ -1,25 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CookBookC3.Models;
+using CookBookASP.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
-using DataLibrary.Logic;
-using DataLibrary.DataAccess;
+using CookBookBLL.Logic;
+using CookBookBLL.DataAccess;
 using AutoMapper;
-using DataLibrary.Models;
-using CookBookC3.Controllers;
-using CookBookC3.Session;
+using CookBookBLL.Models;
+using CookBookASP.Session;
 using Microsoft.OpenApi.Models;
-
-namespace CookBookC3
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+namespace CookBookASP
 {
     public class Startup
     {
@@ -39,9 +32,15 @@ namespace CookBookC3
             {
                 config.CreateMap<IngredientUIO, IngredientDTO>();
                 config.CreateMap<CategoryUIO, CategoryDTO>();
+                config.CreateMap<CuisineUIO, CuisineDTO>();
+                config.CreateMap<RecipeUIO, RecipeDTO>();
+                config.CreateMap<StepUIO, StepDTO>();
             });
             mapper = mapperConfiguration.CreateMapper();
             services.AddSingleton<IMapper>(mapper);
+            //Identity
+            services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("CookBookIdentity")));
+            services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AppIdentityDbContext>().AddDefaultTokenProviders();
             //MVC and Microsoft
             services.AddControllersWithViews();
             services.AddHttpContextAccessor();
@@ -52,6 +51,8 @@ namespace CookBookC3
             services.AddSingleton<SqlDataAccess>();
             services.AddSingleton<IngredientProcessor>();
             services.AddSingleton<CategoryProcessor>();
+            services.AddSingleton<RecipeProcessor>();
+            services.AddSingleton<CuisineProcessor>();
             services.AddTransient<SessionManager<Purchase>>();
             //Swagger
             services.AddSwaggerGen(c =>
@@ -85,10 +86,10 @@ namespace CookBookC3
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
             app.UseSession();
-            
+
 
             app.UseEndpoints(endpoints =>
             {
@@ -105,7 +106,7 @@ namespace CookBookC3
                 endpoints.MapControllerRoute(
                     name: "Category",
                     pattern: "Skladniki/{category}/{id?}",
-                    defaults: new { Controller = "Ingredient", action="Index" }
+                    defaults: new { Controller = "Ingredient", action = "Index" }
                     );
                 endpoints.MapControllerRoute(
                     name: "default",

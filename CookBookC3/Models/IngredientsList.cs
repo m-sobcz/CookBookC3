@@ -1,10 +1,10 @@
-﻿using DataLibrary.Models;
+﻿using CookBookBLL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CookBookC3.Models
+namespace CookBookASP.Models
 {
     public class IngredientsList
     {

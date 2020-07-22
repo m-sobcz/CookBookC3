@@ -5,15 +5,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CookBookC3.Models
+namespace CookBookASP.Models
 {
-    public class IngredientUIO
+    public class IngredientUIO : UIO
     {
-       
-        const string ErrorMessageText = "Podanie tego pola jest obowiązkowe";
         public int Id { get; set; }
         [Display(Name = "Nazwa")]
-        [Required(ErrorMessage = ErrorMessageText)]
         public string Name { get; set; }
         [Display(Name = "Opis")]
         [Required(ErrorMessage = ErrorMessageText)]

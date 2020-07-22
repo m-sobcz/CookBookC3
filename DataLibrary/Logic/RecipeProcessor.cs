@@ -1,13 +1,13 @@
-﻿using DataLibrary.DataAccess;
-using DataLibrary.Models;
+﻿using CookBookBLL.DataAccess;
+using CookBookBLL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace DataLibrary.Logic
+namespace CookBookBLL.Logic
 {
-    class RecipeProcessor : Processor
+    public class RecipeProcessor : Processor
     {
         private SqlDataAccess sqlDataAccess;
 
@@ -38,13 +38,14 @@ namespace DataLibrary.Logic
             {
                 StartIndex = startIndex,
                 NumberOfRows = numberOfRows,
-                CategoryName = cuisineName
+                CuisineName = cuisineName
             };
             return sqlDataAccess.LoadData<RecipeWithCuisines, string, RecipeWithCuisines>
                 (
                 GetDefaultStoredProcedureName(),
                 (recipe, cuisines) => { recipe.Cuisines = cuisines; return recipe; },
-                parameters
+                parameters,
+                splitOn: "CuisineList"
                 );
         }
 
@@ -65,7 +66,7 @@ namespace DataLibrary.Logic
             };
             return sqlDataAccess.LoadData<int>(GetDefaultStoredProcedureName(), parameters).FirstOrDefault();
         }
-        public int RemoveCategory(int recipeID, int cuisineId)
+        public int RemoveCuisine(int recipeID, int cuisineId)
         {
             var parameter = new
             {

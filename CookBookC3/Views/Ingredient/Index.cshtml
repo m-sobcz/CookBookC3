@@ -1,74 +1,76 @@
 ﻿@model IngredientsList
-    <h1>Składniki</h1>
-    <!--Dodawanie nowego skladnika-->
-    <div class="row justify-content-center p-1">
-        <a asp-action="Create" class="btn btn-primary ">Dodaj nowy</a>
-    </div>
-
-    <!--Kategorie-->
-    <div class="row p-1">
-        <a class="btn btn-outline-primary m-1
+<h1>Produkty</h1>
+<!--Kategorie-->
+<h3 style="display: inline-block">Kategorie</h3>
+<a style="vertical-align: text-bottom" asp-controller=@nameof(CookBookASP.Controllers.CategoryController).GetASPName() asp-action=@ASPNames.Index>Edytuj</a>
+<!--Wybór kategorii do wyswietlania-->
+<ul class="nav nav-pills">
+    <li class="nav-item">
+        <a class="nav-link
                @(Model.SelectedCategoryName is null ?"active": "")"
-           asp-action="Index" asp-controller="Ingredient" asp-route-id="1"
+           asp-action=@ASPNames.Index asp-controller=@nameof(CookBookASP.Controllers.IngredientController).GetASPName() asp-route-id="1"
            asp-route-category="">
             Wszystkie
         </a>
-
-        @foreach (var category in Model.Categories)
-        {
-            <a class="btn btn-outline-primary m-1
+    </li>
+    @foreach (var category in Model.Categories)
+    {
+        <li class="nav-item">
+            <a class="nav-link
                    @(Model.SelectedCategoryName == category.Name?"active": "")"
-               asp-action="Index" asp-controller="Ingredient"
+               asp-action=@ASPNames.Index asp-controller=@nameof(CookBookASP.Controllers.IngredientController).GetASPName()
                asp-route-category="@category.Name" asp-route-id="1">
                 @category.Name
             </a>
-        }
-    </div>
-    <!--Skladniki-->
-    @foreach (var ingredient in Model.Ingredients)
-    {
-        <div class="card m-2">
-            <div class="card-body">
-                <h4 class="card-title">@ingredient.Name</h4>
-                @if (@ingredient.Categories != null)
-                {
-                    foreach (string category in Regex.Split(ingredient.Categories, ","))
-                    {
-                        <p class="badge badge-info">@category</p>
-                    }
-                }
-                <h6 class="card-subtitle">@ingredient.Description.</h6>
-                <p class="card-text">Jednostka: @ingredient.Unit</p>
-                <p class="card-text">Kalorie: @ingredient.Callories</p>
-                <p class="card-text">Koszt: @ingredient.Cost.ToString("c")</p>
-                <div class="row">
-                    <form asp-controller="Purchase" asp-action="Add" method="post" class="m-1">
-                        <input name="id" type="hidden" value="@ingredient.Id">
-                        <button type="submit" class="btn btn-secondary">
-                            Dodaj do listy
-                        </button>
-                    </form>
-                    <a asp-action="Edit" method="post" class="btn btn-secondary m-1"
-                       asp-route-id="@ingredient.Id">
-                        Edytuj
-                    </a>
-                    <form asp-action="Delete" method="post" class="m-1">
-                        <input name="id" type="hidden" value="@ingredient.Id">
-                        <button type="submit" class="btn btn-secondary" onclick="if (!confirm('Na pewno chcesz usunąć ?')) return false;">
-                            Usuń
-                        </button>
-                    </form>
-                    <a asp-action="Categories" method="post" class="btn btn-secondary m-1"
-                       asp-route-id="@ingredient.Id">
-                        Kategorie
-                    </a>
-                </div>
-            </div>
-
-        </div>
+        </li>
     }
-    <!--Nawigacja miedzy stronami-->
-    <div class="row justify-content-center p-1">
-        <ul class="pagination" pagination-info="@Model.PaginationInfo" page-action="Index"
-            page-outer-class-default="page-item" page-outer-class-selected="page-item active" page-inner-class-default="page-link"></ul>
+</ul>
+<!--Produkty-->
+<h3 style="display: inline-block">Produkty w kategorii</h3>
+<a style="vertical-align: text-bottom" asp-action=@ASPNames.Create>Dodaj</a>
+
+@foreach (var ingredient in Model.Ingredients)
+{
+    <div class="card m-2">
+        <div class="card-body">
+            <h5 class="card-title">
+                @ingredient.Name
+                        @if (@ingredient.Categories != null)
+                        {
+                            foreach (string category in Regex.Split(ingredient.Categories, ","))
+                            {
+                                <p class="badge badge-info">@category</p>
+                            }
+                        }
+                    </h5>
+            <h7 class="card-subtitle">@ingredient.Description.</h7>
+            <p class="card-text">Jednostka: @ingredient.Unit</p>
+            <p class="card-text">Kalorie: @ingredient.Callories</p>
+            <p class="card-text">Koszt: @ingredient.Cost.ToString("c")</p>
+            <div class="row">
+                <form asp-controller=@nameof(CookBookASP.Controllers.PurchaseController).GetASPName() asp-action=@ASPNames.Add method="post" class="m-1">
+                    <input name="id" type="hidden" value="@ingredient.Id">
+                    <button type="submit" class="btn btn-secondary">
+                        Dodaj do listy zakupów
+                    </button>
+                </form>
+                <a asp-action=@ASPNames.Edit method="post" class="btn btn-secondary m-1"
+                   asp-route-id="@ingredient.Id">
+                    Edytuj
+                </a>
+                <form asp-action=@ASPNames.Delete method="post" class="m-1">
+                    <input name="id" type="hidden" value="@ingredient.Id">
+                    <button type="submit" class="btn btn-secondary" onclick="if (!confirm('Na pewno chcesz usunąć ?')) return false;">
+                        Usuń
+                    </button>
+                </form>
+            </div>
+        </div>
+
     </div>
+}
+<!--Nawigacja miedzy stronami-->
+<div class="row justify-content-center p-1">
+    <ul class="pagination" pagination-info="@Model.PaginationInfo" page-action=@ASPNames.Index
+        page-outer-class-default="page-item" page-outer-class-selected="page-item active" page-inner-class-default="page-link"></ul>
+</div>

@@ -6,3 +6,4 @@ AS
 UPDATE Categories 
 SET Name=@Name, Description=@Description 
 WHERE Id=@Id
+SELECT CAST(SCOPE_IDENTITY() AS INT)

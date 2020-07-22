@@ -1,6 +1,6 @@
 using System;
 
-namespace CookBookC3.Models
+namespace CookBookASP.Models
 {
     public class ErrorViewModel
     {

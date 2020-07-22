@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CookBookC3.Converters;
-using CookBookC3.Extensions;
-using CookBookC3.Models;
-using CookBookC3.Session;
-using DataLibrary.Enums;
-using DataLibrary.Logic;
+﻿using CookBookASP.Converters;
+using CookBookASP.Models;
+using CookBookASP.Session;
+using CookBookBLL.Logic;
 using Microsoft.AspNetCore.Mvc;
+using static CookBookASP.Converters.ModelConverter;
 
-namespace CookBookC3.Controllers
+
+namespace CookBookASP.Controllers
 {
     public class PurchaseController : Controller
     {
-        private SessionManager<Purchase> sessionManager;
-        private IngredientProcessor ingredientProcessor;
+        private readonly SessionManager<Purchase> sessionManager;
+        private readonly IngredientProcessor ingredientProcessor;
 
         public PurchaseController(IngredientProcessor ingredientProcessor, SessionManager<Purchase> sessionManager)
         {
@@ -30,7 +26,7 @@ namespace CookBookC3.Controllers
 
         public ActionResult Add(int id)
         {    
-            IngredientUIO Ingredient = ingredientProcessor.Get(id).DTOToUIO();
+            IngredientUIO Ingredient = ingredientProcessor.Get(id).DTOToUIO(MapIngredient);
             if (Ingredient != null)
             {
                 Purchase purchase = sessionManager.GetItem();
@@ -42,7 +38,7 @@ namespace CookBookC3.Controllers
 
         public RedirectToActionResult Remove(int id)
         {
-            IngredientUIO Ingredient = ingredientProcessor.Get(id).DTOToUIO();
+            IngredientUIO Ingredient = ingredientProcessor.Get(id).DTOToUIO(MapIngredient);
 
             if (Ingredient != null)
             {

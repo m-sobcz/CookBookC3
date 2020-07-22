@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DataLibrary.Models
+namespace CookBookBLL.Models
 {
     public class IngredientWithCategories : IngredientDTO
     {

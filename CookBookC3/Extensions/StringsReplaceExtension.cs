@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CookBookC3.Extensions
+namespace CookBookASP.Extensions
 {
     public static class StringsReplaceExtension
     {

@@ -1,10 +1,9 @@
 ﻿@model List<CategoryUIO>
     <div>
-        <h3>Dodaj kategorię do składnika</h3>
         @foreach (var category in Model)
         {
             <a class="btn btn-outline-secondary m-1"
-               asp-action="AddCategory" asp-controller="Ingredient"
+               asp-action=@ASPNames.AddCategory asp-controller=@nameof(CookBookASP.Controllers.IngredientController).GetASPName()
                asp-route-categoryid="@category.Id" asp-route-id="@(ViewContext.RouteData.Values["id"])">
                 @category.Name
             </a>

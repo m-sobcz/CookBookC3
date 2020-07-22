@@ -5,9 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using CookBookC3.Models;
+using CookBookASP.Models;
 
-namespace CookBookC3.Controllers
+namespace CookBookASP.Controllers
 {
     public class HomeController : Controller
     {

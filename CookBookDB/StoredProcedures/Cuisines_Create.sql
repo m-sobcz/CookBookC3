@@ -6,3 +6,4 @@ AS
 INSERT INTO Cuisines 
 (Name,Description) 
 VALUES (@Name, @Description)
+SELECT CAST(SCOPE_IDENTITY() AS INT)

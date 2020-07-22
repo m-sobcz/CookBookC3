@@ -1,13 +1,15 @@
-﻿using CookBookC3.Converters;
-using CookBookC3.Extensions;
-using DataLibrary.Logic;
+﻿using CookBookASP.Converters;
+using CookBookASP.Extensions;
+using CookBookASP.Models;
+using CookBookBLL.Logic;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static CookBookASP.Converters.ModelConverter;
 
-namespace CookBookC3.Components
+namespace CookBookASP.Components
 {
     public class CategorySelectionViewComponent : ViewComponent
     {
@@ -19,7 +21,7 @@ namespace CookBookC3.Components
         }
         public IViewComponentResult Invoke(int id)
         {
-            var categories = ingredientProcessor.GetUnusedCategories(id).DTOToUIOList();
+            List<CategoryUIO> categories = ingredientProcessor.GetUnusedCategories(id).DTOToUIOList(MapCategory);
             return View(categories);
         }
     }

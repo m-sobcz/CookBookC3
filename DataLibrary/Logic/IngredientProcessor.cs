@@ -1,6 +1,6 @@
-﻿using DataLibrary.DataAccess;
-using DataLibrary.Enums;
-using DataLibrary.Models;
+﻿using CookBookBLL.DataAccess;
+using CookBookBLL.Enums;
+using CookBookBLL.Models;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace DataLibrary.Logic
+namespace CookBookBLL.Logic
 {
     public class IngredientProcessor : Processor
     {
@@ -48,7 +48,8 @@ namespace DataLibrary.Logic
                 (
                 GetDefaultStoredProcedureName(),
                 (ingredient, categories) => { ingredient.Categories = categories; return ingredient; },
-                parameters
+                parameters,
+                splitOn: "CategoryList"
                 );
         }
 

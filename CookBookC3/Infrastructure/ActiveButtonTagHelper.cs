@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CookBookC3.Infrastructure
+namespace CookBookASP.Infrastructure
 {
     [HtmlTargetElement("btn", Attributes = "is-active")]
     public class ActiveButtonTagHelper : TagHelper

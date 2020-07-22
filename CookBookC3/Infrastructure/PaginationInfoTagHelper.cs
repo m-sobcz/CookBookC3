@@ -1,4 +1,4 @@
-﻿using CookBookC3.Models;
+﻿using CookBookASP.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CookBookC3.Infrastructure
+namespace CookBookASP.Infrastructure
 {
     [HtmlTargetElement("ul",Attributes="pagination-info")]
     public class PaginationInfoTagHelper : TagHelper

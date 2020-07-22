@@ -2,5 +2,5 @@
 (
 	[Id] INT NOT NULL PRIMARY KEY, 
     [Name] NVARCHAR(100) NULL, 
-    [Email] NVARCHAR(100) NULL
+    [Email] NVARCHAR(1000) NULL
 )

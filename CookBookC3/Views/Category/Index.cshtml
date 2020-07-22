@@ -1,9 +1,7 @@
-﻿@model IEnumerable<CookBookC3.Models.CategoryUIO>
+﻿@model IEnumerable<CookBookASP.Models.CategoryUIO>
 
-<h1>Kategorie</h1>
-<div class="row justify-content-center p-1">
-    <a asp-action="Create" class="btn btn-primary ">Dodaj nową</a>
-</div>
+<h1>Kategorie produktów</h1>
+<a asp-action=@ASPNames.Create>Dodaj</a>
 
 <!--Kategorie-->
 @*Wyswietlanie i usuwanie kategorii*@
@@ -30,19 +28,22 @@
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
                 <td>
-                    <a asp-action="Edit" method="post" class="btn btn-secondary m-1"
-                       asp-route-id="@item.Id">
-                        Edytuj
-                    </a>
-                    <form asp-action="Delete" method="post" class="m-1">
-                        <input name="id" type="hidden" value="@item.Id">
-                        <button type="submit" class="btn btn-secondary" onclick="if (!confirm('Na pewno chcesz usunąć ?')) return false;">
-                            Usuń
-                        </button>
-                    </form>
+                    <div class="row">
+                        <a asp-action=@ASPNames.Edit method="post" class="btn btn-secondary btn-sm m-1"
+                           asp-route-id="@item.Id">
+                            Edytuj
+                        </a>
+                        <form asp-action=@ASPNames.Delete method="post" class="m-1">
+                            <input name="id" type="hidden" value="@item.Id">
+                            <button type="submit" class="btn btn-secondary btn-sm" onclick="if (!confirm('Na pewno chcesz usunąć ?')) return false;">
+                                Usuń
+                            </button>
+                        </form>
+                    </div>
                 </td>
             </tr>
         }
 
     </tbody>
 </table>
+<a class="row" asp-controller=@nameof(CookBookASP.Controllers.IngredientController).GetASPName() asp-action=@ASPNames.Index>Powrót</a>

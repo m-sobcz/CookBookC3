@@ -9,3 +9,4 @@ AS
 UPDATE Ingredients 
 SET Name=@Name, Description=@Description, Callories=@Callories, Cost=@Cost 
 WHERE Id=@Id
+SELECT CAST(SCOPE_IDENTITY() AS INT)

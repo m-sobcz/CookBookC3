@@ -1,0 +1,49 @@
+﻿@model IEnumerable<CookBookASP.Models.CuisineUIO>
+
+<h1>Rodzaje kuchni</h1>
+<a asp-action=@ASPNames.Create>Dodaj</a>
+
+<!--Kuchnie-->
+@*Wyswietlanie i usuwanie kategorii*@
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    <div class="row">
+                        <a asp-action=@ASPNames.Edit method="post" class="btn btn-secondary btn-sm m-1"
+                           asp-route-id="@item.Id">
+                            Edytuj
+                        </a>
+                        <form asp-action=@ASPNames.Delete method="post" class="m-1">
+                            <input name="id" type="hidden" value="@item.Id">
+                            <button type="submit" class="btn btn-secondary btn-sm" onclick="if (!confirm('Na pewno chcesz usunąć ?')) return false;">
+                                Usuń
+                            </button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+<a class="row" asp-controller=@nameof(CookBookASP.Controllers.RecipeController).GetASPName() asp-action=@ASPNames.Index>Powrót</a>

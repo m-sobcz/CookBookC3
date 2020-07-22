@@ -117,13 +117,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Comparison\ProjectVsLocalComparison.scmp" />
+    <None Include="CookBookDB.publish.xml" />
     <None Include="PublishProfiles\CookBookDB.publish.xml" />
-    <None Include="Data-tier\v1.dacpac" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="CookBookDB.refactorlog" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="PostDeploymentScripts\Script.PostDeployment1.sql" />
+    <None Include="PostDeploymentScripts\SetIdentityPostDeployment.sql" />
   </ItemGroup>
 </Project>

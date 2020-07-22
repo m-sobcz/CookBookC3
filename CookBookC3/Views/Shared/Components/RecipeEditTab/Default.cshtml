@@ -1,0 +1,12 @@
+﻿@model TabWithId
+<h1>Edycja przepisu</h1>
+<ul class="nav nav-pills">
+    <li class="nav-item">
+        <a class="nav-link @(@Model.Tab == 1 ? "active": "")" asp-action=@ASPNames.Edit asp-route-id=@Model.Id>Ogólne</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link @(@Model.Tab == 2 ? "active": "")" asp-action=@ASPNames.Cuisines asp-route-id=@Model.Id>Kuchnie</a>
+    </li>
+</ul>
+
+

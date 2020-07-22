@@ -1,12 +1,12 @@
-﻿using CookBookC3.Extensions;
-using CookBookC3.Models;
+﻿using CookBookASP.Extensions;
+using CookBookASP.Models;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CookBookC3.Session
+namespace CookBookASP.Session
 {
     public class SessionManager<T> where T : new()
     {
