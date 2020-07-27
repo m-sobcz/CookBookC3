@@ -12,7 +12,7 @@ namespace CookBookBLL.DataAccess
 {
     public class SqlDataAccess
     {
-        private IConfiguration configuration;
+        private readonly IConfiguration configuration;
 
         public SqlDataAccess(IConfiguration configuration)
         {
@@ -34,20 +34,19 @@ namespace CookBookBLL.DataAccess
         {
             using (IDbConnection connection = new SqlConnection(GetConnectionString()))
             {
-                var data= connection.Query<Tin1,Tin2,Tout>(sql,mapping, parameter, commandType: commandType, splitOn: splitOn).ToList();//!
-                return data;
+                return connection.Query<Tin1, Tin2, Tout>(sql, mapping, parameter, commandType: commandType, splitOn: splitOn).ToList();
             }
         }
         public int SaveData<T>(string sql, T data, CommandType commandType = CommandType.StoredProcedure)
         {
             using (IDbConnection connection = new SqlConnection(GetConnectionString()))
             {
-                return (int)connection.ExecuteScalar(sql, data, commandType: commandType);
+                object result = connection.ExecuteScalar(sql, data, commandType: commandType);
+                return (int.TryParse(result?.ToString(), out int intResult)) ? intResult : -1;
             }
         }
         public int DeleteData(string sql, object parameter,CommandType commandType = CommandType.StoredProcedure)
         {
-            //parameter=new { Id = id }
             using (IDbConnection connection = new SqlConnection(GetConnectionString()))
             {
                 return connection.Execute(sql, parameter, commandType: commandType);
