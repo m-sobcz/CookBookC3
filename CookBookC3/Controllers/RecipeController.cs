@@ -3,6 +3,7 @@ using System.Linq;
 using AutoMapper;
 using CookBookASP.Converters;
 using CookBookASP.Models;
+using CookBookASP.Session;
 using CookBookBLL.Logic;
 using CookBookBLL.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -15,12 +16,16 @@ namespace CookBookASP.Controllers
         private readonly IMapper mapper;
         private readonly RecipeProcessor recipeProcessor;
         private readonly CuisineProcessor cuisineProcessor;
+        private readonly SessionManager<ItemInfo> sessionManager;
+
         public int RecipesPerPage { get; set; } = 6;
-        public RecipeController(RecipeProcessor recipeProcessor, CuisineProcessor cuisineProcessor, IMapper mapper)
+        public RecipeController(RecipeProcessor recipeProcessor, CuisineProcessor cuisineProcessor, IMapper mapper,
+            SessionManager<ItemInfo> sessionManager)
         {
             this.mapper = mapper;
             this.recipeProcessor = recipeProcessor;
             this.cuisineProcessor = cuisineProcessor;
+            this.sessionManager = sessionManager;
         }
         public ActionResult Index(int id = 1, string cuisine = null)
         {
@@ -47,12 +52,13 @@ namespace CookBookASP.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Create(RecipeUIO ingredient)
+        public ActionResult Create(RecipeUIO recipe)
         {
             if (ModelState.IsValid)
             {
-                recipeProcessor.Create(mapper.Map<RecipeDTO>(ingredient));
-                return RedirectToAction(nameof(Index));
+                int id = recipeProcessor.Create(mapper.Map<RecipeDTO>(recipe));
+                sessionManager.SetItem(new ItemInfo() { Name = recipe.Name });
+                return RedirectToAction(nameof(Cuisines), new { id });
             }
             else
             {
@@ -76,6 +82,7 @@ namespace CookBookASP.Controllers
         public ActionResult Edit(int id)
         {
             RecipeUIO model = recipeProcessor.Get(id).DTOToUIO(MapRecipe);
+            sessionManager.SetItem(new ItemInfo() { Name = model.Name });
             return View(model);
         }
         [HttpPost]

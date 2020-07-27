@@ -3,6 +3,7 @@ using System.Linq;
 using AutoMapper;
 using CookBookASP.Converters;
 using CookBookASP.Models;
+using CookBookASP.Session;
 using CookBookBLL.Logic;
 using CookBookBLL.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -16,13 +17,16 @@ namespace CookBookASP.Controllers
         private readonly IMapper mapper;
         private readonly IngredientProcessor ingredientProcessor;
         private readonly CategoryProcessor categoryProcessor;
+        private readonly SessionManager<ItemInfo> sessionManager;
 
         public int IngredientsPerPage { get; set; } = 6;
-        public IngredientController(IngredientProcessor ingredientProcessor, CategoryProcessor categoryProcessor, IMapper mapper)
+        public IngredientController(IngredientProcessor ingredientProcessor, CategoryProcessor categoryProcessor, 
+            IMapper mapper, SessionManager<ItemInfo> sessionManager)
         {
             this.mapper = mapper;
             this.ingredientProcessor = ingredientProcessor;
             this.categoryProcessor = categoryProcessor;
+            this.sessionManager = sessionManager;
         }
         public ActionResult Index(int id = 1, string category=null)
         {
@@ -54,6 +58,7 @@ namespace CookBookASP.Controllers
             if (ModelState.IsValid)
             {
                 int id=ingredientProcessor.Create(mapper.Map<IngredientDTO>(ingredient));
+                sessionManager.SetItem(new ItemInfo() { Name = ingredient.Name });
                 return RedirectToAction(nameof(Categories),new { id });
             }
             else
@@ -78,6 +83,7 @@ namespace CookBookASP.Controllers
         public ActionResult Edit(int id)
         {
             IngredientUIO model=ingredientProcessor.Get(id).DTOToUIO(MapIngredient);
+            sessionManager.SetItem(new ItemInfo() { Name = model.Name });
             return View(model);
         }
         [HttpPost]

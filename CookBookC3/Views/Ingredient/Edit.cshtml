@@ -1,6 +1,7 @@
 ﻿@model CookBookASP.Models.IngredientUIO
-@await Component.InvokeAsync(nameof(CookBookASP.Components.IngredientEditTabViewComponent).GetASPName(), 
-    new TabWithId { Tab = 1, Id = Convert.ToInt32((ViewContext.RouteData.Values["id"])) })
+@inject CookBookASP.Session.SessionManager<ItemInfo> SessionManger
+@await Component.InvokeAsync(nameof(CookBookASP.Components.IngredientEditTabViewComponent).GetASPName(),
+    new TabWithId { Tab = 1, Id = Convert.ToInt32(ViewContext.RouteData.Values["id"]), Name = SessionManger.GetItem()?.Name ?? "" })
 <div class="row">
     <div class="col-md-4">
         <form asp-action=@ASPNames.Edit>

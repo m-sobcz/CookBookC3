@@ -1,47 +1,48 @@
 ﻿@model IEnumerable<CookBookASP.Models.CuisineUIO>
+@inject CookBookASP.Session.SessionManager<ItemInfo> SessionManger
 @await Component.InvokeAsync(nameof(CookBookASP.Components.RecipeEditTabViewComponent).GetASPName(),
-    new TabWithId { Tab = 2, Id = Convert.ToInt32((ViewContext.RouteData.Values["id"])) })
-    @*Wyswietlanie i usuwanie kuchni*@
-    <h3>Aktualne rodzaje kuchni</h3>
-    <table class="table">
-        <thead>
+    new TabWithId { Tab = 2, Id = Convert.ToInt32(ViewContext.RouteData.Values["id"]), Name = SessionManger.GetItem()?.Name ?? "" })
+@*Wyswietlanie i usuwanie kuchni*@
+<h3>Aktualne rodzaje kuchni</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
             <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Name)
-
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Description)
-                </th>
-                <th></th>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    <a asp-action=@ASPNames.RemoveCuisine method="post" class="btn btn-secondary m-1"
+                       asp-route-id=@(ViewContext.RouteData.Values["id"]) asp-route-cuisineId="@item.Id">
+                        Usuń
+                    </a>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Description)
-                    </td>
-                    <td>
-                        <a asp-action=@ASPNames.RemoveCuisine method="post" class="btn btn-secondary m-1"
-                           asp-route-id=@(ViewContext.RouteData.Values["id"]) asp-route-cuisineId="@item.Id">
-                            Usuń
-                        </a>
-                    </td>
-                </tr>
-            }
+        }
 
-        </tbody>
-    </table>
+    </tbody>
+</table>
 
-    @*Dodawanie kuchni*@
-    <h3>Dodawanie rodzajów kuchni</h3>
-    @await Component.InvokeAsync(nameof(CookBookASP.Components.CuisineSelectionViewComponent).GetASPName(), new { id = Convert.ToInt32((ViewContext.RouteData.Values["id"])) })
+@*Dodawanie kuchni*@
+<h3>Dodawanie rodzajów kuchni</h3>
+@await Component.InvokeAsync(nameof(CookBookASP.Components.CuisineSelectionViewComponent).GetASPName(), new { id = Convert.ToInt32((ViewContext.RouteData.Values["id"])) })
 
-    <div>
-        <a asp-action=@ASPNames.Index>Powrót</a>
-    </div>
+<div>
+    <a asp-action=@ASPNames.Index>Powrót</a>
+</div>

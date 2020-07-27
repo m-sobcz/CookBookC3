@@ -12,6 +12,8 @@ using CookBookASP.Session;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System;
+
 namespace CookBookASP
 {
     public class Startup
@@ -53,7 +55,8 @@ namespace CookBookASP
             services.AddSingleton<CategoryProcessor>();
             services.AddSingleton<RecipeProcessor>();
             services.AddSingleton<CuisineProcessor>();
-            services.AddTransient<SessionManager<Purchase>>();
+            services.AddScoped<SessionManager<Purchase>>();
+            services.AddScoped<SessionManager<ItemInfo>>();
             //Swagger
             services.AddSwaggerGen(c =>
             {

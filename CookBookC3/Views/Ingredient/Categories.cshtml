@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<CookBookASP.Models.CategoryUIO>
+@inject CookBookASP.Session.SessionManager<ItemInfo> SessionManger
 @await Component.InvokeAsync(nameof(CookBookASP.Components.IngredientEditTabViewComponent).GetASPName(),
-    new TabWithId { Tab = 2, Id = Convert.ToInt32((ViewContext.RouteData.Values["id"])) })
+    new TabWithId { Tab = 2, Id = Convert.ToInt32(ViewContext.RouteData.Values["id"]), Name = SessionManger.GetItem()?.Name ?? "" })
 @*Wyswietlanie i usuwanie kategorii*@
 <h3>Aktualne kategorie</h3>
 <table class="table">

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using CookBookASP.Converters;
 using CookBookASP.Models;
+using CookBookASP.Session;
 using CookBookBLL.Logic;
 using CookBookBLL.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -15,11 +16,13 @@ namespace CookBookASP.Controllers
 {
     public class CategoryController : Controller
     {
+        private readonly SessionManager<ItemInfo> sessionManager;
         private readonly IMapper mapper;
         private readonly CategoryProcessor categoryProcessor;
 
-        public CategoryController(CategoryProcessor categoryProcessor, IMapper mapper)
+        public CategoryController(CategoryProcessor categoryProcessor, IMapper mapper, SessionManager<ItemInfo> sessionManager)
         {
+            this.sessionManager = sessionManager;
             this.mapper = mapper;
             this.categoryProcessor = categoryProcessor;
         }

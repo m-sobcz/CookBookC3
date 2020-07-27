@@ -5,10 +5,8 @@ using System.Threading.Tasks;
 
 namespace CookBookASP.Models
 {
-    public class TabWithId
+    public class ItemInfo
     {
-        public int Tab { get; set; }
-        public int Id { get; set; }
         public string Name { get; set; }
     }
 }
