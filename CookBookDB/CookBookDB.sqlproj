@@ -114,6 +114,11 @@
     <Build Include="StoredProcedures\RecipesCuisines_DeleteByCuisines.sql" />
     <Build Include="StoredProcedures\Recipes_RemoveCuisine.sql" />
     <Build Include="StoredProcedures\Recipes_AddCuisine.sql" />
+    <Build Include="StoredProcedures\Steps_Get.sql" />
+    <Build Include="StoredProcedures\Steps_Delete.sql" />
+    <Build Include="dbo\Tables\Recipes_UpdateStep.sql" />
+    <Build Include="StoredProcedures\Steps_Create.sql" />
+    <Build Include="StoredProcedures\Steps_Update.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Comparison\ProjectVsLocalComparison.scmp" />

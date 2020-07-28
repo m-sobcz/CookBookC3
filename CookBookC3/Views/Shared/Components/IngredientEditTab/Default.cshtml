@@ -1,13 +1,16 @@
 ﻿@model TabWithId
-<h1>@Model.Name</h1>
-<h3>Edycja produktu</h3>
+@inject CookBookASP.Session.SessionManager<ItemInfo> SessionManger
+@{
+    int id = Convert.ToInt32(ViewContext.RouteData.Values["id"]);
+    string name = SessionManger.GetItem()?.Name ?? "";
+}
+<h1>@name</h1>
+<h3>Edycja przepisu</h3>
 <ul class="nav nav-pills">
     <li class="nav-item">
-        <a class="nav-link @(@Model.Tab == 1 ? "active": "")" asp-action=@ASPNames.Edit asp-route-id=@Model.Id>Ogólne</a>
+        <a class="nav-link @(Model.Tab == 1 ? "active": "")" asp-action=@ASPNames.Edit asp-route-id=@id>Ogólne</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link @(@Model.Tab == 2 ? "active": "")" asp-action=@ASPNames.Categories asp-route-id=@Model.Id>Kategorie</a>
+        <a class="nav-link @(Model.Tab == 2 ? "active": "")" asp-action=@ASPNames.Categories asp-route-id=@id>Kategorie</a>
     </li>
 </ul>
-
-

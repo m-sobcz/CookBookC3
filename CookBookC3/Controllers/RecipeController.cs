@@ -106,5 +106,6 @@ namespace CookBookASP.Controllers
             recipeProcessor.AddCuisine(id, cuisineId);
             return RedirectToAction(nameof(Cuisines), new { id });
         }
+        
     }
 }

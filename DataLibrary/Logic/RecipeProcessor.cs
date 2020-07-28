@@ -91,7 +91,7 @@ namespace CookBookBLL.Logic
                 Recipes_Id = recipeId,
                 Cuisines_Id = cuisineId
             };
-            return sqlDataAccess.DeleteData(GetDefaultStoredProcedureName(), parameter);
+            return sqlDataAccess.SaveData(GetDefaultStoredProcedureName(), parameter);
         }
         public List<CuisineDTO> GetUnusedCuisines(int recipeID)
         {
@@ -101,5 +101,6 @@ namespace CookBookBLL.Logic
             };
             return sqlDataAccess.LoadData<CuisineDTO>(GetDefaultStoredProcedureName(), parameter);
         }
+        
     }
 }

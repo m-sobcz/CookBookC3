@@ -1,8 +1,9 @@
 ﻿@model IEnumerable<CookBookASP.Models.CuisineUIO>
 
-<h1>Rodzaje kuchni</h1>
-<a asp-action=@ASPNames.Create>Dodaj</a>
-
+<div>
+    <h1 style="display: inline-block">Rodzaje kuchni</h1>
+    <a style="vertical-align: text-bottom" asp-action=@ASPNames.Create>Dodaj</a>
+</div>
 <!--Kuchnie-->
 @*Wyswietlanie i usuwanie kategorii*@
 <table class="table">

@@ -64,5 +64,14 @@ namespace CookBookASP.Converters
                 Portions=dto.Portions
             };
         }
+        public static StepUIO MapStep(StepDTO dto)
+        {
+            return new StepUIO()
+            {
+                Id=dto.Id,
+                Order=dto.Order,
+                Description=dto.Description
+            };
+        }
     }
 }

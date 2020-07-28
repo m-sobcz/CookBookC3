@@ -95,7 +95,7 @@ namespace CookBookBLL.Logic
                 Ingredients_Id = ingredientId,
                 Categories_Id = categoryId
             };
-            return sqlDataAccess.DeleteData(GetDefaultStoredProcedureName(), parameter);
+            return sqlDataAccess.SaveData(GetDefaultStoredProcedureName(), parameter);
         }
         public List<CategoryDTO> GetUnusedCategories(int ingredientId)
         {

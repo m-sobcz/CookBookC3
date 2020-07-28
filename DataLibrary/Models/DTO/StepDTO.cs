@@ -7,7 +7,8 @@ namespace CookBookBLL.Models
     public class StepDTO
     {
         public int Id { get; set; }
-        public static string Description { get; set; }
+        public string Description { get; set; }
         public int Order { get; set; }
+        public int Recipe_Id { get; set; }
     }
 }
