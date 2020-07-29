@@ -14,7 +14,6 @@ namespace CookBookASP.Models
         [Required(ErrorMessage = ErrorMessageText)]
         public string Description { get; set; }
         [Display(Name = "Kolejność")]
-        [Required(ErrorMessage = ErrorMessageText)]
         public int Order { get; set; }
     }
 }

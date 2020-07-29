@@ -1,0 +1,70 @@
+﻿@model IEnumerable<CookBookASP.Models.StepUIO>
+@await Component.InvokeAsync(nameof(CookBookASP.Components.RecipeEditTabViewComponent).GetASPName(),
+    new TabWithId { Tab = 3 })
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Order)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            string text = "text" + item.Id.ToString();
+            string btn = "btn" + item.Id.ToString();
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Order)
+                </td>
+                <td>
+                    <form asp-action=@ASPNames.Edit method="post">
+                        @Html.AntiForgeryToken()
+                        <div asp-validation-summary="None" class="text-danger"></div>
+                        <input name="id" type="hidden" value="@item.Id">
+                        <input name="Recipe_Id" type="hidden" value=@item.Recipe_Id>
+                        <div class="form-group">
+                            <textarea id="@text" name="Description" class="form-control" rows="5">@item.Description</textarea>
+                        </div>
+                        <div class="form-group">
+                            <input id="@btn" type="submit" value="Zmień" class="btn btn-secondary" />
+                        </div>
+                        @*<script>
+                            var input = document.getElementById("@text");
+                            input.addEventListener("keyup", function (event) {
+                                if (event.keyCode === 13) {
+                                    event.preventDefault();
+                                    document.getElementById("@btn").click();
+                                }
+                            });
+                        </script>*@
+                    </form>
+                    <form asp-action=@ASPNames.Delete method="post" class="m-1">
+                        <input name="id" type="hidden" value="@item.Id">
+                        <button type="submit" class="btn btn-secondary" onclick="if (!confirm('Na pewno chcesz usunąć ?')) return false;">
+                            Usuń
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+        <tr>
+            <td></td>
+            <td>
+                @{int recipeId = int.TryParse(ViewContext.RouteData.Values["id"]?.ToString(), out int extractedId) ? extractedId : 0;
+                    var createModel = new CookBookASP.Models.StepUIO() { Recipe_Id = recipeId };}
+                <partial name="_StepCreate" model=@createModel />
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+

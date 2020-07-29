@@ -41,7 +41,8 @@
 
 @*Dodawanie kuchni*@
 <h3>Dodawanie rodzajów kuchni</h3>
-@await Component.InvokeAsync(nameof(CookBookASP.Components.CuisineSelectionViewComponent).GetASPName(), new { id = Convert.ToInt32((ViewContext.RouteData.Values["id"])) })
+@await Component.InvokeAsync(nameof(CookBookASP.Components.CuisineSelectionViewComponent).GetASPName(),
+    new { id = int.TryParse(ViewContext.RouteData.Values["id"]?.ToString(), out int extractedId) ? extractedId : 0 })
 
 <div>
     <a asp-action=@ASPNames.Index>Powrót</a>

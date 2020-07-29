@@ -43,18 +43,21 @@ namespace CookBookASP
             //Identity
             services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("CookBookIdentity")));
             services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AppIdentityDbContext>().AddDefaultTokenProviders();
-            //MVC and Microsoft
+            //ASP MVC
             services.AddControllersWithViews();
             services.AddHttpContextAccessor();
             services.AddRazorPages().AddRazorRuntimeCompilation();
             services.AddMemoryCache();
             services.AddSession();
-            //Custom
+            //DataAccess
             services.AddSingleton<SqlDataAccess>();
+            //Logic
             services.AddSingleton<IngredientProcessor>();
             services.AddSingleton<CategoryProcessor>();
             services.AddSingleton<RecipeProcessor>();
             services.AddSingleton<CuisineProcessor>();
+            services.AddSingleton<StepProcessor>();
+            //SessionManager
             services.AddScoped<SessionManager<Purchase>>();
             services.AddScoped<SessionManager<ItemInfo>>();
             //Swagger
@@ -106,11 +109,11 @@ namespace CookBookASP
                 //    pattern: "Skladniki/{action}/{id?}",
                 //    defaults: new { Controller = "Ingredients"}
                 //    );
-                endpoints.MapControllerRoute(
-                    name: "Category",
-                    pattern: "Skladniki/{category}/{id?}",
-                    defaults: new { Controller = "Ingredient", action = "Index" }
-                    );
+                //endpoints.MapControllerRoute(
+                //    name: "Category",
+                //    pattern: "Skladniki/{category}/{id?}",
+                //    defaults: new { Controller = "Ingredient", action = "Index" }
+                //    );
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

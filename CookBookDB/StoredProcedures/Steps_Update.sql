@@ -4,6 +4,16 @@
 	@Order int,
 	@Recipe_Id int
 AS
-INSERT INTO Steps (Description) 
-VALUES (@Description)
-SELECT CAST(SCOPE_IDENTITY() AS INT)
+declare @ExtractedRecipeId int
+
+set @ExtractedRecipeId=(
+SELECT Steps.Recipe_Id
+FROM Steps
+WHERE Id=@Id
+)
+
+UPDATE Steps
+SET Description=@Description
+WHERE Id=@Id
+
+SELECT @ExtractedRecipeId

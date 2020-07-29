@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<CookBookASP.Models.CategoryUIO>
 @inject CookBookASP.Session.SessionManager<ItemInfo> SessionManger
 @await Component.InvokeAsync(nameof(CookBookASP.Components.IngredientEditTabViewComponent).GetASPName(),
-    new TabWithId { Tab = 2})
+    new TabWithId { Tab = 2 })
 @*Wyswietlanie i usuwanie kategorii*@
 <h3>Aktualne kategorie</h3>
 <table class="table">
@@ -41,8 +41,8 @@
 
 @*Dodawanie kategorii*@
 <h3>Dodawanie kategorii</h3>
-@await Component.InvokeAsync("CategorySelection", new { id = Convert.ToInt32((ViewContext.RouteData.Values["id"])) })
-
+@await Component.InvokeAsync("CategorySelection",
+    new { id = int.TryParse(ViewContext.RouteData.Values["id"]?.ToString(), out int extractedId) ? extractedId : 0 })
 <div>
     <a asp-action=@ASPNames.Index>Powrót</a>
 </div>

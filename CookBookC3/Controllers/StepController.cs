@@ -9,6 +9,7 @@ using CookBookASP.Session;
 using CookBookBLL.Logic;
 using CookBookBLL.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using static CookBookASP.Converters.ModelConverter;
 
 namespace CookBookASP.Controllers
@@ -25,7 +26,7 @@ namespace CookBookASP.Controllers
             this.mapper = mapper;
             this.stepProcessor = stepProcessor;
         }
-        public ActionResult Get(int id)
+        public ActionResult Index(int id)
         {
             List<StepUIO> model = stepProcessor.Get(id).DTOToUIOList(MapStep);
             return View(model);
@@ -33,8 +34,8 @@ namespace CookBookASP.Controllers
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            stepProcessor.Delete(id);
-            return RedirectToAction(nameof(Get), new { id });
+            int recipeId= stepProcessor.Delete(id);
+            return RedirectToAction(nameof(Index), new { id=recipeId });
         }
         [HttpGet]
         public ActionResult Create()
@@ -44,28 +45,18 @@ namespace CookBookASP.Controllers
         [HttpPost]
         public ActionResult Create(StepUIO model)
         {
-            if (ModelState.IsValid)
-            {
-                int id = stepProcessor.Create(mapper.Map<StepDTO>(model));
-                return RedirectToAction(nameof(Get), new { id });
-            }
-            else
-            {
-                return View();
-            }
+            stepProcessor.Create(mapper.Map<StepDTO>(model));
+            return RedirectToAction(nameof(Index),
+                new { id = model.Recipe_Id });
         }
+
         [HttpPost]
-        public ActionResult Update(StepUIO model)
+        public ActionResult Edit(StepUIO model)
         {
-            if (ModelState.IsValid)
-            {
-                stepProcessor.Update(mapper.Map<StepDTO>(model));
-                return RedirectToAction(nameof(Index));
-            }
-            else
-            {
-                return View(model);
-            }
+            int id=stepProcessor.Update(mapper.Map<StepDTO>(model));
+            return RedirectToAction(nameof(Index), 
+                new { id});
         }
     }
 }
+

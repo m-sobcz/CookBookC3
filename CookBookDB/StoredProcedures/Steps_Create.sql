@@ -4,11 +4,12 @@
 	@Order int,
 	@Recipe_Id int
 AS
-INSERT INTO Steps (Description,[Order],Recipe_Id) 
-VALUES (@Description, @Order,
+
+INSERT INTO Steps (Description,Recipe_Id,[Order]) 
+VALUES (@Description, @Recipe_Id,
 (
-	SELECT COALESCE(MAX(s.Recipe_Id),1)  
+	SELECT COALESCE(MAX(s.[Order]+1),1)  
 	FROM Steps s
 	WHERE Recipe_Id=@Recipe_Id)
 )
-SELECT CAST(SCOPE_IDENTITY() AS INT)
+SELECT @Recipe_Id

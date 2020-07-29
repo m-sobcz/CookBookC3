@@ -30,7 +30,7 @@ namespace CookBookBLL.Logic
             {
                 Id = stepId
             };
-            return sqlDataAccess.DeleteData(GetDefaultStoredProcedureName(), parameter);
+            return sqlDataAccess.SaveData(GetDefaultStoredProcedureName(), parameter);
         }
         public int Create(StepDTO stepModel)
         {
