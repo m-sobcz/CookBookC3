@@ -41,7 +41,7 @@ namespace CookBookBLL.Logic
             {
                 Id = id
             };
-            sqlDataAccess.DeleteData("RecipesCuisines_DeleteByCuisines", parameter);
+            //sqlDataAccess.DeleteData("RecipesCuisines_DeleteByCuisines", parameter);
             return sqlDataAccess.DeleteData(GetDefaultStoredProcedureName(), parameter);
         }
     }

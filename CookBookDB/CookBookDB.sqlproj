@@ -83,7 +83,6 @@
     <Build Include="StoredProcedures\Categories_Get.sql" />
     <Build Include="StoredProcedures\Categories_Create.sql" />
     <Build Include="StoredProcedures\Categories_Update.sql" />
-    <Build Include="StoredProcedures\IngredientsCategories_DeleteByCategories.sql" />
     <Build Include="StoredProcedures\Categories_Delete.sql" />
     <Build Include="StoredProcedures\Ingredients_Create.sql" />
     <Build Include="StoredProcedures\Ingredients_Update.sql" />
@@ -92,7 +91,6 @@
     <Build Include="StoredProcedures\Ingredients_GetCategories.sql" />
     <Build Include="StoredProcedures\Ingredients_Count.sql" />
     <Build Include="StoredProcedures\Ingredients_RemoveCategory.sql" />
-    <Build Include="StoredProcedures\IngredientsCategories_DeleteByIngredients.sql" />
     <Build Include="StoredProcedures\Ingredients_Delete.sql" />
     <Build Include="StoredProcedures\Ingredients_AddCategory.sql" />
     <Build Include="StoredProcedures\Ingredients_GetUnusedCategories.sql" />
@@ -110,15 +108,13 @@
     <Build Include="StoredProcedures\Cuisines_Get.sql" />
     <Build Include="StoredProcedures\Cuisines_GetAll.sql" />
     <Build Include="StoredProcedures\Cuisines_Update.sql" />
-    <Build Include="StoredProcedures\RecipesCuisines_DeleteByRecipes.sql" />
-    <Build Include="StoredProcedures\RecipesCuisines_DeleteByCuisines.sql" />
     <Build Include="StoredProcedures\Recipes_RemoveCuisine.sql" />
     <Build Include="StoredProcedures\Recipes_AddCuisine.sql" />
     <Build Include="StoredProcedures\Steps_Get.sql" />
     <Build Include="StoredProcedures\Steps_Delete.sql" />
-    <Build Include="dbo\Tables\Recipes_UpdateStep.sql" />
     <Build Include="StoredProcedures\Steps_Create.sql" />
     <Build Include="StoredProcedures\Steps_Update.sql" />
+    <Build Include="dbo\Tables\Recipes_Ingredients.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Comparison\ProjectVsLocalComparison.scmp" />

@@ -15,5 +15,6 @@ namespace CookBookASP.Models
         public string Name { get; set; }
         [Display(Name = "Opis")]
         public string Description { get; set; }
+        public int MyProperty => 5;
     }
 }

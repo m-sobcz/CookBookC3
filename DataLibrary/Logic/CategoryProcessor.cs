@@ -42,7 +42,7 @@ namespace CookBookBLL.Logic
             {
                 Id = id
             };
-            sqlDataAccess.DeleteData("IngredientsCategories_DeleteByCategories", parameter );
+            //sqlDataAccess.DeleteData("IngredientsCategories_DeleteByCategories", parameter );
             return sqlDataAccess.DeleteData(GetDefaultStoredProcedureName(), parameter );
         }
     }

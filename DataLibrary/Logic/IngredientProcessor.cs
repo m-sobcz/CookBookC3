@@ -85,7 +85,7 @@ namespace CookBookBLL.Logic
             {
                 Id = id
             };
-            sqlDataAccess.DeleteData("IngredientsCategories_DeleteByIngredients", parameter);
+            //sqlDataAccess.DeleteData("IngredientsCategories_DeleteByIngredients", parameter);
             return sqlDataAccess.DeleteData(GetDefaultStoredProcedureName(), parameter);
         }
         public int AddCategory(int ingredientId, int categoryId)
