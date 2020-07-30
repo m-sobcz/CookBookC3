@@ -23,21 +23,21 @@ namespace CookBookBLL.DataAccess
         {
             return configuration.GetConnectionString(connectionName);
         }
-        public List<T> LoadData<T>(string sql,object parameter=null, CommandType commandType=CommandType.StoredProcedure)
+        public List<T> Load<T>(string sql,object parameter=null, CommandType commandType=CommandType.StoredProcedure)
         {        
             using (IDbConnection connection = new SqlConnection(GetConnectionString()))
             {
                 return connection.Query<T>(sql, parameter,commandType: commandType).ToList();
             }
         }
-        public List<Tout> LoadData<Tin1,Tin2,Tout>(string sql,Func<Tin1,Tin2,Tout> mapping, object parameter = null, CommandType commandType = CommandType.StoredProcedure, string splitOn="CategoryList")
+        public List<Tout> Load<Tin1,Tin2,Tout>(string sql,Func<Tin1,Tin2,Tout> mapping, object parameter = null, CommandType commandType = CommandType.StoredProcedure, string splitOn="CategoryList")
         {
             using (IDbConnection connection = new SqlConnection(GetConnectionString()))
             {
                 return connection.Query<Tin1, Tin2, Tout>(sql, mapping, parameter, commandType: commandType, splitOn: splitOn).ToList();
             }
         }
-        public int SaveData<T>(string sql, T data, CommandType commandType = CommandType.StoredProcedure)
+        public int Save<T>(string sql, T data, CommandType commandType = CommandType.StoredProcedure)
         {
             using (IDbConnection connection = new SqlConnection(GetConnectionString()))
             {
@@ -45,7 +45,7 @@ namespace CookBookBLL.DataAccess
                 return (int.TryParse(result?.ToString(), out int intResult)) ? intResult : -1;
             }
         }
-        public int DeleteData(string sql, object parameter,CommandType commandType = CommandType.StoredProcedure)
+        public int Delete(string sql, object parameter,CommandType commandType = CommandType.StoredProcedure)
         {
             using (IDbConnection connection = new SqlConnection(GetConnectionString()))
             {

@@ -17,7 +17,7 @@ namespace CookBookBLL.Logic
         }
         public List<CuisineDTO> GetAll()
         {
-            return sqlDataAccess.LoadData<CuisineDTO>(GetDefaultStoredProcedureName());
+            return sqlDataAccess.Load<CuisineDTO>(GetDefaultStoredProcedureName());
         }
         public CuisineDTO Get(int id)
         {
@@ -25,15 +25,15 @@ namespace CookBookBLL.Logic
             {
                 Id = id
             };
-            return sqlDataAccess.LoadData<CuisineDTO>(GetDefaultStoredProcedureName(), parameter).FirstOrDefault();
+            return sqlDataAccess.Load<CuisineDTO>(GetDefaultStoredProcedureName(), parameter).FirstOrDefault();
         }
         public int Create(CuisineDTO category)
         {
-            return sqlDataAccess.SaveData(GetDefaultStoredProcedureName(), category);
+            return sqlDataAccess.Save(GetDefaultStoredProcedureName(), category);
         }
         public int Update(CuisineDTO category)
         {
-            return sqlDataAccess.SaveData(GetDefaultStoredProcedureName(), category);
+            return sqlDataAccess.Save(GetDefaultStoredProcedureName(), category);
         }
         public int Delete(int id)
         {
@@ -42,7 +42,7 @@ namespace CookBookBLL.Logic
                 Id = id
             };
             //sqlDataAccess.DeleteData("RecipesCuisines_DeleteByCuisines", parameter);
-            return sqlDataAccess.DeleteData(GetDefaultStoredProcedureName(), parameter);
+            return sqlDataAccess.Delete(GetDefaultStoredProcedureName(), parameter);
         }
     }
 }

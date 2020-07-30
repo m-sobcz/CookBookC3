@@ -22,11 +22,11 @@ namespace CookBookBLL.Logic
         }
         public int Create(IngredientDTO ingredientModel)
         {
-            return sqlDataAccess.SaveData(GetDefaultStoredProcedureName(), ingredientModel);
+            return sqlDataAccess.Save(GetDefaultStoredProcedureName(), ingredientModel);
         }
         public int Update(IngredientDTO ingredientModel)
         {
-            return sqlDataAccess.SaveData(GetDefaultStoredProcedureName(), ingredientModel);
+            return sqlDataAccess.Save(GetDefaultStoredProcedureName(), ingredientModel);
         }
         public IngredientDTO Get(int id)
         {
@@ -34,7 +34,7 @@ namespace CookBookBLL.Logic
             {
                 Id = id
             };
-            return sqlDataAccess.LoadData<IngredientDTO>(GetDefaultStoredProcedureName(), parameter).FirstOrDefault();
+            return sqlDataAccess.Load<IngredientDTO>(GetDefaultStoredProcedureName(), parameter).FirstOrDefault();
         }
         public List<IngredientWithCategories> GetAllInCategory(int startIndex, int numberOfRows, string categoryName=null)
         {
@@ -44,7 +44,7 @@ namespace CookBookBLL.Logic
                 NumberOfRows = numberOfRows,
                 CategoryName= categoryName
             };
-            return sqlDataAccess.LoadData<IngredientWithCategories, string, IngredientWithCategories>
+            return sqlDataAccess.Load<IngredientWithCategories, string, IngredientWithCategories>
                 (
                 GetDefaultStoredProcedureName(),
                 (ingredient, categories) => { ingredient.Categories = categories; return ingredient; },
@@ -60,7 +60,7 @@ namespace CookBookBLL.Logic
                 Id = ingredientId
             };
             
-            return sqlDataAccess.LoadData<CategoryDTO>(GetDefaultStoredProcedureName(),parameter);
+            return sqlDataAccess.Load<CategoryDTO>(GetDefaultStoredProcedureName(),parameter);
         }
         public int Count(string categoryName = null) 
         {
@@ -68,7 +68,7 @@ namespace CookBookBLL.Logic
             {
                 CategoryName = categoryName
             };
-            return sqlDataAccess.LoadData<int>(GetDefaultStoredProcedureName(), parameters).FirstOrDefault();
+            return sqlDataAccess.Load<int>(GetDefaultStoredProcedureName(), parameters).FirstOrDefault();
         }
         public int RemoveCategory(int ingredientId, int categoryId)
         {
@@ -77,7 +77,7 @@ namespace CookBookBLL.Logic
                 Ingredients_Id= ingredientId,
                 Categories_Id=categoryId
             };
-            return sqlDataAccess.DeleteData(GetDefaultStoredProcedureName(),parameter);
+            return sqlDataAccess.Delete(GetDefaultStoredProcedureName(),parameter);
         }
         public int Delete(int id)
         {
@@ -86,7 +86,7 @@ namespace CookBookBLL.Logic
                 Id = id
             };
             //sqlDataAccess.DeleteData("IngredientsCategories_DeleteByIngredients", parameter);
-            return sqlDataAccess.DeleteData(GetDefaultStoredProcedureName(), parameter);
+            return sqlDataAccess.Delete(GetDefaultStoredProcedureName(), parameter);
         }
         public int AddCategory(int ingredientId, int categoryId)
         {
@@ -95,7 +95,7 @@ namespace CookBookBLL.Logic
                 Ingredients_Id = ingredientId,
                 Categories_Id = categoryId
             };
-            return sqlDataAccess.SaveData(GetDefaultStoredProcedureName(), parameter);
+            return sqlDataAccess.Save(GetDefaultStoredProcedureName(), parameter);
         }
         public List<CategoryDTO> GetUnusedCategories(int ingredientId)
         {
@@ -103,7 +103,7 @@ namespace CookBookBLL.Logic
             {
                 Id = ingredientId
             };
-            return sqlDataAccess.LoadData<CategoryDTO>(GetDefaultStoredProcedureName(), parameter);
+            return sqlDataAccess.Load<CategoryDTO>(GetDefaultStoredProcedureName(), parameter);
         }
     }
 }

@@ -18,11 +18,11 @@ namespace CookBookBLL.Logic
         }
         public int Create(RecipeDTO recipeModel)
         {
-            return sqlDataAccess.SaveData(GetDefaultStoredProcedureName(), recipeModel);
+            return sqlDataAccess.Save(GetDefaultStoredProcedureName(), recipeModel);
         }
         public int Update(RecipeDTO recipeModel)
         {
-            return sqlDataAccess.SaveData(GetDefaultStoredProcedureName(), recipeModel);
+            return sqlDataAccess.Save(GetDefaultStoredProcedureName(), recipeModel);
         }
         public RecipeDTO Get(int id)
         {
@@ -30,7 +30,7 @@ namespace CookBookBLL.Logic
             {
                 Id = id
             };
-            return sqlDataAccess.LoadData<RecipeDTO>(GetDefaultStoredProcedureName(), parameter).FirstOrDefault();
+            return sqlDataAccess.Load<RecipeDTO>(GetDefaultStoredProcedureName(), parameter).FirstOrDefault();
         }
         public List<RecipeWithCuisines> GetAllInCuisine(int startIndex, int numberOfRows, string cuisineName = null)
         {
@@ -40,7 +40,7 @@ namespace CookBookBLL.Logic
                 NumberOfRows = numberOfRows,
                 CuisineName = cuisineName
             };
-            return sqlDataAccess.LoadData<RecipeWithCuisines, string, RecipeWithCuisines>
+            return sqlDataAccess.Load<RecipeWithCuisines, string, RecipeWithCuisines>
                 (
                 GetDefaultStoredProcedureName(),
                 (recipe, cuisines) => { recipe.Cuisines = cuisines; return recipe; },
@@ -56,16 +56,9 @@ namespace CookBookBLL.Logic
                 Id = recipeID
             };
 
-            return sqlDataAccess.LoadData<CuisineDTO>(GetDefaultStoredProcedureName(), parameter);
+            return sqlDataAccess.Load<CuisineDTO>(GetDefaultStoredProcedureName(), parameter);
         }
-        public int Count(string cuisineName = null)
-        {
-            var parameters = new
-            {
-                CuisineName = cuisineName
-            };
-            return sqlDataAccess.LoadData<int>(GetDefaultStoredProcedureName(), parameters).FirstOrDefault();
-        }
+
         public int RemoveCuisine(int recipeID, int cuisineId)
         {
             var parameter = new
@@ -73,7 +66,7 @@ namespace CookBookBLL.Logic
                 Recipes_Id = recipeID,
                 Cuisines_Id = cuisineId
             };
-            return sqlDataAccess.DeleteData(GetDefaultStoredProcedureName(), parameter);
+            return sqlDataAccess.Delete(GetDefaultStoredProcedureName(), parameter);
         }
         public int Delete(int id)
         {
@@ -82,7 +75,7 @@ namespace CookBookBLL.Logic
                 Id = id
             };
             //sqlDataAccess.DeleteData("RecipesCuisines_DeleteByRecipes", parameter);
-            return sqlDataAccess.DeleteData(GetDefaultStoredProcedureName(), parameter);
+            return sqlDataAccess.Delete(GetDefaultStoredProcedureName(), parameter);
         }
         public int AddCuisine(int recipeId, int cuisineId)
         {
@@ -91,7 +84,7 @@ namespace CookBookBLL.Logic
                 Recipes_Id = recipeId,
                 Cuisines_Id = cuisineId
             };
-            return sqlDataAccess.SaveData(GetDefaultStoredProcedureName(), parameter);
+            return sqlDataAccess.Save(GetDefaultStoredProcedureName(), parameter);
         }
         public List<CuisineDTO> GetUnusedCuisines(int recipeID)
         {
@@ -99,8 +92,45 @@ namespace CookBookBLL.Logic
             {
                 Id = recipeID
             };
-            return sqlDataAccess.LoadData<CuisineDTO>(GetDefaultStoredProcedureName(), parameter);
+            return sqlDataAccess.Load<CuisineDTO>(GetDefaultStoredProcedureName(), parameter);
         }
-        
+        public List<IngredientDTO> GetIngredients(int recipeID)
+        {
+            var parameter = new
+            {
+                Id = recipeID
+            };
+
+            return sqlDataAccess.Load<IngredientDTO>(GetDefaultStoredProcedureName(), parameter);
+        }
+        public int AddIngredient(int recipeId, int ingredientId)
+        {
+            //Add or increment count
+            var parameter = new
+            {
+                Recipes_Id = recipeId,
+                Ingredients_Id = ingredientId
+            };
+            return sqlDataAccess.Save(GetDefaultStoredProcedureName(), parameter);
+        }
+        public int RemoveIngredient(int recipeID, int ingredientId)
+        {
+            var parameter = new
+            {
+                Recipes_Id = recipeID,
+                Ingredients_Id = ingredientId
+            };
+            return sqlDataAccess.Delete(GetDefaultStoredProcedureName(), parameter);
+        }
+        public int EditIngredientCount(int recipeID, int ingredientId, int count)
+        {
+            var parameter = new
+            {
+                Recipes_Id = recipeID,
+                Ingredients_Id = ingredientId,
+                Count=count
+            };
+            return sqlDataAccess.Save(GetDefaultStoredProcedureName(), parameter);
+        }
     }
 }

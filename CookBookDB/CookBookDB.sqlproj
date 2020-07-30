@@ -115,6 +115,10 @@
     <Build Include="StoredProcedures\Steps_Create.sql" />
     <Build Include="StoredProcedures\Steps_Update.sql" />
     <Build Include="dbo\Tables\Recipes_Ingredients.sql" />
+    <Build Include="StoredProcedures\Recipes_AddIngredient.sql" />
+    <Build Include="StoredProcedures\Recipes_RemoveIngredient.sql" />
+    <Build Include="StoredProcedures\Recipes_EditIngredientCount.sql" />
+    <Build Include="StoredProcedures\Recipes_GetIngredients.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Comparison\ProjectVsLocalComparison.scmp" />

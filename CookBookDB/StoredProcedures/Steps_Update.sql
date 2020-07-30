@@ -6,7 +6,7 @@
 AS
 declare @ExtractedRecipeId int
 
-set @ExtractedRecipeId=(
+SET @ExtractedRecipeId=(
 SELECT Steps.Recipe_Id
 FROM Steps
 WHERE Id=@Id

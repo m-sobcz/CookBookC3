@@ -1,79 +1,68 @@
-﻿@model IngredientsList
-<div>
-    <h1 style="display: inline-block">Produkty</h1>
-    <a style="vertical-align: text-bottom" asp-action=@ASPNames.Create>Dodaj</a>
-</div>
-<!--Kategorie-->
-<div>
-    <h3 style="display: inline-block">Kategorie</h3>
-    <a style="vertical-align: text-bottom" asp-controller=@nameof(CookBookASP.Controllers.CategoryController).GetASPName() asp-action=@ASPNames.Index>Edytuj</a>
-</div>
-<!--Wybór kategorii do wyswietlania-->
-<ul class="nav nav-pills">
-    <li class="nav-item">
-        <a class="nav-link
-               @(Model.SelectedCategoryName is null ?"active": "")"
-           asp-action=@ASPNames.Index asp-controller=@nameof(CookBookASP.Controllers.IngredientController).GetASPName() asp-route-id="1"
-           asp-route-category="">
-            Wszystkie
-        </a>
-    </li>
-    @foreach (var category in Model.Categories)
-    {
-        <li class="nav-item">
-            <a class="nav-link
-                   @(Model.SelectedCategoryName == category.Name?"active": "")"
-               asp-action=@ASPNames.Index asp-controller=@nameof(CookBookASP.Controllers.IngredientController).GetASPName()
-               asp-route-category="@category.Name" asp-route-id="1">
-                @category.Name
-            </a>
-        </li>
-    }
-</ul>
-<!--Produkty-->
-<h3 style="display: inline-block">Produkty w kategorii</h3>
-@foreach (var ingredient in Model.Ingredients)
-{
-    <div class="card m-2">
-        <div class="card-body">
-            <h5 class="card-title">
-                @ingredient.Name
-                @if (@ingredient.Categories != null)
-                {
-                    foreach (string category in Regex.Split(ingredient.Categories, ","))
-                    {
-                        <p class="badge badge-info">@category</p>
-                    }
-                }
-            </h5>
-            <h7 class="card-subtitle">@ingredient.Description.</h7>
-            <p class="card-text">Jednostka: @ingredient.Unit</p>
-            <p class="card-text">Kalorie: @ingredient.Callories</p>
-            <p class="card-text">Koszt: @ingredient.Cost.ToString("c")</p>
-            <div class="row">
-                <form asp-controller=@nameof(CookBookASP.Controllers.PurchaseController).GetASPName() asp-action=@ASPNames.Add method="post" class="m-1">
-                    <input name="id" type="hidden" value="@ingredient.Id">
-                    <button type="submit" class="btn btn-secondary">
-                        Dodaj do listy zakupów
-                    </button>
-                </form>
-                <a asp-action=@ASPNames.Edit method="post" class="btn btn-secondary m-1"
-                   asp-route-id="@ingredient.Id">
-                    Edytuj
-                </a>
-                <form asp-action=@ASPNames.Delete method="post" class="m-1">
-                    <input name="id" type="hidden" value="@ingredient.Id">
-                    <button type="submit" class="btn btn-secondary" onclick="if (!confirm('Na pewno chcesz usunąć ?')) return false;">
-                        Usuń
-                    </button>
-                </form>
-            </div>
-        </div>
+﻿@model IEnumerable<CookBookASP.Models.IngredientUIO>
 
-    </div>
-}
-<!--Nawigacja miedzy stronami-->
-<div class="row justify-content-center p-1">
-    <ul class="pagination" pagination-info="@Model.PaginationInfo" page-action=@ASPNames.Index
-        page-outer-class-default="page-item" page-outer-class-selected="page-item active" page-inner-class-default="page-link"></ul>
-</div>
+@await Component.InvokeAsync(nameof(CookBookASP.Components.RecipeEditTabViewComponent).GetASPName(),
+    new TabWithId { Tab = 4 })
+
+@*Aktualnie przypisane produkty*@
+<h3>Aktualne produkty</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Unit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Callories)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Unit)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cost)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Callories)
+                </td>
+                <td>
+                    <a asp-action=@ASPNames.RemoveCuisine method="post" class="btn btn-secondary m-1"
+                       asp-route-id=@(ViewContext.RouteData.Values["id"]) asp-route-recipeId="@item.Id">
+                        Usuń
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@await Component.InvokeAsync(nameof(CookBookASP.Components.IngredientSelectionViewComponent).GetASPName(), new
+{id=ViewBag.id,category=ViewBag.category})

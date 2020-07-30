@@ -16,6 +16,7 @@ namespace CookBookASP.Extensions
         public static string Delete => "Delete";
         public static string Categories => "Categories";
         public static string Cuisines => "Cuisines";
+        public static string Ingredients => "Ingredients";
         public static string AddCategory => "AddCategory";
         public static string RemoveCategory => "RemoveCategory";
         public static string AddCuisine => "AddCuisine";

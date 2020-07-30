@@ -1,4 +1,4 @@
-﻿@model RecipesList
+﻿@model RecipeViewModel
     <div>
         <h1 style="display: inline-block">Przepisy</h1>
         <a style="vertical-align: text-bottom" asp-action=@ASPNames.Create>Dodaj</a>
@@ -43,7 +43,7 @@
                     {
                         foreach (string category in Regex.Split(recipe.Cuisines, ","))
                         {
-                            <p class="badge badge-info">@category</p>
+                            <span class="badge badge-info">@category</span>
                         }
                     }
                 </h5>

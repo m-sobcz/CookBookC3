@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CookBookASP.Models
 {
-    public class CuisinesList
+    public class RecipeViewModel
     {
         public IEnumerable<RecipeWithCuisines> Recipes { get; set; }
         public IEnumerable<CuisineUIO> Cuisines { get; set; }

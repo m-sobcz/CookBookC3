@@ -32,7 +32,7 @@ namespace CookBookASP.Controllers
             List<RecipeWithCuisines> loadedRecipes = recipeProcessor.GetAllInCuisine((id - 1) * RecipesPerPage, RecipesPerPage, cuisine);
             List<CuisineUIO> cuisines = cuisineProcessor.GetAll().DTOToUIOList(MapCuisine);
             int recipeCount = loadedRecipes.Count();
-            RecipesList recipesList = new RecipesList()
+            RecipeViewModel recipesList = new RecipeViewModel()
             {
                 Recipes = loadedRecipes,
                 PaginationInfo = new PaginationInfo()
@@ -106,6 +106,28 @@ namespace CookBookASP.Controllers
             recipeProcessor.AddCuisine(id, cuisineId);
             return RedirectToAction(nameof(Cuisines), new { id });
         }
-        
+        public ActionResult Ingredients(int recipeId, int id=1, string category=null)
+        {
+            ViewBag.id = id;
+            ViewBag.category = category;
+            List<IngredientUIO> model = recipeProcessor.GetIngredients(recipeId).DTOToUIOList(MapIngredient);
+            return View(model);
+        }
+        public ActionResult AddIngredient(int recipeId, int ingredientId)
+        {
+            recipeProcessor.AddIngredient(recipeId, ingredientId);
+            return RedirectToAction(nameof(Ingredients), new { recipeId });
+        }
+        public ActionResult RemoveIngredient(int recipeId, int ingredientId)
+        {
+            recipeProcessor.RemoveIngredient(recipeId, ingredientId);
+            return RedirectToAction(nameof(Ingredients), new { recipeId });
+        }
+        public ActionResult EditIngredientCount(int recipeId, int ingredientId,int count)
+        {
+            recipeProcessor.EditIngredientCount(recipeId, ingredientId, count);
+            return RedirectToAction(nameof(Ingredients), new { recipeId });
+        }
+
     }
 }

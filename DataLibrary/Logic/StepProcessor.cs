@@ -22,7 +22,7 @@ namespace CookBookBLL.Logic
             {
                 Id = recipeID
             };
-            return sqlDataAccess.LoadData<StepDTO>(GetDefaultStoredProcedureName(), parameter);
+            return sqlDataAccess.Load<StepDTO>(GetDefaultStoredProcedureName(), parameter);
         }
         public int Delete(int stepId)
         {
@@ -30,15 +30,15 @@ namespace CookBookBLL.Logic
             {
                 Id = stepId
             };
-            return sqlDataAccess.SaveData(GetDefaultStoredProcedureName(), parameter);
+            return sqlDataAccess.Save(GetDefaultStoredProcedureName(), parameter);
         }
         public int Create(StepDTO stepModel)
         {
-            return sqlDataAccess.SaveData(GetDefaultStoredProcedureName(), stepModel);
+            return sqlDataAccess.Save(GetDefaultStoredProcedureName(), stepModel);
         }
         public int Update(StepDTO stepModel)
         {
-            return sqlDataAccess.SaveData(GetDefaultStoredProcedureName(), stepModel);
+            return sqlDataAccess.Save(GetDefaultStoredProcedureName(), stepModel);
         }
     }
 }

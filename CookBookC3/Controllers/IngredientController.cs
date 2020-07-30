@@ -30,10 +30,15 @@ namespace CookBookASP.Controllers
         }
         public ActionResult Index(int id = 1, string category=null)
         {
-            List<IngredientWithCategories> loadedIngredients = ingredientProcessor.GetAllInCategory((id-1)*IngredientsPerPage, IngredientsPerPage,category);
+            var ingredientsList = GetViewModel(id, category);
+            return View(ingredientsList);
+        }
+        public IngredientViewModel GetViewModel(int id, string category=null) 
+        {
+            List<IngredientWithCategories> loadedIngredients = ingredientProcessor.GetAllInCategory((id - 1) * IngredientsPerPage, IngredientsPerPage, category);
             List<CategoryUIO> Categories = categoryProcessor.GetAll().DTOToUIOList(MapCategory);
             int ingredientCount = loadedIngredients.Count();
-            IngredientsList ingredientsList = new IngredientsList()
+            return new IngredientViewModel()
             {
                 Ingredients = loadedIngredients,
                 PaginationInfo = new PaginationInfo()
@@ -42,10 +47,9 @@ namespace CookBookASP.Controllers
                     ItemsPerPage = IngredientsPerPage,
                     ItemsCount = ingredientCount
                 },
-                Categories= Categories,
-                SelectedCategoryName= category
-            };          
-            return View(ingredientsList);
+                Categories = Categories,
+                SelectedCategoryName = category
+            };
         }
         [HttpGet]
         public ActionResult Create()
