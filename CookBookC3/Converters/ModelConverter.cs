@@ -44,6 +44,19 @@ namespace CookBookASP.Converters
                 Unit = dto.Unit
             };
         }
+        public static IngredientWithCountUIO MapIngredientWithCount(IngredientWithCountDTO dto)
+        {
+            return new IngredientWithCountUIO()
+            {
+                Description = dto.Description,
+                Id = dto.Id,
+                Name = dto.Name,
+                Callories = dto.Callories,
+                Cost = dto.Cost,
+                Unit = dto.Unit,
+                Count=dto.Count
+            };
+        }
         public static CuisineUIO MapCuisine(CuisineDTO dto)
         {
             return new CuisineUIO()

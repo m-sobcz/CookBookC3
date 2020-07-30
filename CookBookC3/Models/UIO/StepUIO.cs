@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CookBookASP.Models
 {
-    public class StepUIO :UIO
+    public class StepUIO :UIOBase
     {
         public int Id { get; set; }
         public int Recipe_Id { get; set; }

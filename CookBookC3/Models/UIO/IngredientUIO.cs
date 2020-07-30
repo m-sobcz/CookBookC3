@@ -7,13 +7,12 @@ using System.Threading.Tasks;
 
 namespace CookBookASP.Models
 {
-    public class IngredientUIO : UIO
+    public class IngredientUIO : UIOBase
     {
         public int Id { get; set; }
         [Display(Name = "Nazwa")]
         public string Name { get; set; }
         [Display(Name = "Opis")]
-        [Required(ErrorMessage = ErrorMessageText)]
         public string Description { get; set; }
         [Display(Name = "Jednostka")]
         [Required(ErrorMessage = ErrorMessageText)]

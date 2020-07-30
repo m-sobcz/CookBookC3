@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CookBookASP.Models
 {
-    public class RecipeUIO : UIO
+    public class RecipeUIO : UIOBase
     {
         public int Id { get; set; }
         [Display(Name = "Nazwa")]

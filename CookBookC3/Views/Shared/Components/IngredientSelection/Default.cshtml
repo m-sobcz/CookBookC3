@@ -13,8 +13,8 @@
     <li class="nav-item">
         <a class="nav-link
                @(Model.SelectedCategoryName is null ?"active": "")"
-           asp-action=@ASPNames.Index asp-controller=@nameof(CookBookASP.Controllers.IngredientController).GetASPName() asp-route-id="1"
-           asp-route-category="">
+           asp-action=@ASPNames.Ingredients asp-controller=@nameof(CookBookASP.Controllers.RecipeController).GetASPName() asp-route-pageId="1"
+           asp-route-category="" asp-route-id=@ViewBag.recipeId>
             Wszystkie
         </a>
     </li>
@@ -23,8 +23,8 @@
         <li class="nav-item">
             <a class="nav-link
                    @(Model.SelectedCategoryName == category.Name?"active": "")"
-               asp-action=@ASPNames.Index asp-controller=@nameof(CookBookASP.Controllers.IngredientController).GetASPName()
-               asp-route-category="@category.Name" asp-route-id="1">
+               asp-action=@ASPNames.Ingredients asp-controller=@nameof(CookBookASP.Controllers.RecipeController).GetASPName()
+               asp-route-category="@category.Name" asp-route-pageId="1" asp-route-id=@ViewBag.recipeId>
                 @category.Name
             </a>
         </li>
@@ -51,20 +51,11 @@
             <p class="card-text">Kalorie: @ingredient.Callories</p>
             <p class="card-text">Koszt: @ingredient.Cost.ToString("c")</p>
             <div class="row">
-                <form asp-controller=@nameof(CookBookASP.Controllers.PurchaseController).GetASPName() asp-action=@ASPNames.Add method="post" class="m-1">
-                    <input name="id" type="hidden" value="@ingredient.Id">
+                <form asp-controller=@nameof(CookBookASP.Controllers.RecipeController).GetASPName() asp-action=@ASPNames.AddIngredient method="post" class="m-1">
+                    <input name="ingredientId" type="hidden" value="@ingredient.Id">
+                    <input name="id" type="hidden" value="@ViewBag.recipeId">
                     <button type="submit" class="btn btn-secondary">
-                        Dodaj do listy zakupów
-                    </button>
-                </form>
-                <a asp-action=@ASPNames.Edit method="post" class="btn btn-secondary m-1"
-                   asp-route-id="@ingredient.Id">
-                    Edytuj
-                </a>
-                <form asp-action=@ASPNames.Delete method="post" class="m-1">
-                    <input name="id" type="hidden" value="@ingredient.Id">
-                    <button type="submit" class="btn btn-secondary" onclick="if (!confirm('Na pewno chcesz usunąć ?')) return false;">
-                        Usuń
+                        Dodaj do przepisu
                     </button>
                 </form>
             </div>
@@ -74,6 +65,6 @@
 }
 <!--Nawigacja miedzy stronami-->
 <div class="row justify-content-center p-1">
-    <ul class="pagination" pagination-info="@Model.PaginationInfo" page-action=@ASPNames.Index
+    <ul class="pagination" pagination-info="@Model.PaginationInfo" page-action=@ASPNames.Ingredients 
         page-outer-class-default="page-item" page-outer-class-selected="page-item active" page-inner-class-default="page-link"></ul>
 </div>

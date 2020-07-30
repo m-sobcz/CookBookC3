@@ -28,22 +28,22 @@ namespace CookBookASP.Controllers
             this.categoryProcessor = categoryProcessor;
             this.sessionManager = sessionManager;
         }
-        public ActionResult Index(int id = 1, string category=null)
+        public ActionResult Index(int pageId = 1, string category=null)
         {
-            var ingredientsList = GetViewModel(id, category);
+            var ingredientsList = GetViewModel(pageId, category);
             return View(ingredientsList);
         }
-        public IngredientViewModel GetViewModel(int id, string category=null) 
+        public IngredientViewModel GetViewModel(int pageId, string category=null) //DRY!
         {
-            List<IngredientWithCategories> loadedIngredients = ingredientProcessor.GetAllInCategory((id - 1) * IngredientsPerPage, IngredientsPerPage, category);
+            List<IngredientWithCategories> loadedIngredients = ingredientProcessor.GetAllInCategory((pageId - 1) * IngredientsPerPage, IngredientsPerPage, category);
             List<CategoryUIO> Categories = categoryProcessor.GetAll().DTOToUIOList(MapCategory);
-            int ingredientCount = loadedIngredients.Count();
+            int ingredientCount = ingredientProcessor.Count(category);
             return new IngredientViewModel()
             {
                 Ingredients = loadedIngredients,
                 PaginationInfo = new PaginationInfo()
                 {
-                    Current = id,
+                    Current = pageId,
                     ItemsPerPage = IngredientsPerPage,
                     ItemsCount = ingredientCount
                 },

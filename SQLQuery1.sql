@@ -1,4 +1,11 @@
-﻿select * from Categories 
-LEFT JOIN Ingredients_Categories on Categories.Id=Ingredients_Categories.Categories_Id
-LEFT JOIN Ingredients on Ingredients.Id=Ingredients_Categories.Ingredients_Id
-where Ingredients.Id=2
+﻿USE [CookBook]
+GO
+
+DECLARE	@return_value Int
+
+EXEC	@return_value = [dbo].[Recipes_GetIngredientsWithCount]
+		@Id = 1
+
+SELECT	@return_value as 'Return Value'
+
+GO

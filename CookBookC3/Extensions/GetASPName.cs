@@ -21,6 +21,8 @@ namespace CookBookASP.Extensions
         public static string RemoveCategory => "RemoveCategory";
         public static string AddCuisine => "AddCuisine";
         public static string RemoveCuisine => "RemoveCuisine";
+        public static string AddIngredient => "AddIngredient";
+        public static string RemoveIngredient => "RemoveIngredient";
         public static string Steps => "Steps";
         public static string GetASPName(this string originalName)
         {

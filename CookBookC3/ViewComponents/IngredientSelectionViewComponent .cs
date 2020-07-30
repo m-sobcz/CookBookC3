@@ -23,9 +23,10 @@ namespace CookBookASP.Components
             this.ingredientProcessor = ingredientProcessor;
             this.categoryProcessor = categoryProcessor;
         }
-        public IViewComponentResult Invoke(int id = 1, string category = null)
+        public IViewComponentResult Invoke(int recipeId, int pageId = 1, string category = null) //DRY!
         {
-            List<IngredientWithCategories> loadedIngredients = ingredientProcessor.GetAllInCategory((id - 1) * IngredientsPerPage, IngredientsPerPage, category);
+            ViewBag.recipeId = recipeId;
+            List<IngredientWithCategories> loadedIngredients = ingredientProcessor.GetAllInCategory((pageId - 1) * IngredientsPerPage, IngredientsPerPage, category);
             List<CategoryUIO> Categories = categoryProcessor.GetAll().DTOToUIOList(MapCategory);
             int ingredientCount = loadedIngredients.Count();
             IngredientViewModel ingredientsList = new IngredientViewModel()
@@ -33,7 +34,7 @@ namespace CookBookASP.Components
                 Ingredients = loadedIngredients,
                 PaginationInfo = new PaginationInfo()
                 {
-                    Current = id,
+                    Current = pageId,
                     ItemsPerPage = IngredientsPerPage,
                     ItemsCount = ingredientCount
                 },

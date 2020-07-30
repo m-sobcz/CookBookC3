@@ -43,7 +43,7 @@ namespace CookBookASP.Infrastructure
                 result.AddCssClass(PaginationInfo.Current == i ? PageOuterClassSelected : PageOuterClassDefault);
                 TagBuilder tag = new TagBuilder("a");
                 tag.AddCssClass(PageInnerClassDefault);
-                PageValues["id"] = i;
+                PageValues["pageId"] = i;
                 tag.Attributes["href"] = urlHelper.Action(PageAction, PageValues);
                 tag.InnerHtml.Append(i.ToString());             
                 result.InnerHtml.AppendHtml(tag);

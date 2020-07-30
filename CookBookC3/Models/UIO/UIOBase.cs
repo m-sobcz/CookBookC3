@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace CookBookASP.Models
 {
-    public class UIO
+    public class UIOBase
     {
         protected const string ErrorMessageText = "Podanie tego pola jest obowiązkowe";
     }

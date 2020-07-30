@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
 using CookBookASP.Converters;
 using CookBookASP.Models;
 using CookBookASP.Session;
 using CookBookBLL.Logic;
 using CookBookBLL.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
 using static CookBookASP.Converters.ModelConverter;
 
 namespace CookBookASP.Controllers
@@ -27,17 +27,17 @@ namespace CookBookASP.Controllers
             this.cuisineProcessor = cuisineProcessor;
             this.sessionManager = sessionManager;
         }
-        public ActionResult Index(int id = 1, string cuisine = null)
+        public ActionResult Index(int pageId = 1, string cuisine = null)
         {
-            List<RecipeWithCuisines> loadedRecipes = recipeProcessor.GetAllInCuisine((id - 1) * RecipesPerPage, RecipesPerPage, cuisine);
+            List<RecipeWithCuisines> loadedRecipes = recipeProcessor.GetAllInCuisine((pageId - 1) * RecipesPerPage, RecipesPerPage, cuisine);
             List<CuisineUIO> cuisines = cuisineProcessor.GetAll().DTOToUIOList(MapCuisine);
-            int recipeCount = loadedRecipes.Count();
+            int recipeCount = recipeProcessor.Count(cuisine);
             RecipeViewModel recipesList = new RecipeViewModel()
             {
                 Recipes = loadedRecipes,
                 PaginationInfo = new PaginationInfo()
                 {
-                    Current = id,
+                    Current = pageId,
                     ItemsPerPage = RecipesPerPage,
                     ItemsCount = recipeCount
                 },
@@ -106,27 +106,28 @@ namespace CookBookASP.Controllers
             recipeProcessor.AddCuisine(id, cuisineId);
             return RedirectToAction(nameof(Cuisines), new { id });
         }
-        public ActionResult Ingredients(int recipeId, int id=1, string category=null)
+        public ActionResult Ingredients(int id, int pageId = 1, string category = null)
         {
-            ViewBag.id = id;
+            ViewBag.pageId = pageId;
+            ViewBag.recipeId = id;
             ViewBag.category = category;
-            List<IngredientUIO> model = recipeProcessor.GetIngredients(recipeId).DTOToUIOList(MapIngredient);
+            List<IngredientWithCountUIO> model = recipeProcessor.GetIngredientsWithCount(id).DTOToUIOList(MapIngredientWithCount);
             return View(model);
         }
-        public ActionResult AddIngredient(int recipeId, int ingredientId)
+        public ActionResult AddIngredient(int id, int ingredientId)
         {
-            recipeProcessor.AddIngredient(recipeId, ingredientId);
-            return RedirectToAction(nameof(Ingredients), new { recipeId });
+            recipeProcessor.AddIngredient(id, ingredientId);
+            return RedirectToAction(nameof(Ingredients), new { id });
         }
-        public ActionResult RemoveIngredient(int recipeId, int ingredientId)
+        public ActionResult RemoveIngredient(int id, int ingredientId)
         {
-            recipeProcessor.RemoveIngredient(recipeId, ingredientId);
-            return RedirectToAction(nameof(Ingredients), new { recipeId });
+            recipeProcessor.RemoveIngredient(id, ingredientId);
+            return RedirectToAction(nameof(Ingredients), new { id });
         }
-        public ActionResult EditIngredientCount(int recipeId, int ingredientId,int count)
+        public ActionResult EditIngredientCount(int id, int ingredientId, int count)
         {
-            recipeProcessor.EditIngredientCount(recipeId, ingredientId, count);
-            return RedirectToAction(nameof(Ingredients), new { recipeId });
+            recipeProcessor.EditIngredientCount(id, ingredientId, count);
+            return RedirectToAction(nameof(Ingredients), new { id });
         }
 
     }

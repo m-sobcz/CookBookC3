@@ -62,7 +62,7 @@ namespace CookBookBLL.Logic
             
             return sqlDataAccess.Load<CategoryDTO>(GetDefaultStoredProcedureName(),parameter);
         }
-        public int Count(string categoryName = null) 
+        public int Count(string categoryName) 
         {
             var parameters = new
             {

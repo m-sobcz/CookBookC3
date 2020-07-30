@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace CookBookASP.Models
 {
-    public class CuisineUIO : UIO
+    public class CuisineUIO : UIOBase
     {
         public int Id { get; set; }
         [Display(Name = "Nazwa")]
