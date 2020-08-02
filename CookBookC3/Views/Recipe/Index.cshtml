@@ -57,6 +57,10 @@
                             Dodaj do listy zakupów
                         </button>
                     </form>
+                    <a asp-action=@ASPNames.Details method="post" class="btn btn-secondary m-1"
+                       asp-route-id="@recipe.Id">
+                        Wyświetl
+                    </a>
                     <a asp-action=@ASPNames.Edit method="post" class="btn btn-secondary m-1"
                        asp-route-id="@recipe.Id">
                         Edytuj

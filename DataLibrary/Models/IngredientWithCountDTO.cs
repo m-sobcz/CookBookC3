@@ -6,6 +6,6 @@ namespace CookBookBLL.Models
 {
     public class IngredientWithCountDTO : IngredientDTO
     {
-        public int Count { get; set; }
+        public decimal Count { get; set; }
     }
 }

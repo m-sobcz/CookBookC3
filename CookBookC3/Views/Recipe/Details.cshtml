@@ -1,0 +1,54 @@
+﻿@model CookBookASP.Models.FullRecipeUIO
+<a class="row" asp-controller=@nameof(CookBookASP.Controllers.RecipeController).GetASPName() asp-action=@ASPNames.Index>Powrót do przepisów</a>
+<h1>
+    @Model.Recipe.Name
+</h1>
+
+@*Produkty*@
+<h3>
+    Produkty
+</h3>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th> @Html.DisplayNameFor(model => model.Ingredients[0].Name)</th>
+            <th>@Html.DisplayNameFor(model => model.Ingredients[0].Description)</th>
+            <th>@Html.DisplayNameFor(model => model.Ingredients[0].Count)</th>
+            <th>@Html.DisplayNameFor(model => model.Ingredients[0].Unit)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var ingredient in @Model.Ingredients)
+        {
+        <tr>
+            <td>@ingredient.Name</td>
+            <td>@ingredient.Description</td>
+            <td>@ingredient.Count</td>
+            <td>@ingredient.Unit</td>
+        </tr>
+        }
+    </tbody>
+</table>
+@*Wykonanie*@
+<h3>
+    Wykonanie
+</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th> @Html.DisplayNameFor(model => model.Steps[0].Order)</th>
+            <th>@Html.DisplayNameFor(model => model.Steps[0].Description)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var step in @Model.Steps)
+        {
+        <tr>
+            <td>@step.Order</td>
+            <td>@step.Description</td>
+        </tr>
+        }
+    </tbody>
+</table> 

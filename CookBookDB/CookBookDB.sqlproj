@@ -120,6 +120,7 @@
     <Build Include="StoredProcedures\Recipes_EditIngredientCount.sql" />
     <Build Include="StoredProcedures\Recipes_GetIngredients.sql" />
     <Build Include="StoredProcedures\Recipes_GetIngredientsWithCount.sql" />
+    <Build Include="StoredProcedures\Recipes_GetFull.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Comparison\ProjectVsLocalComparison.scmp" />

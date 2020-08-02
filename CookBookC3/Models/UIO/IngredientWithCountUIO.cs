@@ -9,6 +9,6 @@ namespace CookBookASP.Models
     public class IngredientWithCountUIO : IngredientUIO
     {
         [Display(Name = "Ilość")]
-        public int Count { get; set; }
+        public decimal Count { get; set; }
     }
 }

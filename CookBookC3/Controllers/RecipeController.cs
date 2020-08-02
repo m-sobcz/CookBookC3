@@ -5,9 +5,7 @@ using CookBookASP.Session;
 using CookBookBLL.Logic;
 using CookBookBLL.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
-using System.Linq;
 using static CookBookASP.Converters.ModelConverter;
 
 namespace CookBookASP.Controllers
@@ -125,10 +123,15 @@ namespace CookBookASP.Controllers
             recipeProcessor.RemoveIngredient(id, ingredientId);
             return RedirectToAction(nameof(Ingredients), new { id });
         }
-        public ActionResult EditIngredientCount(int id, int ingredientId, int count)
+        public ActionResult EditIngredientCount(int id, int ingredientId, decimal count)
         {
             recipeProcessor.EditIngredientCount(id, ingredientId, count);
             return RedirectToAction(nameof(Ingredients), new { id });
+        }
+        public ActionResult Details(int id)
+        {
+            var model = recipeProcessor.GetFull(id).DTOToUIO(MapFullRecipe);
+            return View(model);
         }
 
     }

@@ -77,6 +77,7 @@ namespace CookBookASP.Converters
                 Portions=dto.Portions
             };
         }
+
         public static StepUIO MapStep(StepDTO dto)
         {
             return new StepUIO()
@@ -84,6 +85,17 @@ namespace CookBookASP.Converters
                 Id=dto.Id,
                 Order=dto.Order,
                 Description=dto.Description
+            };
+        }
+        public static FullRecipeUIO MapFullRecipe(FullRecipeDTO dto)
+        {
+            return new FullRecipeUIO()
+            {
+                Recipe=dto.Recipe.DTOToUIO(MapRecipe),
+                Ingredients = dto.Ingredients.DTOToUIOList(MapIngredientWithCount),
+                Cuisines = dto.Cuisines.DTOToUIOList(MapCuisine),
+                Steps = dto.Steps.DTOToUIOList(MapStep)
+
             };
         }
     }

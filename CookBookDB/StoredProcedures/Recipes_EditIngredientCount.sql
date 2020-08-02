@@ -1,7 +1,7 @@
 ﻿CREATE PROCEDURE [dbo].[Recipes_EditIngredientCount]
 	@Recipes_Id  int,
 	@Ingredients_Id int,
-	@Count int
+	@Count DECIMAL(18, 2)
 AS
 UPDATE Recipes_Ingredients
 SET Recipes_Ingredients.[Count]=@Count

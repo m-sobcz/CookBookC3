@@ -9,6 +9,6 @@ namespace CookBookASP.Models
     {
         public int ID { get; set; }
         public IngredientUIO Ingredient { get; set; }
-        public int Quantity { get; set; }
+        public decimal Quantity { get; set; }
     }
 }

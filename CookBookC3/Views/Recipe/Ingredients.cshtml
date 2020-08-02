@@ -64,7 +64,7 @@
                     <form asp-action=@ASPNames.EditIngredientCount>
                             <input type="hidden" name="id" value="@ViewBag.recipeId" />
                             <input type="hidden" name="ingredientId" value="@item.Id" />
-                            <input class="form-control col-4" name="count" value="@item.Count" />
+                            <input class="form-control col-4" name="count" value="@item.Count.ToString("F1")" />
                             <input class="btn btn-secondary m-1" type="submit" value="Zmień" />
                     </form>
                 </td>

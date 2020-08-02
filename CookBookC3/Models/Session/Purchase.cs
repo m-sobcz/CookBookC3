@@ -9,7 +9,7 @@ namespace CookBookASP.Models
     {
         public List<PurchasePosition> Positions = new List<PurchasePosition>();
 
-        public virtual void AddItem(IngredientUIO ingredient, int quantity)
+        public virtual void AddItem(IngredientUIO ingredient, decimal quantity)
         {
             PurchasePosition ingredientPosition = Positions
                 .Where(x => x.Ingredient.Name == ingredient.Name)

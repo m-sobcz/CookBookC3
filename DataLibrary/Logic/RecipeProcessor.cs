@@ -9,10 +9,12 @@ namespace CookBookBLL.Logic
 {
     public class RecipeProcessor : Processor
     {
+        private StepProcessor stepProcessor;
         private SqlDataAccess sqlDataAccess;
 
-        public RecipeProcessor(SqlDataAccess sqlDataAccess)
+        public RecipeProcessor(SqlDataAccess sqlDataAccess, StepProcessor stepProcessor)
         {
+            this.stepProcessor = stepProcessor;
             this.sqlDataAccess = sqlDataAccess;
             defaultStoredProceduresPrefix = "Recipes";
         }
@@ -116,7 +118,7 @@ namespace CookBookBLL.Logic
             {
                 Id = recipeId
             };
-            return sqlDataAccess.Load<IngredientWithCountDTO, int, IngredientWithCountDTO>
+            return sqlDataAccess.Load<IngredientWithCountDTO, decimal, IngredientWithCountDTO>
                 (
                 GetDefaultStoredProcedureName(),
                 (ingredient, count) => { ingredient.Count = count; return ingredient; },
@@ -143,7 +145,7 @@ namespace CookBookBLL.Logic
             };
             return sqlDataAccess.Delete(GetDefaultStoredProcedureName(), parameter);
         }
-        public int EditIngredientCount(int recipeID, int ingredientId, int count)
+        public int EditIngredientCount(int recipeID, int ingredientId, decimal count)
         {
             var parameter = new
             {
@@ -152,6 +154,23 @@ namespace CookBookBLL.Logic
                 Count=count
             };
             return sqlDataAccess.Save(GetDefaultStoredProcedureName(), parameter);
+        }
+        public FullRecipeDTO GetFull(int id)
+        {
+            RecipeDTO recipe = Get(id);
+            List<IngredientWithCountDTO> ingredients = GetIngredientsWithCount(id);
+            List<StepDTO> steps = stepProcessor.Get(id);
+            List<CuisineDTO> cuisines = GetCuisines(id);
+
+            FullRecipeDTO fullRecipeDTO = new FullRecipeDTO() 
+            {
+                Recipe=recipe,
+                Ingredients=ingredients,
+                Cuisines=cuisines,
+                Steps=steps
+            }
+            ;
+            return fullRecipeDTO;
         }
     }
 }
