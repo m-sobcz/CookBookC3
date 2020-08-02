@@ -1,0 +1,25 @@
+﻿@model int
+@inject CookBookASP.Session.SessionManager<ItemInfo> SessionManger
+@{
+    int id = int.TryParse(ViewContext.RouteData.Values["id"]?.ToString(), out int extractedId) ? extractedId : 0;
+    string name = SessionManger.GetItem()?.Name ?? "";
+    Tab[] tabs = {
+        new Tab() { Id = 1, Action = ASPNames.Edit,Controller=nameof(CookBookASP.Controllers.RecipeController).GetASPName(), Name = "Ogólne" },
+        new Tab() { Id = 2, Action = ASPNames.Cuisines,Controller=nameof(CookBookASP.Controllers.RecipeController).GetASPName(), Name = "Rodzaje dań" },
+        new Tab() { Id = 3, Action = ASPNames.Index,Controller=nameof(CookBookASP.Controllers.StepController).GetASPName(), Name = "Wykonanie" },
+         new Tab() { Id = 4, Action = ASPNames.Ingredients,Controller=nameof(CookBookASP.Controllers.RecipeController).GetASPName(), Name = "Produkty" }
+    };
+
+}
+<a class="row" asp-controller=@nameof(CookBookASP.Controllers.RecipeController).GetASPName() asp-action=@ASPNames.Index>Powrót do przepisów</a>
+
+<h1>@name</h1>
+<h3>Edycja przepisu</h3>
+<ul class="nav nav-pills">
+    @foreach (Tab tab in tabs)
+    {
+        <li class="nav-item">
+            <a class="nav-link @(tab.Id == Model ? "active": "")" asp-controller=@tab.Controller asp-action=@tab.Action asp-route-id=@id>@tab.Name</a>
+        </li>
+    }
+</ul>

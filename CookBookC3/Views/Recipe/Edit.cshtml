@@ -1,6 +1,11 @@
 ﻿@model CookBookASP.Models.RecipeUIO
-@await Component.InvokeAsync(nameof(CookBookASP.Components.RecipeEditTabViewComponent).GetASPName(), 
-    new TabWithId { Tab = 1})
+
+@await Component.InvokeAsync(nameof(CookBookASP.Components.EditTabsViewComponent).GetASPName(),
+    new
+    {
+        viewName = nameof(CookBookASP.Controllers.RecipeController).GetASPName(),
+        tabId = 1
+    })
 <div class="row">
     <div class="col-md-4">
         <form asp-action=@ASPNames.Edit>
@@ -32,9 +37,6 @@
             </div>
         </form>
     </div>
-</div>
-<div>
-    <a asp-action=@ASPNames.Index>Powrót</a>
 </div>
 
 @section Scripts {

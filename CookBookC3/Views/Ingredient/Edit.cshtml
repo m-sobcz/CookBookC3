@@ -1,7 +1,10 @@
 ﻿@model CookBookASP.Models.IngredientUIO
 @inject CookBookASP.Session.SessionManager<ItemInfo> SessionManger
-@await Component.InvokeAsync(nameof(CookBookASP.Components.IngredientEditTabViewComponent).GetASPName(),
-    new TabWithId { Tab = 1})
+@await Component.InvokeAsync(nameof(CookBookASP.Components.EditTabsViewComponent).GetASPName(),
+    new {
+        viewName = nameof(CookBookASP.Controllers.IngredientController).GetASPName(),
+        tabId=1
+    })
 <div class="row">
     <div class="col-md-4">
         <form asp-action=@ASPNames.Edit>
@@ -41,9 +44,7 @@
         </form>
     </div>
 </div>
-<div>
-    <a asp-action=@ASPNames.Index>Powrót</a>
-</div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

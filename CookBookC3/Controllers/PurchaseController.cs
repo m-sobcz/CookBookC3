@@ -3,6 +3,7 @@ using CookBookASP.Models;
 using CookBookASP.Session;
 using CookBookBLL.Logic;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using static CookBookASP.Converters.ModelConverter;
 
 
@@ -10,11 +11,15 @@ namespace CookBookASP.Controllers
 {
     public class PurchaseController : Controller
     {
+        private readonly RecipeProcessor recipeProcessor;
         private readonly SessionManager<Purchase> sessionManager;
         private readonly IngredientProcessor ingredientProcessor;
+        Purchase purchase;
 
-        public PurchaseController(IngredientProcessor ingredientProcessor, SessionManager<Purchase> sessionManager)
+        public PurchaseController(IngredientProcessor ingredientProcessor, RecipeProcessor recipeProcessor,
+            SessionManager<Purchase> sessionManager)
         {
+            this.recipeProcessor = recipeProcessor;
             this.sessionManager = sessionManager;
             this.ingredientProcessor = ingredientProcessor;
         }
@@ -24,29 +29,59 @@ namespace CookBookASP.Controllers
             return View(sessionManager.GetItem());
         }
 
-        public ActionResult Add(int id)
-        {    
-            IngredientUIO Ingredient = ingredientProcessor.Get(id).DTOToUIO(MapIngredient);
-            if (Ingredient != null)
+        public ActionResult AddIngredient(int ingredientId)
+        {
+            var rawIngredient = ingredientProcessor.Get(ingredientId).DTOToUIO(MapIngredient);
+            IngredientWithCountUIO ingredient = new IngredientWithCountUIO()
             {
-                Purchase purchase = sessionManager.GetItem();
-                purchase.AddItem(Ingredient, 1);
-                sessionManager.SetItem(purchase);
-            }
+                Callories = rawIngredient.Callories,
+                Cost = rawIngredient.Cost,
+                Description = rawIngredient.Description,
+                Id = rawIngredient.Id,
+                Name = rawIngredient.Name,
+                Unit = rawIngredient.Unit,
+                Count = 1
+            };
+
+            AddIngredientsToSession(new List<IngredientWithCountUIO>() { ingredient });
             return RedirectToAction(nameof(Index));
         }
-
-        public RedirectToActionResult Remove(int id)
+        public ActionResult AddRecipe(int recipeId)
         {
-            IngredientUIO Ingredient = ingredientProcessor.Get(id).DTOToUIO(MapIngredient);
+            List<IngredientWithCountUIO> Ingredients = recipeProcessor.GetIngredientsWithCount(recipeId).DTOToUIOList(MapIngredientWithCount);
+            AddIngredientsToSession(Ingredients);
+            return RedirectToAction(nameof(Index));
+        }
+        void AddIngredientsToSession(List<IngredientWithCountUIO> ingredients)
+        {
+            purchase = sessionManager.GetItem();
+            foreach (IngredientWithCountUIO ingredient in ingredients)
+            {
+                if (ingredient != null)
+                {
+                    purchase.AddItem(ingredient, ingredient.Count);
+                    sessionManager.SetItem(purchase);
+                }
+            }
+        }
+
+
+        public RedirectToActionResult RemoveIngredient(int ingredientId)
+        {
+            IngredientUIO Ingredient = ingredientProcessor.Get(ingredientId).DTOToUIO(MapIngredient);
 
             if (Ingredient != null)
             {
-                Purchase purchase = sessionManager.GetItem();
+                purchase = sessionManager.GetItem();
                 purchase.RemovePosition(Ingredient);
                 sessionManager.SetItem(purchase);
             }
             return RedirectToAction(nameof(Index));
         }
-    }
+        public RedirectToActionResult RemoveAll()
+        {
+            sessionManager.SetItem(new Purchase());
+            return RedirectToAction(nameof(Index));
+        }
+    } 
 }

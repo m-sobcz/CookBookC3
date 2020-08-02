@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<CookBookASP.Models.CategoryUIO>
+    <a class="row" asp-controller=@nameof(CookBookASP.Controllers.IngredientController).GetASPName() asp-action=@ASPNames.Index>Przejdź do listy produktów</a>
 <div>
     <h1 style="display: inline-block">Kategorie produktów</h1>
     <a style="vertical-align: text-bottom" asp-action=@ASPNames.Create>Dodaj</a>

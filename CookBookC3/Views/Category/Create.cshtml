@@ -1,5 +1,5 @@
 ﻿@model CookBookASP.Models.CategoryUIO
-
+    <a class="row" asp-controller=@nameof(CookBookASP.Controllers.CategoryController).GetASPName() asp-action=@ASPNames.Index>Powrót do kategorii</a>
 <h1>Tworzenie kategorii dla produktów</h1>
 <hr />
 <div class="row">
@@ -23,9 +23,7 @@
     </div>
 </div>
 
-<div>
-    <a asp-action=@ASPNames.Index>Powrót</a>
-</div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

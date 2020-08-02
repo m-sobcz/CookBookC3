@@ -1,6 +1,10 @@
 ﻿@model IEnumerable<CookBookASP.Models.StepUIO>
-@await Component.InvokeAsync(nameof(CookBookASP.Components.RecipeEditTabViewComponent).GetASPName(),
-    new TabWithId { Tab = 3 })
+@await Component.InvokeAsync(nameof(CookBookASP.Components.EditTabsViewComponent).GetASPName(),
+    new
+    {
+        viewName = nameof(CookBookASP.Controllers.RecipeController).GetASPName(),
+        tabId = 3
+    })
 
 <table class="table">
     <thead>
@@ -36,14 +40,14 @@
                             <input id="@btn" type="submit" value="Zmień" class="btn btn-secondary" />
                         </div>
                         @*<script>
-                            var input = document.getElementById("@text");
-                            input.addEventListener("keyup", function (event) {
-                                if (event.keyCode === 13) {
-                                    event.preventDefault();
-                                    document.getElementById("@btn").click();
-                                }
-                            });
-                        </script>*@
+                                var input = document.getElementById("@text");
+                                input.addEventListener("keyup", function (event) {
+                                    if (event.keyCode === 13) {
+                                        event.preventDefault();
+                                        document.getElementById("@btn").click();
+                                    }
+                                });
+                            </script>*@
                     </form>
                     <form asp-action=@ASPNames.Delete method="post" class="m-1">
                         <input name="id" type="hidden" value="@item.Id">

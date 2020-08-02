@@ -1,6 +1,6 @@
 ﻿@model Purchase
 
-<h2>Lista zakupów</h2>
+<h1>Lista zakupów</h1>
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
@@ -13,20 +13,20 @@
     <tbody>
         @foreach (var position in Model.Positions)
         {
-        <tr>
+            <tr>
 
 
-            <td class="text-left">@position.Quantity</td>
-            <td class="text-center">@position.Ingredient.Name</td>
-            <td class="text-center">@position.Ingredient.Cost.ToString("C")</td>
-            @{
-                var positionTotal = @position.Quantity * @position.Ingredient.Cost;
-            }
-            <td class="text-center">@positionTotal.ToString("C")</td>
-
-
-        </tr>
+                <td class="text-left">@position.Quantity</td>
+                <td class="text-center">@position.Ingredient.Name</td>
+                <td class="text-center">@position.Ingredient.Cost.ToString("C")</td>
+                @{
+                    var positionTotal = @position.Quantity * @position.Ingredient.Cost;
                 }
+                <td class="text-center">@positionTotal.ToString("C")</td>
+
+
+            </tr>
+        }
     </tbody>
     <tfoot>
         <tr>
@@ -37,3 +37,5 @@
         </tr>
     </tfoot>
 </table>
+
+<a class="btn btn-secondary m-1" asp-action=@ASPNames.RemoveAll>Wyczyść koszyk</a>

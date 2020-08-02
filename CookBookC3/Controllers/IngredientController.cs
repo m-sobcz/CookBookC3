@@ -31,6 +31,7 @@ namespace CookBookASP.Controllers
         public ActionResult Index(int pageId = 1, string category=null)
         {
             var ingredientsList = GetViewModel(pageId, category);
+            //List<IngredientWithCategories> loadedIngredients = ingredientProcessor.GetAllInCategory((pageId - 1) * IngredientsPerPage, IngredientsPerPage, category);
             return View(ingredientsList);
         }
         public IngredientViewModel GetViewModel(int pageId, string category=null) //DRY!

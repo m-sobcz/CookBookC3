@@ -1,9 +1,14 @@
 ﻿@model IEnumerable<CookBookASP.Models.CuisineUIO>
-@await Component.InvokeAsync(nameof(CookBookASP.Components.RecipeEditTabViewComponent).GetASPName(), 
-    new TabWithId { Tab = 2 })
 
-@*Wyswietlanie i usuwanie kuchni*@
-<h3>Aktualne rodzaje kuchni</h3>
+@await Component.InvokeAsync(nameof(CookBookASP.Components.EditTabsViewComponent).GetASPName(),
+    new
+    {
+        viewName = nameof(CookBookASP.Controllers.RecipeController).GetASPName(),
+        tabId = 2
+    })
+
+@*Wyswietlanie i usuwanie rodzaju danń*@
+<h3>Aktualne rodzaje dań</h3>
 <table class="table">
     <thead>
         <tr>
@@ -39,11 +44,8 @@
     </tbody>
 </table>
 
-@*Dodawanie kuchni*@
-<h3>Dodawanie rodzajów kuchni</h3>
+@*Dodawanie rodzaju dań*@
+<h3>Dodawanie rodzajów dań</h3>
 @await Component.InvokeAsync(nameof(CookBookASP.Components.CuisineSelectionViewComponent).GetASPName(),
     new { id = int.TryParse(ViewContext.RouteData.Values["id"]?.ToString(), out int extractedId) ? extractedId : 0 })
 
-<div>
-    <a asp-action=@ASPNames.Index>Powrót</a>
-</div>

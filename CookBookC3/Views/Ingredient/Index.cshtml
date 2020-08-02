@@ -31,7 +31,6 @@
         }
     </ul>
     <!--Produkty-->
-    <h3 style="display: inline-block">Produkty w kategorii</h3>
     @foreach (var ingredient in Model.Ingredients)
     {
         <div class="card m-2">
@@ -51,8 +50,8 @@
                 <p class="card-text">Kalorie: @ingredient.Callories</p>
                 <p class="card-text">Koszt: @ingredient.Cost.ToString("c")</p>
                 <div class="row">
-                    <form asp-controller=@nameof(CookBookASP.Controllers.PurchaseController).GetASPName() asp-action=@ASPNames.Add method="post" class="m-1">
-                        <input name="id" type="hidden" value="@ingredient.Id">
+                    <form asp-controller=@nameof(CookBookASP.Controllers.PurchaseController).GetASPName() asp-action=@ASPNames.AddIngredient method="post" class="m-1">
+                        <input name="ingredientId" type="hidden" value="@ingredient.Id">
                         <button type="submit" class="btn btn-secondary">
                             Dodaj do listy zakupów
                         </button>

@@ -28,7 +28,7 @@ namespace CookBookASP.Components
             ViewBag.recipeId = recipeId;
             List<IngredientWithCategories> loadedIngredients = ingredientProcessor.GetAllInCategory((pageId - 1) * IngredientsPerPage, IngredientsPerPage, category);
             List<CategoryUIO> Categories = categoryProcessor.GetAll().DTOToUIOList(MapCategory);
-            int ingredientCount = loadedIngredients.Count();
+            int ingredientCount = ingredientProcessor.Count(category);
             IngredientViewModel ingredientsList = new IngredientViewModel()
             {
                 Ingredients = loadedIngredients,

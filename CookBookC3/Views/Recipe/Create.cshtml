@@ -1,4 +1,6 @@
 ﻿@model CookBookASP.Models.RecipeUIO
+<a class="row" asp-controller=@nameof(CookBookASP.Controllers.RecipeController).GetASPName() asp-action=@ASPNames.Index>Powrót do przepisów</a>
+
 <h1>Tworzenie przepisu</h1>
 <hr />
 
@@ -35,9 +37,6 @@
     </div>
 </div>
 
-<div>
-    <a asp-action=@ASPNames.Index>Powrót</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

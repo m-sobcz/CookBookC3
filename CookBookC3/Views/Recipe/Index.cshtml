@@ -5,11 +5,11 @@
     </div>
     <!--Kategorie-->
     <div>
-        <h3 style="display: inline-block">Kuchnie</h3>
+        <h3 style="display: inline-block">Rodzaje dań</h3>
         <a style="vertical-align: text-bottom" asp-controller=@nameof(CookBookASP.Controllers.CuisineController).GetASPName()
            asp-action=@ASPNames.Index>Edytuj</a>
     </div>
-    <!--Wybór kuchni do wyswietlania-->
+    <!--Wybór rodzajów dań do wyswietlania-->
     <ul class="nav nav-pills">
         <li class="nav-item">
             <a class="nav-link
@@ -32,7 +32,7 @@
         }
     </ul>
     <!--Przepisy-->
-    <h3 style="display: inline-block">Przepisy w kuchniach</h3>
+    
     @foreach (var recipe in Model.Recipes)
     {
         <div class="card m-2">
@@ -51,8 +51,8 @@
                 <p class="card-text">Porcje: @recipe.Portions</p>
 
                 <div class="row">
-                    <form asp-controller=@nameof(CookBookASP.Controllers.PurchaseController).GetASPName() asp-action=@ASPNames.Add method="post" class="m-1">
-                        <input name="id" type="hidden" value="@recipe.Id">
+                    <form asp-controller=@nameof(CookBookASP.Controllers.PurchaseController).GetASPName() asp-action=@ASPNames.AddRecipe method="post" class="m-1">
+                        <input name="recipeId" type="hidden" value="@recipe.Id">
                         <button type="submit" class="btn btn-secondary">
                             Dodaj do listy zakupów
                         </button>
