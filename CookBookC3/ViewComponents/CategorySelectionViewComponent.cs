@@ -1,6 +1,7 @@
 ﻿using CookBookASP.Converters;
 using CookBookASP.Extensions;
 using CookBookASP.Models;
+using CookBookASP.ViewModels;
 using CookBookBLL.Logic;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -9,9 +10,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using static CookBookASP.Converters.ModelConverter;
 
-namespace CookBookASP.Components
+namespace CookBookASP.ViewComponents
 {
-    public class CategorySelectionViewComponent : ViewComponent
+    public class CategorySelectionViewComponent : ViewComponentBase<CategorySelectionViewComponent>
     {
         private IngredientProcessor ingredientProcessor;
 
@@ -21,7 +22,7 @@ namespace CookBookASP.Components
         }
         public IViewComponentResult Invoke(int id)
         {
-            List<CategoryUIO> categories = ingredientProcessor.GetUnusedCategories(id).DTOToUIOList(MapCategory);
+            List<CategoryVM> categories = ingredientProcessor.GetUnusedCategories(id).DTOToViewModelList(MapCategory);
             return View(categories);
         }
     }

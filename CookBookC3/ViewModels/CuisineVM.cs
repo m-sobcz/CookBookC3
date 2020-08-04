@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CookBookASP.Models
+namespace CookBookASP.ViewModels
 {
-    public class CuisineUIO : UIOBase
+    public class CuisineVM : ViewModelBase
     {
         public int Id { get; set; }
         [Display(Name = "Nazwa")]

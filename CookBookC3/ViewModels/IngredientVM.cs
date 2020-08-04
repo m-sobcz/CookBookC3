@@ -1,24 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CookBookASP.Models
+namespace CookBookASP.ViewModels
 {
-    public class RecipeUIO : UIOBase
+    public class IngredientVM : ViewModelBase
     {
         public int Id { get; set; }
         [Display(Name = "Nazwa")]
-        [Required(ErrorMessage = ErrorMessageText)]
         public string Name { get; set; }
         [Display(Name = "Opis")]
         public string Description { get; set; }
-        [Display(Name = "Czas przygotowania")]
+        [Display(Name = "Jednostka")]
         [Required(ErrorMessage = ErrorMessageText)]
-        public int Time { get; set; }
-        [Display(Name = "Porcje")]
+        public string Unit { get; set; }
+        [Display(Name = "Koszt")]
         [Required(ErrorMessage = ErrorMessageText)]
-        public int Portions { get; set; }
+        public decimal Cost { get; set; }
+        [Display(Name = "Kalorie")]
+        [Required(ErrorMessage = ErrorMessageText)]
+        public int Callories { get; set; }
+        
+        
     }
 }

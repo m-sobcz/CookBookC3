@@ -1,14 +1,14 @@
-﻿@model CookBookASP.Models.RecipeUIO
+﻿@model RecipeVM
 
-@await Component.InvokeAsync(nameof(CookBookASP.Components.EditTabsViewComponent).GetASPName(),
+@await Component.InvokeAsync(nameof(EditTabsViewComponent).GetASPName(),
     new
     {
-        viewName = nameof(CookBookASP.Controllers.RecipeController).GetASPName(),
+        viewName = nameof(RecipeController).GetASPName(),
         tabId = 1
     })
 <div class="row">
     <div class="col-md-4">
-        <form asp-action=@ASPNames.Edit>
+        <form asp-action=@nameof(RecipeController.names.Edit)>
             @Html.AntiForgeryToken()
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">

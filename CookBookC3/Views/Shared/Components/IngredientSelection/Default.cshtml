@@ -1,19 +1,19 @@
-﻿@model IngredientViewModel
+﻿@model FullIngredientVM
 <div>
     <h1 style="display: inline-block">Produkty</h1>
-    <a style="vertical-align: text-bottom" asp-action=@ASPNames.Create>Dodaj</a>
+    <a style="vertical-align: text-bottom" asp-action=@nameof(IngredientController.names.Create)>Dodaj</a>
 </div>
 <!--Kategorie-->
 <div>
     <h3 style="display: inline-block">Kategorie</h3>
-    <a style="vertical-align: text-bottom" asp-controller=@nameof(CookBookASP.Controllers.CategoryController).GetASPName() asp-action=@ASPNames.Index>Edytuj</a>
+    <a style="vertical-align: text-bottom" asp-controller=@nameof(CategoryController).GetASPName() asp-action=@nameof(CategoryController.names.Index)>Edytuj</a>
 </div>
 <!--Wybór kategorii do wyswietlania-->
 <ul class="nav nav-pills">
     <li class="nav-item">
         <a class="nav-link
                @(Model.SelectedCategoryName is null ?"active": "")"
-           asp-action=@ASPNames.Ingredients asp-controller=@nameof(CookBookASP.Controllers.RecipeController).GetASPName() asp-route-pageId="1"
+           asp-action=@nameof(RecipeController.names.Ingredients) asp-controller=@nameof(RecipeController).GetASPName() asp-route-pageId="1"
            asp-route-category="" asp-route-id=@ViewBag.recipeId>
             Wszystkie
         </a>
@@ -23,7 +23,7 @@
         <li class="nav-item">
             <a class="nav-link
                    @(Model.SelectedCategoryName == category.Name?"active": "")"
-               asp-action=@ASPNames.Ingredients asp-controller=@nameof(CookBookASP.Controllers.RecipeController).GetASPName()
+               asp-action=@nameof(RecipeController.names.Ingredients) asp-controller=@nameof(RecipeController).GetASPName()
                asp-route-category="@category.Name" asp-route-pageId="1" asp-route-id=@ViewBag.recipeId>
                 @category.Name
             </a>
@@ -51,7 +51,7 @@
             <p class="card-text">Kalorie: @ingredient.Callories</p>
             <p class="card-text">Koszt: @ingredient.Cost.ToString("c")</p>
             <div class="row">
-                <form asp-controller=@nameof(CookBookASP.Controllers.RecipeController).GetASPName() asp-action=@ASPNames.AddIngredient method="post" class="m-1">
+                <form asp-controller=@nameof(RecipeController).GetASPName() asp-action=@nameof(RecipeController.names.Ingredients) method="post" class="m-1">
                     <input name="ingredientId" type="hidden" value="@ingredient.Id">
                     <input name="id" type="hidden" value="@ViewBag.recipeId">
                     <button type="submit" class="btn btn-secondary">
@@ -65,6 +65,6 @@
 }
 <!--Nawigacja miedzy stronami-->
 <div class="row justify-content-center p-1">
-    <ul class="pagination" pagination-info="@Model.PaginationInfo" page-action=@ASPNames.Ingredients 
+    <ul class="pagination" pagination-info="@Model.PaginationInfo" page-action=@nameof(StepController.names.Edit)
         page-outer-class-default="page-item" page-outer-class-selected="page-item active" page-inner-class-default="page-link"></ul>
 </div>

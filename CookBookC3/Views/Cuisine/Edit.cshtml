@@ -1,11 +1,11 @@
-﻿@model CookBookASP.Models.CuisineUIO
-<a class="row" asp-controller=@nameof(CookBookASP.Controllers.CuisineController).GetASPName() asp-action=@ASPNames.Index>Powrót do rodzajów dań</a>
+﻿@model CuisineVM
+<a class="row" asp-controller=@nameof(CuisineController).GetASPName() asp-action=@nameof(CuisineController.names.Index)>Powrót do rodzajów dań</a>
 
 <h1>Edycja rodzaju dania</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action=@ASPNames.Edit>
+        <form asp-action=@nameof(CuisineController.names.Edit)>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <input asp-for="Id" class="form-control" type="hidden" />
@@ -28,7 +28,7 @@
 </div>
 
 <div>
-    <a asp-action=@ASPNames.Index>Powrót</a>
+    <a asp-action=@nameof(CuisineController.names.Index)>Powrót</a>
 </div>
 
 @section Scripts {

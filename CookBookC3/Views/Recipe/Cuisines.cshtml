@@ -1,9 +1,9 @@
-﻿@model IEnumerable<CookBookASP.Models.CuisineUIO>
+﻿@model IEnumerable<CuisineVM>
 
-@await Component.InvokeAsync(nameof(CookBookASP.Components.EditTabsViewComponent).GetASPName(),
+@await Component.InvokeAsync(nameof(EditTabsViewComponent).GetASPName(),
     new
     {
-        viewName = nameof(CookBookASP.Controllers.RecipeController).GetASPName(),
+        viewName = nameof(RecipeController).GetASPName(),
         tabId = 2
     })
 
@@ -33,7 +33,7 @@
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
                 <td>
-                    <a asp-action=@ASPNames.RemoveCuisine method="post" class="btn btn-secondary m-1"
+                    <a asp-action=@nameof(RecipeController.names.RemoveCuisine) method="post" class="btn btn-secondary m-1"
                        asp-route-id=@(ViewContext.RouteData.Values["id"]) asp-route-cuisineId="@item.Id">
                         Usuń
                     </a>
@@ -46,6 +46,6 @@
 
 @*Dodawanie rodzaju dań*@
 <h3>Dodawanie rodzajów dań</h3>
-@await Component.InvokeAsync(nameof(CookBookASP.Components.CuisineSelectionViewComponent).GetASPName(),
+@await Component.InvokeAsync(nameof(CuisineSelectionViewComponent).GetASPName(),
     new { id = int.TryParse(ViewContext.RouteData.Values["id"]?.ToString(), out int extractedId) ? extractedId : 0 })
 

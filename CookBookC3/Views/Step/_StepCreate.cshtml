@@ -1,6 +1,6 @@
-﻿@model CookBookASP.Models.StepUIO
+﻿@model StepVM
 
-<form asp-action=@ASPNames.Create>
+<form asp-action=@nameof(StepController.names.Create)>
     <input asp-for="Recipe_Id" type="hidden" value=@Model.Recipe_Id>
     <div class="form-group">
         <textarea id="text" class="form-control" asp-for="Description" rows="5"></textarea>
@@ -21,6 +21,6 @@
 
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action=@nameof(StepController.names.Index)>Back to List</a>
 </div>
 

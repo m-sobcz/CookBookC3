@@ -4,14 +4,14 @@
     int id = int.TryParse(ViewContext.RouteData.Values["id"]?.ToString(), out int extractedId) ? extractedId : 0;
     string name = SessionManger.GetItem()?.Name ?? "";
     Tab[] tabs = {
-        new Tab() { Id = 1, Action = ASPNames.Edit,Controller=nameof(CookBookASP.Controllers.RecipeController).GetASPName(), Name = "Ogólne" },
-        new Tab() { Id = 2, Action = ASPNames.Cuisines,Controller=nameof(CookBookASP.Controllers.RecipeController).GetASPName(), Name = "Rodzaje dań" },
-        new Tab() { Id = 3, Action = ASPNames.Index,Controller=nameof(CookBookASP.Controllers.StepController).GetASPName(), Name = "Wykonanie" },
-         new Tab() { Id = 4, Action = ASPNames.Ingredients,Controller=nameof(CookBookASP.Controllers.RecipeController).GetASPName(), Name = "Produkty" }
+        new Tab() { Id = 1, Action = nameof(RecipeController.names.Edit),Controller=nameof(RecipeController).GetASPName(), Name = "Ogólne" },
+        new Tab() { Id = 2, Action = nameof(RecipeController.names.Cuisines),Controller=nameof(RecipeController).GetASPName(), Name = "Rodzaje dań" },
+        new Tab() { Id = 3, Action = nameof(StepController.names.Index),Controller=nameof(StepController).GetASPName(), Name = "Wykonanie" },
+         new Tab() { Id = 4, Action =nameof(RecipeController.names.Ingredients),Controller=nameof(RecipeController).GetASPName(), Name = "Produkty" }
     };
 
 }
-<a class="row" asp-controller=@nameof(CookBookASP.Controllers.RecipeController).GetASPName() asp-action=@ASPNames.Index>Powrót do przepisów</a>
+<a class="row" asp-controller=@nameof(RecipeController).GetASPName() asp-action=@nameof(RecipeController.names.Index)>Powrót do przepisów</a>
 
 <h1>@name</h1>
 <h3>Edycja przepisu</h3>

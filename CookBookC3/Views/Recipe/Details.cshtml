@@ -1,5 +1,5 @@
-﻿@model CookBookASP.Models.FullRecipeUIO
-<a class="row" asp-controller=@nameof(CookBookASP.Controllers.RecipeController).GetASPName() asp-action=@ASPNames.Index>Powrót do przepisów</a>
+﻿@model FullRecipeVM
+<a class="row" asp-controller=@nameof(RecipeController).GetASPName() asp-action=@nameof(RecipeController.names.Index)>Powrót do przepisów</a>
 <h1>
     @Model.Recipe.Name
 </h1>

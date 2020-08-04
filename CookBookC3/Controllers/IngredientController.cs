@@ -4,6 +4,7 @@ using AutoMapper;
 using CookBookASP.Converters;
 using CookBookASP.Models;
 using CookBookASP.Session;
+using CookBookASP.ViewModels;
 using CookBookBLL.Logic;
 using CookBookBLL.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +13,7 @@ using static CookBookASP.Converters.ModelConverter;
 namespace CookBookASP.Controllers
 {
 
-    public class IngredientController : Controller
+    public class IngredientController :  ControllerBase<IngredientController>
     {
         private readonly IMapper mapper;
         private readonly IngredientProcessor ingredientProcessor;
@@ -34,12 +35,12 @@ namespace CookBookASP.Controllers
             //List<IngredientWithCategories> loadedIngredients = ingredientProcessor.GetAllInCategory((pageId - 1) * IngredientsPerPage, IngredientsPerPage, category);
             return View(ingredientsList);
         }
-        public IngredientViewModel GetViewModel(int pageId, string category=null) //DRY!
+        public FullIngredientVM GetViewModel(int pageId, string category=null) //DRY!
         {
-            List<IngredientWithCategories> loadedIngredients = ingredientProcessor.GetAllInCategory((pageId - 1) * IngredientsPerPage, IngredientsPerPage, category);
-            List<CategoryUIO> Categories = categoryProcessor.GetAll().DTOToUIOList(MapCategory);
+            List<IngredientWithCategoriesDTO> loadedIngredients = ingredientProcessor.GetAllInCategory((pageId - 1) * IngredientsPerPage, IngredientsPerPage, category);
+            List<CategoryVM> Categories = categoryProcessor.GetAll().DTOToViewModelList(MapCategory);
             int ingredientCount = ingredientProcessor.Count(category);
-            return new IngredientViewModel()
+            return new FullIngredientVM()
             {
                 Ingredients = loadedIngredients,
                 PaginationInfo = new PaginationInfo()
@@ -58,7 +59,7 @@ namespace CookBookASP.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Create(IngredientUIO ingredient)
+        public ActionResult Create(IngredientVM ingredient)
         {            
             if (ModelState.IsValid)
             {
@@ -72,7 +73,7 @@ namespace CookBookASP.Controllers
             }
         }
         [HttpPost]
-        public ActionResult Edit(IngredientUIO ingredient)
+        public ActionResult Edit(IngredientVM ingredient)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +88,7 @@ namespace CookBookASP.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            IngredientUIO model=ingredientProcessor.Get(id).DTOToUIO(MapIngredient);
+            IngredientVM model=ingredientProcessor.Get(id).DTOToViewModel(MapIngredient);
             sessionManager.SetItem(new ItemInfo() { Name = model.Name });
             return View(model);
         }
@@ -99,7 +100,7 @@ namespace CookBookASP.Controllers
         }
         public ActionResult Categories(int id)
         {
-            List<CategoryUIO> model = ingredientProcessor.GetCategories(id).DTOToUIOList(MapCategory);
+            List<CategoryVM> model = ingredientProcessor.GetCategories(id).DTOToViewModelList(MapCategory);
             return View(model);
         }
         public ActionResult RemoveCategory(int id, int categoryId)

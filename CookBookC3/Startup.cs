@@ -13,6 +13,7 @@ using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
+using CookBookASP.ViewModels;
 
 namespace CookBookASP
 {
@@ -32,11 +33,11 @@ namespace CookBookASP
             //Automapper
             MapperConfiguration mapperConfiguration = new MapperConfiguration(config =>
             {
-                config.CreateMap<IngredientUIO, IngredientDTO>();
-                config.CreateMap<CategoryUIO, CategoryDTO>();
-                config.CreateMap<CuisineUIO, CuisineDTO>();
-                config.CreateMap<RecipeUIO, RecipeDTO>();
-                config.CreateMap<StepUIO, StepDTO>();
+                config.CreateMap<IngredientVM, IngredientDTO>();
+                config.CreateMap<CategoryVM, CategoryDTO>();
+                config.CreateMap<CuisineVM, CuisineDTO>();
+                config.CreateMap<RecipeVM, RecipeDTO>();
+                config.CreateMap<StepVM, StepDTO>();
             });
             mapper = mapperConfiguration.CreateMapper();
             services.AddSingleton<IMapper>(mapper);

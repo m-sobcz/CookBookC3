@@ -1,12 +1,12 @@
-﻿@model CookBookASP.Models.RecipeUIO
-<a class="row" asp-controller=@nameof(CookBookASP.Controllers.RecipeController).GetASPName() asp-action=@ASPNames.Index>Powrót do przepisów</a>
+﻿@model RecipeVM
+<a class="row" asp-controller=@nameof(RecipeController).GetASPName() asp-action=@nameof(RecipeController.names.Index)>Powrót do przepisów</a>
 
 <h1>Tworzenie przepisu</h1>
 <hr />
 
 <div class="row">
     <div class="col-md-4">
-        <form asp-action=@ASPNames.Create>
+        <form asp-action=@nameof(RecipeController.names.Create)>
             @Html.AntiForgeryToken()
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using CookBookASP.Converters;
 using CookBookASP.Models;
+using CookBookASP.ViewModels;
 using CookBookBLL.Logic;
 using CookBookBLL.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +13,7 @@ using static CookBookASP.Converters.ModelConverter;
 
 namespace CookBookASP.Controllers
 {
-    public class CuisineController : Controller
+    public class CuisineController : ControllerBase<CuisineController>
     {
         private readonly IMapper mapper;
         private readonly CuisineProcessor cuisineProcessor;
@@ -24,7 +25,7 @@ namespace CookBookASP.Controllers
         }
         public ActionResult Index()
         {
-            List<CuisineUIO> model = cuisineProcessor.GetAll().DTOToUIOList(MapCuisine);
+            List<CuisineVM> model = cuisineProcessor.GetAll().DTOToViewModelList(MapCuisine);
             return View(model);
         }
         [HttpGet]
@@ -33,7 +34,7 @@ namespace CookBookASP.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Create(CuisineUIO cuisine)
+        public ActionResult Create(CuisineVM cuisine)
         {
             if (ModelState.IsValid)
             {
@@ -46,7 +47,7 @@ namespace CookBookASP.Controllers
             }
         }
         [HttpPost]
-        public ActionResult Edit(CuisineUIO category)
+        public ActionResult Edit(CuisineVM category)
         {
             if (ModelState.IsValid)
             {
@@ -61,7 +62,7 @@ namespace CookBookASP.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            CuisineUIO model = cuisineProcessor.Get(id).DTOToUIO(MapCuisine);
+            CuisineVM model = cuisineProcessor.Get(id).DTOToViewModel(MapCuisine);
             return View(model);
         }
         [HttpPost]

@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace CookBookASP.ViewComponents
 {
-    public class EditStepViewComponent : ViewComponentBase<EditStepViewComponent>
+    public abstract class ViewComponentBase<T> : ViewComponent
     {
-        public IViewComponentResult Invoke()
-        {
-            return View();
-        }
+        public static T names;
     }
 }

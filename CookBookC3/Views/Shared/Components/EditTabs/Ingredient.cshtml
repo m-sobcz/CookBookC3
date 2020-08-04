@@ -4,12 +4,12 @@
     int id = int.TryParse(ViewContext.RouteData.Values["id"]?.ToString(), out int extractedId) ? extractedId : 0;
     string name = SessionManger.GetItem()?.Name ?? "";
     Tab[] tabs = {
-        new Tab() { Id = 1, Action = ASPNames.Edit,Controller=nameof(CookBookASP.Controllers.IngredientController).GetASPName(), Name = "Ogólne" },
-        new Tab() { Id = 2, Action = ASPNames.Categories,Controller=nameof(CookBookASP.Controllers.IngredientController).GetASPName(), Name = "Kategorie" }
+        new Tab() { Id = 1, Action = nameof(IngredientController.names.Edit),Controller=nameof(IngredientController).GetASPName(), Name = "Ogólne" },
+        new Tab() { Id = 2, Action = nameof(IngredientController.names.Categories),Controller=nameof(IngredientController).GetASPName(), Name = "Kategorie" }
     };
 
 }
-<a class="row" asp-controller=@nameof(CookBookASP.Controllers.IngredientController).GetASPName() asp-action=@ASPNames.Index>Powrót do produktów</a>
+<a class="row" asp-controller=@nameof(IngredientController).GetASPName() asp-action=@nameof(IngredientController.names.Index)>Powrót do produktów</a>
 
 <h1>@name</h1>
 <h3>Edycja produktu</h3>

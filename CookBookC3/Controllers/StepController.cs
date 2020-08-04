@@ -6,6 +6,7 @@ using AutoMapper;
 using CookBookASP.Converters;
 using CookBookASP.Models;
 using CookBookASP.Session;
+using CookBookASP.ViewModels;
 using CookBookBLL.Logic;
 using CookBookBLL.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -14,7 +15,7 @@ using static CookBookASP.Converters.ModelConverter;
 
 namespace CookBookASP.Controllers
 {
-    public class StepController : Controller
+    public class StepController :  ControllerBase<StepController>
     {
         private readonly SessionManager<ItemInfo> sessionManager;
         private readonly IMapper mapper;
@@ -28,7 +29,7 @@ namespace CookBookASP.Controllers
         }
         public ActionResult Index(int id)
         {
-            List<StepUIO> model = stepProcessor.Get(id).DTOToUIOList(MapStep);
+            List<StepVM> model = stepProcessor.Get(id).DTOToViewModelList(MapStep);
             return View(model);
         }
         [HttpPost]
@@ -43,7 +44,7 @@ namespace CookBookASP.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Create(StepUIO model)
+        public ActionResult Create(StepVM model)
         {
             stepProcessor.Create(mapper.Map<StepDTO>(model));
             return RedirectToAction(nameof(Index),
@@ -51,7 +52,7 @@ namespace CookBookASP.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(StepUIO model)
+        public ActionResult Edit(StepVM model)
         {
             int id=stepProcessor.Update(mapper.Map<StepDTO>(model));
             return RedirectToAction(nameof(Index), 

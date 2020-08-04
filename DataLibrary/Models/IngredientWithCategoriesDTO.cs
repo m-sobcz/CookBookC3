@@ -4,8 +4,8 @@ using System.Text;
 
 namespace CookBookBLL.Models
 {
-    public class RecipeWithCuisines : RecipeDTO
+    public class IngredientWithCategoriesDTO : IngredientDTO
     {
-        public string Cuisines { get; set; }
+        public string Categories { get; set; }
     }
 }

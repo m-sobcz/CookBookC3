@@ -2,6 +2,7 @@
 using CookBookASP.Converters;
 using CookBookASP.Models;
 using CookBookASP.Session;
+using CookBookASP.ViewModels;
 using CookBookBLL.Logic;
 using CookBookBLL.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +11,7 @@ using static CookBookASP.Converters.ModelConverter;
 
 namespace CookBookASP.Controllers
 {
-    public class RecipeController : Controller
+    public class RecipeController :  ControllerBase<RecipeController>
     {
         private readonly IMapper mapper;
         private readonly RecipeProcessor recipeProcessor;
@@ -28,10 +29,10 @@ namespace CookBookASP.Controllers
         }
         public ActionResult Index(int pageId = 1, string cuisine = null)
         {
-            List<RecipeWithCuisines> loadedRecipes = recipeProcessor.GetAllInCuisine((pageId - 1) * RecipesPerPage, RecipesPerPage, cuisine);
-            List<CuisineUIO> cuisines = cuisineProcessor.GetAll().DTOToUIOList(MapCuisine);
+            List<RecipeWithCuisinesDTO> loadedRecipes = recipeProcessor.GetAllInCuisine((pageId - 1) * RecipesPerPage, RecipesPerPage, cuisine);
+            List<CuisineVM> cuisines = cuisineProcessor.GetAll().DTOToViewModelList(MapCuisine);
             int recipeCount = recipeProcessor.Count(cuisine);
-            RecipeViewModel recipesList = new RecipeViewModel()
+            RecipeIndexVM recipesList = new RecipeIndexVM()
             {
                 Recipes = loadedRecipes,
                 PaginationInfo = new PaginationInfo()
@@ -51,7 +52,7 @@ namespace CookBookASP.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Create(RecipeUIO recipe)
+        public ActionResult Create(RecipeVM recipe)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +66,7 @@ namespace CookBookASP.Controllers
             }
         }
         [HttpPost]
-        public ActionResult Edit(RecipeUIO recipe)
+        public ActionResult Edit(RecipeVM recipe)
         {
             if (ModelState.IsValid)
             {
@@ -80,7 +81,7 @@ namespace CookBookASP.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            RecipeUIO model = recipeProcessor.Get(id).DTOToUIO(MapRecipe);
+            RecipeVM model = recipeProcessor.Get(id).DTOToViewModel(MapRecipe);
             sessionManager.SetItem(new ItemInfo() { Name = model.Name });
             return View(model);
         }
@@ -92,7 +93,7 @@ namespace CookBookASP.Controllers
         }
         public ActionResult Cuisines(int id)
         {
-            List<CuisineUIO> model = recipeProcessor.GetCuisines(id).DTOToUIOList(MapCuisine);
+            List<CuisineVM> model = recipeProcessor.GetCuisines(id).DTOToViewModelList(MapCuisine);
             return View(model);
         }
         public ActionResult RemoveCuisine(int id, int cuisineId)
@@ -110,7 +111,7 @@ namespace CookBookASP.Controllers
             ViewBag.pageId = pageId;
             ViewBag.recipeId = id;
             ViewBag.category = category;
-            List<IngredientWithCountUIO> model = recipeProcessor.GetIngredientsWithCount(id).DTOToUIOList(MapIngredientWithCount);
+            List<IngredientWithCountVM> model = recipeProcessor.GetIngredientsWithCount(id).DTOToViewModelList(MapIngredientWithCount);
             return View(model);
         }
         public ActionResult AddIngredient(int id, int ingredientId)
@@ -130,7 +131,7 @@ namespace CookBookASP.Controllers
         }
         public ActionResult Details(int id)
         {
-            var model = recipeProcessor.GetFull(id).DTOToUIO(MapFullRecipe);
+            var model = recipeProcessor.GetFull(id).DTOToViewModel(MapFullRecipe);
             return View(model);
         }
 

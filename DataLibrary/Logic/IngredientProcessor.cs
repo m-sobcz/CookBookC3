@@ -36,7 +36,7 @@ namespace CookBookBLL.Logic
             };
             return sqlDataAccess.Load<IngredientDTO>(GetDefaultStoredProcedureName(), parameter).FirstOrDefault();
         }
-        public List<IngredientWithCategories> GetAllInCategory(int startIndex, int numberOfRows, string categoryName=null)
+        public List<IngredientWithCategoriesDTO> GetAllInCategory(int startIndex, int numberOfRows, string categoryName=null)
         {
             var parameters = new
             {
@@ -44,7 +44,7 @@ namespace CookBookBLL.Logic
                 NumberOfRows = numberOfRows,
                 CategoryName= categoryName
             };
-            return sqlDataAccess.Load<IngredientWithCategories, string, IngredientWithCategories>
+            return sqlDataAccess.Load<IngredientWithCategoriesDTO, string, IngredientWithCategoriesDTO>
                 (
                 GetDefaultStoredProcedureName(),
                 (ingredient, categories) => { ingredient.Categories = categories; return ingredient; },

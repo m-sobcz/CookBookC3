@@ -1,8 +1,8 @@
-﻿@model IEnumerable<CookBookASP.Models.StepUIO>
-@await Component.InvokeAsync(nameof(CookBookASP.Components.EditTabsViewComponent).GetASPName(),
+﻿@model IEnumerable<StepVM>
+@await Component.InvokeAsync(nameof(EditTabsViewComponent).GetASPName(),
     new
     {
-        viewName = nameof(CookBookASP.Controllers.RecipeController).GetASPName(),
+        viewName = nameof(RecipeController).GetASPName(),
         tabId = 3
     })
 
@@ -28,7 +28,7 @@
                     @Html.DisplayFor(modelItem => item.Order)
                 </td>
                 <td>
-                    <form asp-action=@ASPNames.Edit method="post">
+                    <form asp-action=@nameof(StepController.names.Edit) method="post">
                         @Html.AntiForgeryToken()
                         <div asp-validation-summary="None" class="text-danger"></div>
                         <input name="id" type="hidden" value="@item.Id">
@@ -49,7 +49,7 @@
                                 });
                             </script>*@
                     </form>
-                    <form asp-action=@ASPNames.Delete method="post" class="m-1">
+                    <form asp-action=@nameof(StepController.names.Delete) method="post" class="m-1">
                         <input name="id" type="hidden" value="@item.Id">
                         <button type="submit" class="btn btn-secondary" onclick="if (!confirm('Na pewno chcesz usunąć ?')) return false;">
                             Usuń
@@ -62,7 +62,7 @@
             <td></td>
             <td>
                 @{int recipeId = int.TryParse(ViewContext.RouteData.Values["id"]?.ToString(), out int extractedId) ? extractedId : 0;
-                    var createModel = new CookBookASP.Models.StepUIO() { Recipe_Id = recipeId };}
+                    var createModel = new StepVM() { Recipe_Id = recipeId };}
                 <partial name="_StepCreate" model=@createModel />
             </td>
         </tr>

@@ -11,7 +11,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller=@nameof(CookBookASP.Controllers.HomeController).GetASPName() asp-action=@ASPNames.Index>CookBookASP</a>
+                <a class="navbar-brand" asp-area="" asp-controller=@nameof(CookBookASP.Controllers.HomeController).GetASPName() asp-action=@nameof(HomeController.names.Index)>CookBookASP</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -19,15 +19,16 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller=@nameof(CookBookASP.Controllers.RecipeController).GetASPName() asp-action=@ASPNames.Index>Przepisy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller=@nameof(CookBookASP.Controllers.RecipeController).GetASPName() asp-action=@nameof(RecipeController.names.Index)>Przepisy</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller=@nameof(CookBookASP.Controllers.IngredientController).GetASPName() asp-action=@ASPNames.Index>Produkty</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller=@nameof(CookBookASP.Controllers.IngredientController).GetASPName() asp-action=@nameof(IngredientController.names.Index)>Produkty</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller=@nameof(CookBookASP.Controllers.PurchaseController).GetASPName() asp-action=@ASPNames.Index>
+                            <a class="nav-link text-dark" asp-area="" asp-controller=@nameof(CookBookASP.Controllers.PurchaseController).GetASPName() asp-action=@nameof(PurchaseController.names.Index)>
                                 Lista zakupów <span class="badge badge-light">
-                                    @await Component.InvokeAsync(nameof(CookBookASP.Components.ShoppingCountViewComponent).GetASPName())
+
+                                    @await Component.InvokeAsync(nameof(ShoppingCountViewComponent).GetASPName())
                                 </span>
                             </a>
                         </li>

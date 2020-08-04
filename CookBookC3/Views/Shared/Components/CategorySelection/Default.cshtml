@@ -1,9 +1,9 @@
-﻿@model List<CategoryUIO>
+﻿@model List<CategoryVM>
     <div>
         @foreach (var category in Model)
         {
             <a class="btn btn-outline-secondary m-1"
-               asp-action=@ASPNames.AddCategory asp-controller=@nameof(CookBookASP.Controllers.IngredientController).GetASPName()
+               asp-action=@nameof(IngredientController.names.AddCategory) asp-controller=@nameof(IngredientController).GetASPName()
                asp-route-categoryid="@category.Id" asp-route-id="@(ViewContext.RouteData.Values["id"])">
                 @category.Name
             </a>

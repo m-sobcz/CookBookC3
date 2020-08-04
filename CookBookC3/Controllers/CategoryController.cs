@@ -6,15 +6,17 @@ using AutoMapper;
 using CookBookASP.Converters;
 using CookBookASP.Models;
 using CookBookASP.Session;
+using CookBookASP.ViewModels;
 using CookBookBLL.Logic;
 using CookBookBLL.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using static CookBookASP.Converters.ModelConverter;
 
 
 namespace CookBookASP.Controllers
 {
-    public class CategoryController : Controller
+    public class CategoryController : ControllerBase<CategoryController>
     {
         private readonly SessionManager<ItemInfo> sessionManager;
         private readonly IMapper mapper;
@@ -28,7 +30,7 @@ namespace CookBookASP.Controllers
         }
         public ActionResult Index()
         {
-            List<CategoryUIO> model = categoryProcessor.GetAll().DTOToUIOList(MapCategory);
+            List<CategoryVM> model = categoryProcessor.GetAll().DTOToViewModelList(MapCategory);
             return View(model);
         }
         [HttpGet]
@@ -37,7 +39,7 @@ namespace CookBookASP.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Create(CategoryUIO category)
+        public ActionResult Create(CategoryVM category)
         {
             if (ModelState.IsValid)
             {
@@ -50,7 +52,7 @@ namespace CookBookASP.Controllers
             }
         }
         [HttpPost]
-        public ActionResult Edit(CategoryUIO category)
+        public ActionResult Edit(CategoryVM category)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +67,7 @@ namespace CookBookASP.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            CategoryUIO model = categoryProcessor.Get(id).DTOToUIO(MapCategory);
+            CategoryVM model = categoryProcessor.Get(id).DTOToViewModel(MapCategory);
             return View(model);
         }
         [HttpPost]

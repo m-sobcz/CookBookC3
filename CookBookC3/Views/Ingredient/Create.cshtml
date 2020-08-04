@@ -1,11 +1,11 @@
-﻿@model CookBookASP.Models.IngredientUIO
-<a class="row" asp-controller=@nameof(CookBookASP.Controllers.IngredientController).GetASPName() asp-action=@ASPNames.Index>Powrót do produktów</a>
+﻿@model IngredientVM
+<a class="row" asp-controller=@nameof(IngredientController).GetASPName() asp-action=@nameof(IngredientController.names.Index)>Powrót do produktów</a>
 <h1>Tworzenie produktu</h1>
 <hr />
 
 <div class="row">
     <div class="col-md-4">
-        <form asp-action=@ASPNames.Create>
+        <form asp-action=@nameof(IngredientController.names.Create)>
             @Html.AntiForgeryToken()
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -41,7 +41,7 @@
 </div>
 
 <div>
-    <a asp-action=@ASPNames.Index>Powrót</a>
+    <a asp-action=@nameof(IngredientController.names.Index)>Powrót</a>
 </div>
 
 @section Scripts {

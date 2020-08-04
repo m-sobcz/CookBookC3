@@ -1,8 +1,8 @@
-﻿@model IEnumerable<CookBookASP.Models.CategoryUIO>
-    <a class="row" asp-controller=@nameof(CookBookASP.Controllers.IngredientController).GetASPName() asp-action=@ASPNames.Index>Przejdź do listy produktów</a>
+﻿@model IEnumerable<CategoryVM>
+    <a class="row" asp-controller=@nameof(CookBookASP.Controllers.IngredientController).GetASPName() asp-action=@nameof(IngredientController.names.Index)>Przejdź do listy produktów</a>
 <div>
     <h1 style="display: inline-block">Kategorie produktów</h1>
-    <a style="vertical-align: text-bottom" asp-action=@ASPNames.Create>Dodaj</a>
+    <a style="vertical-align: text-bottom" asp-action=@nameof(CategoryController.names.Create)>Dodaj</a>
 </div>
 <!--Kategorie-->
 @*Wyswietlanie i usuwanie kategorii*@
@@ -30,11 +30,11 @@
                 </td>
                 <td>
                     <div class="row">
-                        <a asp-action=@ASPNames.Edit method="post" class="btn btn-secondary btn-sm m-1"
+                        <a asp-action=@nameof(CategoryController.names.Edit) method="post" class="btn btn-secondary btn-sm m-1"
                            asp-route-id="@item.Id">
                             Edytuj
                         </a>
-                        <form asp-action=@ASPNames.Delete method="post" class="m-1">
+                        <form asp-action=@nameof(CategoryController.names.Delete) method="post" class="m-1">
                             <input name="id" type="hidden" value="@item.Id">
                             <button type="submit" class="btn btn-secondary btn-sm" onclick="if (!confirm('Na pewno chcesz usunąć ?')) return false;">
                                 Usuń
@@ -47,4 +47,4 @@
 
     </tbody>
 </table>
-<a class="row" asp-controller=@nameof(CookBookASP.Controllers.IngredientController).GetASPName() asp-action=@ASPNames.Index>Powrót</a>
+<a class="row" asp-controller=@nameof(IngredientController).GetASPName() asp-action=@nameof(CategoryController.names.Index)>Powrót</a>

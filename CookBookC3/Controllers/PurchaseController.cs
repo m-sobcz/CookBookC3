@@ -1,6 +1,7 @@
 ﻿using CookBookASP.Converters;
 using CookBookASP.Models;
 using CookBookASP.Session;
+using CookBookASP.ViewModels;
 using CookBookBLL.Logic;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using static CookBookASP.Converters.ModelConverter;
 
 namespace CookBookASP.Controllers
 {
-    public class PurchaseController : Controller
+    public class PurchaseController :  ControllerBase<PurchaseController>
     {
         private readonly RecipeProcessor recipeProcessor;
         private readonly SessionManager<Purchase> sessionManager;
@@ -31,8 +32,8 @@ namespace CookBookASP.Controllers
 
         public ActionResult AddIngredient(int ingredientId)
         {
-            var rawIngredient = ingredientProcessor.Get(ingredientId).DTOToUIO(MapIngredient);
-            IngredientWithCountUIO ingredient = new IngredientWithCountUIO()
+            var rawIngredient = ingredientProcessor.Get(ingredientId).DTOToViewModel(MapIngredient);
+            IngredientWithCountVM ingredient = new IngredientWithCountVM()
             {
                 Callories = rawIngredient.Callories,
                 Cost = rawIngredient.Cost,
@@ -43,19 +44,19 @@ namespace CookBookASP.Controllers
                 Count = 1
             };
 
-            AddIngredientsToSession(new List<IngredientWithCountUIO>() { ingredient });
+            AddIngredientsToSession(new List<IngredientWithCountVM>() { ingredient });
             return RedirectToAction(nameof(Index));
         }
         public ActionResult AddRecipe(int recipeId)
         {
-            List<IngredientWithCountUIO> Ingredients = recipeProcessor.GetIngredientsWithCount(recipeId).DTOToUIOList(MapIngredientWithCount);
+            List<IngredientWithCountVM> Ingredients = recipeProcessor.GetIngredientsWithCount(recipeId).DTOToViewModelList(MapIngredientWithCount);
             AddIngredientsToSession(Ingredients);
             return RedirectToAction(nameof(Index));
         }
-        void AddIngredientsToSession(List<IngredientWithCountUIO> ingredients)
+        void AddIngredientsToSession(List<IngredientWithCountVM> ingredients)
         {
             purchase = sessionManager.GetItem();
-            foreach (IngredientWithCountUIO ingredient in ingredients)
+            foreach (IngredientWithCountVM ingredient in ingredients)
             {
                 if (ingredient != null)
                 {
@@ -68,7 +69,7 @@ namespace CookBookASP.Controllers
 
         public RedirectToActionResult RemoveIngredient(int ingredientId)
         {
-            IngredientUIO Ingredient = ingredientProcessor.Get(ingredientId).DTOToUIO(MapIngredient);
+            IngredientVM Ingredient = ingredientProcessor.Get(ingredientId).DTOToViewModel(MapIngredient);
 
             if (Ingredient != null)
             {

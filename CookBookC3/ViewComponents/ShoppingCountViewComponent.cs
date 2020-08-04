@@ -7,9 +7,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CookBookASP.Components
+namespace CookBookASP.ViewComponents
+
 {
-    public class ShoppingCountViewComponent : ViewComponent
+    public class ShoppingCountViewComponent : ViewComponentBase<ShoppingCountViewComponent>
     {
         private SessionManager<Purchase> sessionManager;
 

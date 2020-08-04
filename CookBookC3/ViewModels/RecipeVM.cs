@@ -1,13 +1,12 @@
-﻿using CookBookASP.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CookBookASP.Models
+namespace CookBookASP.ViewModels
 {
-    public class CategoryUIO : UIOBase
+    public class RecipeVM : ViewModelBase
     {
         public int Id { get; set; }
         [Display(Name = "Nazwa")]
@@ -15,6 +14,11 @@ namespace CookBookASP.Models
         public string Name { get; set; }
         [Display(Name = "Opis")]
         public string Description { get; set; }
-        public int MyProperty => 5;
+        [Display(Name = "Czas przygotowania")]
+        [Required(ErrorMessage = ErrorMessageText)]
+        public int Time { get; set; }
+        [Display(Name = "Porcje")]
+        [Required(ErrorMessage = ErrorMessageText)]
+        public int Portions { get; set; }
     }
 }

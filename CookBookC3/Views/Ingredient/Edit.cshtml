@@ -1,13 +1,13 @@
-﻿@model CookBookASP.Models.IngredientUIO
+﻿@model IngredientVM
 @inject CookBookASP.Session.SessionManager<ItemInfo> SessionManger
-@await Component.InvokeAsync(nameof(CookBookASP.Components.EditTabsViewComponent).GetASPName(),
+@await Component.InvokeAsync(nameof(EditTabsViewComponent).GetASPName(),
     new {
-        viewName = nameof(CookBookASP.Controllers.IngredientController).GetASPName(),
+        viewName = nameof(IngredientController).GetASPName(),
         tabId=1
     })
 <div class="row">
     <div class="col-md-4">
-        <form asp-action=@ASPNames.Edit>
+        <form asp-action=@nameof(IngredientController.names.Edit)>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <input asp-for="Id" class="form-control" type="hidden" />

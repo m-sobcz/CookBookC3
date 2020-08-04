@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CookBookASP.Models
+namespace CookBookASP.ViewModels
 {
-    public class IngredientWithCountUIO : IngredientUIO
+    public class IngredientWithCountVM : IngredientVM
     {
         [Display(Name = "Ilość")]
         public decimal Count { get; set; }

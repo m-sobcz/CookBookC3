@@ -1,20 +1,20 @@
-﻿@model RecipeViewModel
+﻿@model RecipeIndexVM
     <div>
         <h1 style="display: inline-block">Przepisy</h1>
-        <a style="vertical-align: text-bottom" asp-action=@ASPNames.Create>Dodaj</a>
+        <a style="vertical-align: text-bottom" asp-action=@nameof(RecipeController.names.Create)>Dodaj</a>
     </div>
     <!--Kategorie-->
     <div>
         <h3 style="display: inline-block">Rodzaje dań</h3>
-        <a style="vertical-align: text-bottom" asp-controller=@nameof(CookBookASP.Controllers.CuisineController).GetASPName()
-           asp-action=@ASPNames.Index>Edytuj</a>
+        <a style="vertical-align: text-bottom" asp-controller=@nameof(CuisineController).GetASPName()
+           asp-action=@nameof(RecipeController.names.Index)>Edytuj</a>
     </div>
     <!--Wybór rodzajów dań do wyswietlania-->
     <ul class="nav nav-pills">
         <li class="nav-item">
             <a class="nav-link
                @(Model.SelectedCuisineName is null ?"active": "")"
-               asp-action=@ASPNames.Index asp-controller=@nameof(CookBookASP.Controllers.RecipeController).GetASPName() asp-route-id="1"
+               asp-action=@nameof(RecipeController.names.Index) asp-controller=@nameof(RecipeController).GetASPName() asp-route-id="1"
                asp-route-cuisine="">
                 Wszystkie
             </a>
@@ -24,7 +24,7 @@
             <li class="nav-item">
                 <a class="nav-link
                    @(Model.SelectedCuisineName == cuisine.Name?"active": "")"
-                   asp-action=@ASPNames.Index asp-controller=@nameof(CookBookASP.Controllers.RecipeController).GetASPName()
+                   asp-action=@nameof(RecipeController.names.Index) asp-controller=@nameof(RecipeController).GetASPName()
                    asp-route-cuisine="@cuisine.Name" asp-route-id="1">
                     @cuisine.Name
                 </a>
@@ -51,21 +51,21 @@
                 <p class="card-text">Porcje: @recipe.Portions</p>
 
                 <div class="row">
-                    <form asp-controller=@nameof(CookBookASP.Controllers.PurchaseController).GetASPName() asp-action=@ASPNames.AddRecipe method="post" class="m-1">
+                    <form asp-controller=@nameof(PurchaseController).GetASPName() asp-action=@nameof(PurchaseController.names.AddRecipe) method="post" class="m-1">
                         <input name="recipeId" type="hidden" value="@recipe.Id">
                         <button type="submit" class="btn btn-secondary">
                             Dodaj do listy zakupów
                         </button>
                     </form>
-                    <a asp-action=@ASPNames.Details method="post" class="btn btn-secondary m-1"
+                    <a asp-action=@nameof(RecipeController.names.Details) method="post" class="btn btn-secondary m-1"
                        asp-route-id="@recipe.Id">
                         Wyświetl
                     </a>
-                    <a asp-action=@ASPNames.Edit method="post" class="btn btn-secondary m-1"
+                    <a asp-action=@nameof(RecipeController.names.Edit) method="post" class="btn btn-secondary m-1"
                        asp-route-id="@recipe.Id">
                         Edytuj
                     </a>
-                    <form asp-action=@ASPNames.Delete method="post" class="m-1">
+                    <form asp-action=@nameof(RecipeController.names.Delete) method="post" class="m-1">
                         <input name="id" type="hidden" value="@recipe.Id">
                         <button type="submit" class="btn btn-secondary" onclick="if (!confirm('Na pewno chcesz usunąć ?')) return false;">
                             Usuń
@@ -78,6 +78,6 @@
     }
     <!--Nawigacja miedzy stronami-->
     <div class="row justify-content-center p-1">
-        <ul class="pagination" pagination-info="@Model.PaginationInfo" page-action=@ASPNames.Index
+        <ul class="pagination" pagination-info="@Model.PaginationInfo" page-action=@nameof(RecipeController.names.Index)
             page-outer-class-default="page-item" page-outer-class-selected="page-item active" page-inner-class-default="page-link"></ul>
     </div>

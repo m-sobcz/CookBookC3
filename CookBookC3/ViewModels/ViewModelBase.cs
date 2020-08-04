@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CookBookASP.Models
+namespace CookBookASP.ViewModels
 {
-    public class UIOBase
+    public abstract class ViewModelBase
     {
         protected const string ErrorMessageText = "Podanie tego pola jest obowiązkowe";
     }

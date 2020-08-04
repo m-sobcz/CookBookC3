@@ -8,9 +8,9 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CookBookASP.Components
+namespace CookBookASP.ViewComponents
 {
-    public class EditTabsViewComponent : ViewComponent
+    public class EditTabsViewComponent : ViewComponentBase<EditTabsViewComponent>
     {
         public IViewComponentResult Invoke(string viewName,int tabId)
         {

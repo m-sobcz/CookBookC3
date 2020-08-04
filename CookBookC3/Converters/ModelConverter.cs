@@ -1,4 +1,5 @@
 ﻿using CookBookASP.Models;
+using CookBookASP.ViewModels;
 using CookBookBLL.Models;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using System;
@@ -10,31 +11,31 @@ namespace CookBookASP.Converters
 {
     public static class ModelConverter
     {
-        public static List<TUIO> DTOToUIOList<TDTO, TUIO>(this IEnumerable<TDTO> data, Func<TDTO, TUIO> convert)
+        public static List<TViewModel> DTOToViewModelList<TDTO, TViewModel>(this IEnumerable<TDTO> data, Func<TDTO, TViewModel> convert)
         {
-            List<TUIO> tuioList = new List<TUIO>();
+            List<TViewModel> tVMList = new List<TViewModel>();
             foreach (var row in data)
             {
-                tuioList.Add(row.DTOToUIO(convert));
+                tVMList.Add(row.DTOToViewModel(convert));
             }
-            return tuioList;
+            return tVMList;
         }
-        public static TUIO DTOToUIO<TDTO, TUIO>(this TDTO dto, Func<TDTO,TUIO> convert) 
+        public static TViewModel DTOToViewModel<TDTO, TViewModel>(this TDTO dto, Func<TDTO,TViewModel> convert) 
         {
             return convert(dto);
         }
-        public static CategoryUIO MapCategory(CategoryDTO dto)
+        public static CategoryVM MapCategory(CategoryDTO dto)
         {
-            return new CategoryUIO()
+            return new CategoryVM()
             {
                 Description = dto.Description,
                 Id = dto.Id,
                 Name = dto.Name
             };
         }
-        public static IngredientUIO MapIngredient(IngredientDTO dto)
+        public static IngredientVM MapIngredient(IngredientDTO dto)
         {
-            return new IngredientUIO()
+            return new IngredientVM()
             {
                 Description = dto.Description,
                 Id = dto.Id,
@@ -44,9 +45,9 @@ namespace CookBookASP.Converters
                 Unit = dto.Unit
             };
         }
-        public static IngredientWithCountUIO MapIngredientWithCount(IngredientWithCountDTO dto)
+        public static IngredientWithCountVM MapIngredientWithCount(IngredientWithCountDTO dto)
         {
-            return new IngredientWithCountUIO()
+            return new IngredientWithCountVM()
             {
                 Description = dto.Description,
                 Id = dto.Id,
@@ -57,18 +58,18 @@ namespace CookBookASP.Converters
                 Count=dto.Count
             };
         }
-        public static CuisineUIO MapCuisine(CuisineDTO dto)
+        public static CuisineVM MapCuisine(CuisineDTO dto)
         {
-            return new CuisineUIO()
+            return new CuisineVM()
             {
                 Description = dto.Description,
                 Id = dto.Id,
                 Name = dto.Name,
             };
         }
-        public static RecipeUIO MapRecipe(RecipeDTO dto)
+        public static RecipeVM MapRecipe(RecipeDTO dto)
         {
-            return new RecipeUIO()
+            return new RecipeVM()
             {
                 Description = dto.Description,
                 Id = dto.Id,
@@ -78,23 +79,23 @@ namespace CookBookASP.Converters
             };
         }
 
-        public static StepUIO MapStep(StepDTO dto)
+        public static StepVM MapStep(StepDTO dto)
         {
-            return new StepUIO()
+            return new StepVM()
             {
                 Id=dto.Id,
                 Order=dto.Order,
                 Description=dto.Description
             };
         }
-        public static FullRecipeUIO MapFullRecipe(FullRecipeDTO dto)
+        public static FullRecipeVM MapFullRecipe(FullRecipeDTO dto)
         {
-            return new FullRecipeUIO()
+            return new FullRecipeVM()
             {
-                Recipe=dto.Recipe.DTOToUIO(MapRecipe),
-                Ingredients = dto.Ingredients.DTOToUIOList(MapIngredientWithCount),
-                Cuisines = dto.Cuisines.DTOToUIOList(MapCuisine),
-                Steps = dto.Steps.DTOToUIOList(MapStep)
+                Recipe=dto.Recipe.DTOToViewModel(MapRecipe),
+                Ingredients = dto.Ingredients.DTOToViewModelList(MapIngredientWithCount),
+                Cuisines = dto.Cuisines.DTOToViewModelList(MapCuisine),
+                Steps = dto.Steps.DTOToViewModelList(MapStep)
 
             };
         }

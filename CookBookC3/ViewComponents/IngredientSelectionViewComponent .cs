@@ -1,6 +1,7 @@
 ﻿using CookBookASP.Converters;
 using CookBookASP.Extensions;
 using CookBookASP.Models;
+using CookBookASP.ViewModels;
 using CookBookBLL.Logic;
 using CookBookBLL.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -10,9 +11,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using static CookBookASP.Converters.ModelConverter;
 
-namespace CookBookASP.Components
+namespace CookBookASP.ViewComponents
 {
-    public class IngredientSelectionViewComponent : ViewComponent
+    public class IngredientSelectionViewComponent : ViewComponentBase<IngredientSelectionViewComponent>
     {
         private IngredientProcessor ingredientProcessor;
         private CategoryProcessor categoryProcessor;
@@ -26,10 +27,10 @@ namespace CookBookASP.Components
         public IViewComponentResult Invoke(int recipeId, int pageId = 1, string category = null) //DRY!
         {
             ViewBag.recipeId = recipeId;
-            List<IngredientWithCategories> loadedIngredients = ingredientProcessor.GetAllInCategory((pageId - 1) * IngredientsPerPage, IngredientsPerPage, category);
-            List<CategoryUIO> Categories = categoryProcessor.GetAll().DTOToUIOList(MapCategory);
+            List<IngredientWithCategoriesDTO> loadedIngredients = ingredientProcessor.GetAllInCategory((pageId - 1) * IngredientsPerPage, IngredientsPerPage, category);
+            List<CategoryVM> Categories = categoryProcessor.GetAll().DTOToViewModelList(MapCategory);
             int ingredientCount = ingredientProcessor.Count(category);
-            IngredientViewModel ingredientsList = new IngredientViewModel()
+            FullIngredientVM ingredientsList = new FullIngredientVM()
             {
                 Ingredients = loadedIngredients,
                 PaginationInfo = new PaginationInfo()

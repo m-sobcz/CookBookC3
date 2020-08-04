@@ -1,9 +1,9 @@
-﻿@model IEnumerable<CookBookASP.Models.CategoryUIO>
+﻿@model IEnumerable<CategoryVM>
 @inject CookBookASP.Session.SessionManager<ItemInfo> SessionManger
-@await Component.InvokeAsync(nameof(CookBookASP.Components.EditTabsViewComponent).GetASPName(),
+@await Component.InvokeAsync(nameof(EditTabsViewComponent).GetASPName(),
     new
     {
-        viewName = nameof(CookBookASP.Controllers.IngredientController).GetASPName(),
+        viewName = nameof(IngredientController).GetASPName(),
         tabId = 2
     })
 @*Wyswietlanie i usuwanie kategorii*@
@@ -32,7 +32,7 @@
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
                 <td>
-                    <a asp-action=@ASPNames.RemoveCategory method="post" class="btn btn-secondary m-1"
+                    <a asp-action=@nameof(IngredientController.names.RemoveCategory) method="post" class="btn btn-secondary m-1"
                        asp-route-id=@(ViewContext.RouteData.Values["id"]) asp-route-categoryId="@item.Id">
                         Usuń
                     </a>
