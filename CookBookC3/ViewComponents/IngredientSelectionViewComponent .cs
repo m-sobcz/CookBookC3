@@ -15,33 +15,18 @@ namespace CookBookASP.ViewComponents
 {
     public class IngredientSelectionViewComponent : ViewComponentBase<IngredientSelectionViewComponent>
     {
-        private IngredientProcessor ingredientProcessor;
-        private CategoryProcessor categoryProcessor;
+        private CompoundModelBuilder compoundModelBuilder;
+
         public int IngredientsPerPage { get; set; } = 6;
 
-        public IngredientSelectionViewComponent(IngredientProcessor ingredientProcessor, CategoryProcessor categoryProcessor)
+        public IngredientSelectionViewComponent(CompoundModelBuilder compoundModelBuilder)
         {
-            this.ingredientProcessor = ingredientProcessor;
-            this.categoryProcessor = categoryProcessor;
+            this.compoundModelBuilder = compoundModelBuilder;
         }
-        public IViewComponentResult Invoke(int recipeId, int pageId = 1, string category = null) //DRY!
+        public IViewComponentResult Invoke(int recipeId, int pageId = 1, string category = null) 
         {
             ViewBag.recipeId = recipeId;
-            List<IngredientWithCategoriesDTO> loadedIngredients = ingredientProcessor.GetAllInCategory((pageId - 1) * IngredientsPerPage, IngredientsPerPage, category);
-            List<CategoryVM> Categories = categoryProcessor.GetAll().DTOToViewModelList(MapCategory);
-            int ingredientCount = ingredientProcessor.Count(category);
-            FullIngredientVM ingredientsList = new FullIngredientVM()
-            {
-                Ingredients = loadedIngredients,
-                PaginationInfo = new PaginationInfo()
-                {
-                    Current = pageId,
-                    ItemsPerPage = IngredientsPerPage,
-                    ItemsCount = ingredientCount
-                },
-                Categories = Categories,
-                SelectedCategoryName = category
-            };
+            FullIngredientVM ingredientsList = compoundModelBuilder.GetFullIngredientVM(pageId, category, IngredientsPerPage);
             return View(ingredientsList);
         }
     }

@@ -11,40 +11,26 @@ using static CookBookASP.Converters.ModelConverter;
 
 namespace CookBookASP.Controllers
 {
-    public class RecipeController :  ControllerBase<RecipeController>
+    public class RecipeController : ControllerBase<RecipeController>
     {
+        private readonly CompoundModelBuilder compoundModelBuilder;
         private readonly IMapper mapper;
         private readonly RecipeProcessor recipeProcessor;
-        private readonly CuisineProcessor cuisineProcessor;
         private readonly SessionManager<ItemInfo> sessionManager;
 
         public int RecipesPerPage { get; set; } = 6;
-        public RecipeController(RecipeProcessor recipeProcessor, CuisineProcessor cuisineProcessor, IMapper mapper,
-            SessionManager<ItemInfo> sessionManager)
+        public RecipeController(RecipeProcessor recipeProcessor, IMapper mapper,
+            SessionManager<ItemInfo> sessionManager, CompoundModelBuilder compoundModelBuilder)
         {
+            this.compoundModelBuilder = compoundModelBuilder;
             this.mapper = mapper;
             this.recipeProcessor = recipeProcessor;
-            this.cuisineProcessor = cuisineProcessor;
             this.sessionManager = sessionManager;
         }
         public ActionResult Index(int pageId = 1, string cuisine = null)
         {
-            List<RecipeWithCuisinesDTO> loadedRecipes = recipeProcessor.GetAllInCuisine((pageId - 1) * RecipesPerPage, RecipesPerPage, cuisine);
-            List<CuisineVM> cuisines = cuisineProcessor.GetAll().DTOToViewModelList(MapCuisine);
-            int recipeCount = recipeProcessor.Count(cuisine);
-            RecipeIndexVM recipesList = new RecipeIndexVM()
-            {
-                Recipes = loadedRecipes,
-                PaginationInfo = new PaginationInfo()
-                {
-                    Current = pageId,
-                    ItemsPerPage = RecipesPerPage,
-                    ItemsCount = recipeCount
-                },
-                Cuisines = cuisines,
-                SelectedCuisineName = cuisine
-            };
-            return View(recipesList);
+            var model = compoundModelBuilder.GetRecipeIndexVM(pageId, cuisine, RecipesPerPage);
+            return View(model);
         }
         [HttpGet]
         public ActionResult Create()
@@ -108,10 +94,13 @@ namespace CookBookASP.Controllers
         }
         public ActionResult Ingredients(int id, int pageId = 1, string category = null)
         {
-            ViewBag.pageId = pageId;
-            ViewBag.recipeId = id;
-            ViewBag.category = category;
-            List<IngredientWithCountVM> model = recipeProcessor.GetIngredientsWithCount(id).DTOToViewModelList(MapIngredientWithCount);
+            IngredientsPageVM model = new IngredientsPageVM()
+            {
+                Category = category,
+                PageId = pageId,
+                RecipeId = id
+            };
+            model.Ingredients = recipeProcessor.GetIngredientsWithCount(id).DTOToViewModelList(MapIngredientWithCount);
             return View(model);
         }
         public ActionResult AddIngredient(int id, int ingredientId)

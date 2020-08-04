@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using CookBookASP.ViewModels;
+using CookBookASP.Converters;
 
 namespace CookBookASP
 {
@@ -58,6 +59,7 @@ namespace CookBookASP
             services.AddSingleton<RecipeProcessor>();
             services.AddSingleton<CuisineProcessor>();
             services.AddSingleton<StepProcessor>();
+            services.AddSingleton<CompoundModelBuilder>();
             //SessionManager
             services.AddScoped<SessionManager<Purchase>>();
             services.AddScoped<SessionManager<ItemInfo>>();
