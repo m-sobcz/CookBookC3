@@ -19,40 +19,24 @@ namespace CookBookASP.Controllers
         private readonly IngredientProcessor ingredientProcessor;
         private readonly CategoryProcessor categoryProcessor;
         private readonly SessionManager<ItemInfo> sessionManager;
+        private readonly CompoundModelBuilder compoundModelBuilder;
 
         public int IngredientsPerPage { get; set; } = 6;
         public IngredientController(IngredientProcessor ingredientProcessor, CategoryProcessor categoryProcessor, 
-            IMapper mapper, SessionManager<ItemInfo> sessionManager)
+            IMapper mapper, SessionManager<ItemInfo> sessionManager, CompoundModelBuilder compoundModelBuilder)
         {
             this.mapper = mapper;
             this.ingredientProcessor = ingredientProcessor;
             this.categoryProcessor = categoryProcessor;
             this.sessionManager = sessionManager;
+            this.compoundModelBuilder = compoundModelBuilder;
         }
         public ActionResult Index(int pageId = 1, string category=null)
         {
-            var ingredientsList = GetViewModel(pageId, category);
-            //List<IngredientWithCategories> loadedIngredients = ingredientProcessor.GetAllInCategory((pageId - 1) * IngredientsPerPage, IngredientsPerPage, category);
+            var ingredientsList = compoundModelBuilder.GetFullIngredientVM(pageId,category,IngredientsPerPage);
             return View(ingredientsList);
         }
-        public FullIngredientVM GetViewModel(int pageId, string category=null) //DRY!
-        {
-            List<IngredientWithCategoriesDTO> loadedIngredients = ingredientProcessor.GetAllInCategory((pageId - 1) * IngredientsPerPage, IngredientsPerPage, category);
-            List<CategoryVM> Categories = categoryProcessor.GetAll().DTOToViewModelList(MapCategory);
-            int ingredientCount = ingredientProcessor.Count(category);
-            return new FullIngredientVM()
-            {
-                Ingredients = loadedIngredients,
-                PaginationInfo = new PaginationInfo()
-                {
-                    Current = pageId,
-                    ItemsPerPage = IngredientsPerPage,
-                    ItemsCount = ingredientCount
-                },
-                Categories = Categories,
-                SelectedCategoryName = category
-            };
-        }
+        
         [HttpGet]
         public ActionResult Create()
         {
